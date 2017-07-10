@@ -1,3 +1,0 @@
-[0629/153303.005:ERROR:file_io_win.cc(182)] CreateFile C:\Users\SOFIAC~1\AppData\Local\Temp\scoped_dir10408_27373\Crashpad\settings.dat: El proceso no tiene acceso al archivo porque está siendo utilizado por otro proceso. (0x20)
-[0629/153325.749:ERROR:file_io_win.cc(182)] CreateFile C:\Users\SOFIAC~1\AppData\Local\Temp\scoped_dir2704_4427\Crashpad\settings.dat: El proceso no tiene acceso al archivo porque está siendo utilizado por otro proceso. (0x20)
-[0629/154041.558:ERROR:file_io_win.cc(182)] CreateFile C:\Users\SOFIAC~1\AppData\Local\Temp\scoped_dir8372_16092\Crashpad\settings.dat: El proceso no tiene acceso al archivo porque está siendo utilizado por otro proceso. (0x20)
