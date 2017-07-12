@@ -1,5 +1,6 @@
 package login;
 
+
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -11,15 +12,15 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-	public class demo{
+public class setConexion{
 		WebDriver driver;
 
 		@BeforeTest
 		public void setUp() throws MalformedURLException{
 		DesiredCapabilities capability = DesiredCapabilities.chrome();
-		capability.setBrowserName("Chrome");
+		capability.setBrowserName("chrome");
 		capability.setPlatform(Platform.WINDOWS);
-		driver = new RemoteWebDriver(new URL("https:/10.249.37.243/wd/hub"), capability);
+		driver = new RemoteWebDriver(new URL("http://10.249.37.243:5557/wd/hub"), capability);
 		}
 
 		@AfterTest
@@ -29,6 +30,6 @@ import org.testng.annotations.Test;
 
 		@Test
 		public void SimpleTest() {
-			driver.get("www.salesforce.com");
+			driver.get("http://www.google.com");
 		}
 }
