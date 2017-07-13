@@ -38,5 +38,6 @@
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/client-combined-3.4.0-nodeps.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/java-client-5.0.0-BETA9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/selenium-server-standalone-3.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/pablo/Downloads/selenium-server-standalone-3.4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
