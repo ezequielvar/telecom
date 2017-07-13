@@ -3,7 +3,11 @@
 <suite name="Suite">
   <test name="Test">
     <classes>
+<<<<<<< HEAD
+      <class name="Sales.newAccount"/>
+=======
       <class name="login.setConexion"/>
+>>>>>>> 8f33f22ab1f38efadac7da6a5f9ee2c8fecaa582
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
