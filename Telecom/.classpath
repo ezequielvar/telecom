@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="Pages"/>
-	<classpathentry kind="src" path="Modules"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/cglib-nodep-3.2.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-codec-1.10.jar"/>
@@ -38,6 +37,10 @@
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/client-combined-3.4.0-nodeps.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/java-client-5.0.0-BETA9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/selenium-server-standalone-3.4.0.jar"/>
+<<<<<<< HEAD
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
+=======
 	<classpathentry kind="lib" path="C:/Users/pablo/Downloads/selenium-server-standalone-3.4.0.jar"/>
+>>>>>>> b14c9f970e7392b03976f8c46b8b201714db2fde
 	<classpathentry kind="output" path="bin"/>
 </classpath>
