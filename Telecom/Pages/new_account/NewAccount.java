@@ -10,6 +10,8 @@ import Base.BasePage;
 
 public class NewAccount extends BasePage {
 	
+	final WebDriver driver;
+	
 	@FindBy (how = How.CLASS_NAME, using = "bodySmall")
 	private WebElement copyBillingAddressToShipmentAddress;
 	
@@ -162,12 +164,10 @@ public class NewAccount extends BasePage {
 	//Methods
 	
 	public NewAccount(WebDriver driver){
+		
+		this.driver = driver;
 
-    //    this.driver = driver;
-
-        //This initElements method will create all WebElements
-
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver, NewAccount.class);
 
     }
 	

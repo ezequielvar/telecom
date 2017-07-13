@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class AccountType extends BasePage {
 	
+	final WebDriver driver;
+	
 	@FindBy (how = How.ID, using = "p3")
 	private WebElement selectType;
 	
@@ -20,7 +22,8 @@ public class AccountType extends BasePage {
 	//Methods
 	
 	public AccountType(WebDriver driver) {
-		PageFactory.initElements(driver, this);
+		this.driver = driver;
+		PageFactory.initElements(driver, AccountType.class);
 	}
 	
 	public void setType(WebDriver driver, String value) {
