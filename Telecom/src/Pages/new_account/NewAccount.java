@@ -2,7 +2,6 @@ package Pages.new_account;
 
 
 import org.openqa.selenium.support.FindBy;
-
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.WebDriver;
@@ -175,6 +174,11 @@ public class NewAccount extends BasePage {
 	
 	public void createNewAcc(String name) {
 		accountName.sendKeys(name);
+		mainAccount.sendKeys("");
+		setSimpleDropdown(country, "Argentina");
+	
+		
+	//	save.click();
 	}
 	
 	

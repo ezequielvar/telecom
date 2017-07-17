@@ -27,7 +27,7 @@ public class AccountType extends BasePage {
 	}
 	
 	public void setType(String value) {
-		setCombo(selectType, value);
+		setSimpleDropdown(selectType, value);
 		doYouWishToContinue.click();
 	}
 	
