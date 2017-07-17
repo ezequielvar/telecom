@@ -23,7 +23,7 @@ public class AccountType extends BasePage {
 	
 	public AccountType(WebDriver driver) {
 		this.driver = driver;
-		PageFactory.initElements(driver, AccountType.class);
+		PageFactory.initElements(driver, this);
 	}
 	
 	public void setType(WebDriver driver, String value) {

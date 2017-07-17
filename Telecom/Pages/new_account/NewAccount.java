@@ -167,7 +167,7 @@ public class NewAccount extends BasePage {
 		
 		this.driver = driver;
 
-        PageFactory.initElements(driver, NewAccount.class);
+        PageFactory.initElements(driver, this);
 
     }
 	
