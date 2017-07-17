@@ -32,10 +32,6 @@ public void setup() throws Exception {
 
 @Test
 public void createNewAccount() {
-	List<WebElement> account_tabs = driver.findElements(By.id("ext-gen46"));
-	for (WebElement e : account_tabs) {
-		e.click();
-	}
 	driver.findElement(By.name("new")).click();
 	AccountType tipo = new AccountType(driver);
 	tipo.setType("Consumer");

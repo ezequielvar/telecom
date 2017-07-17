@@ -22,6 +22,9 @@ public class Login extends BasePage {
 	@FindBy (how = How.ID, using = "Login")
 	private WebElement login;
 	
+	@FindBy (how = How.NAME, using = "rememberUn")
+	private WebElement rememberMe;
+	
 	//Constructor
 	
 	public Login(WebDriver driver){
@@ -36,7 +39,8 @@ public class Login extends BasePage {
 	public void ingresar() {
 		username.sendKeys("usit@telecom.sit");
 		password.sendKeys("pruebas07");
-		login.click();
+		rememberMe.click();
+	//	login.click();
 	}
 
 }
