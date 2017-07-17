@@ -40,7 +40,7 @@ public class Login extends BasePage {
 		username.sendKeys("usit@telecom.sit");
 		password.sendKeys("pruebas07");
 		rememberMe.click();
-	//	login.click();
+		login.click();
 	}
 
 }

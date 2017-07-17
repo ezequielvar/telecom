@@ -173,6 +173,9 @@ public class NewAccount extends BasePage {
 
     }
 	
+	public void createNewAcc(String name) {
+		accountName.sendKeys(name);
+	}
 	
 	
 	
