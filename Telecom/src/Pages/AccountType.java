@@ -1,10 +1,13 @@
-package Pages.new_account;
-import Pages.Base.BasePage;
+package Pages;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
 
 public class AccountType extends BasePage {
 	
@@ -28,7 +31,10 @@ public class AccountType extends BasePage {
 	
 	public void setType(String value) {
 		setSimpleDropdown(selectType, value);
-		doYouWishToContinue.click();
+		List<WebElement> elements = driver.findElements(By.className("btn"));
+		elements.get(0).click();
+
+		//doYouWishToContinue.click();
 	}
 	
 }

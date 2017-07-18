@@ -1,11 +1,10 @@
-package Pages.login;
+package Pages;
  
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import Pages.Base.BasePage;
 
 public class Login extends BasePage {
 	
@@ -37,9 +36,9 @@ public class Login extends BasePage {
 	//Methods
 	
 	public void ingresar() {
-		username.sendKeys("usit@telecom.sit");
-		password.sendKeys("pruebas07");
-		rememberMe.click();
+//		username.sendKeys("usit@telecom.sit");
+//		password.sendKeys("pruebas07");
+//		rememberMe.click();
 		login.click();
 	}
 

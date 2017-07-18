@@ -1,4 +1,4 @@
-package Pages.new_account;
+package Pages;
 
 
 import org.openqa.selenium.support.FindBy;
@@ -6,7 +6,6 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import Pages.Base.BasePage;
 
 
 public class NewAccount extends BasePage {
@@ -18,7 +17,7 @@ public class NewAccount extends BasePage {
 	
 	//Account information
 	
-	@FindBy (how = How.ID, using = "accountName")
+	@FindBy (how = How.ID, using = "acc2")
 	private WebElement accountName;
 	
 	@FindBy (how = How.ID, using = "acc3")
@@ -40,7 +39,7 @@ public class NewAccount extends BasePage {
 	private WebElement zipCode;
 	
 	@FindBy (how = How.ID, using = "00Nc0000001pSW8")
-	private WebElement curstomerPriority;
+	private WebElement customerPriority;
 	
 	@FindBy (how = How.ID, using = "00Nc0000001pWcg")
 	private WebElement lastModifyEmailDate;
@@ -48,8 +47,8 @@ public class NewAccount extends BasePage {
 	@FindBy (how = How.ID, using = "CF00Nc0000001pSW3")
 	private WebElement contact;
 	
-//	@FindBy (how = How.ID, using = "")
-//	private WebElement documentType;
+	@FindBy (how = How.ID, using = "00Nc0000001pWce")
+	private WebElement documentType;
 	
 	@FindBy (how = How.ID, using = "00Nc0000001pWcd")
 	private WebElement documentNumber;
@@ -98,17 +97,17 @@ public class NewAccount extends BasePage {
 	@FindBy (how = How.ID, using = "00Nc0000001pWcj")
 	private WebElement personalClubPoints;
 	
-//	@FindBy (how = How.ID, using = "")
-//	private WebElement nps;
+	@FindBy (how = How.ID, using = "00Nc0000001pWch")
+	private WebElement nps;
 	
 	@FindBy (how = How.ID, using = "00Nc0000001pWcf")
 	private WebElement fol;
 	
-//	@FindBy (how = How.ID, using = "")
-//	private WebElement personalClubCategory;
+	@FindBy (how = How.ID, using = "00Nc0000001pWci")
+	private WebElement personalClubCategory;
 	
-//	@FindBy (how = How.ID, using = "")
-//	private WebElement segment;
+	@FindBy (how = How.ID, using = "00Nc0000001pWcl")
+	private WebElement segment;
 	
 	//Billing Profile
 
@@ -137,6 +136,9 @@ public class NewAccount extends BasePage {
 
 	@FindBy (how = How.ID, using = "00Nc0000001pSVn_unselected")
 	private WebElement contactPreferences;
+	
+	@FindBy (how = How.ID, using = "00Nc0000001pSVn_right_arrow")
+	private WebElement rightArrow;
 	
 	//Directory Listing
 
@@ -174,11 +176,41 @@ public class NewAccount extends BasePage {
 	
 	public void createNewAcc(String name) {
 		accountName.sendKeys(name);
-		mainAccount.sendKeys("");
+//		mainAccount.sendKeys("Aaa Aaa");
 		setSimpleDropdown(country, "Argentina");
-	
-		
-	//	save.click();
+		street.sendKeys("Congreso 3924");
+		city.sendKeys("Ciudad Autónoma de Buenos Aires");
+		state.sendKeys("Buenos Aires");
+		zipCode.sendKeys("1429");
+		setSimpleDropdown(customerPriority, "High");
+		lastModifyEmailDate.sendKeys("18/07/2017");
+//		contact.sendKeys("Aaa Aaa");
+		setSimpleDropdown(documentType, "DNI");
+		documentNumber.sendKeys("31879238");
+		primaryContactName.sendKeys("Pedro Picapiedra");
+		billingAddressStore.click();
+		shippingAddressStore.click();
+		setSimpleDropdown(status, "Active");
+		setSimpleDropdown(sla, "Gold");
+		setSimpleDropdown(shipmentCountry, "Argentina");
+		shipmentStreet.sendKeys("Congreso 3924");
+		shipmentCity.sendKeys("Capital Federal");
+		setSimpleDropdown(shipmentState, "Ciudad Autónoma de Buenos Aires");
+		shipmentZipCode.sendKeys("1429");
+		phone.sendKeys("45678900");
+		personalClubPoints.sendKeys("1234");
+		setSimpleDropdown(nps, "1-DETRACTORS");
+		fol.click();
+		setSimpleDropdown(personalClubCategory, "Basico");
+		setSimpleDropdown(segment, "Black");
+		setSimpleDropdown(billFrequency, "Weekly");
+		setSimpleDropdown(accountPaymentType, "Prepaid");
+		enableAutopay.click();
+		setSimpleDropdown(billDeliveryMethod, "eMail");
+		billingEmailAddress.sendKeys("cuentadeprueba@nada.com");
+		setSimpleDropdown(autopaymentAmount, "Full Balance");
+		setElementFromList(contactPreferences, "eMail", rightArrow);
+		save.click();
 	}
 	
 	
