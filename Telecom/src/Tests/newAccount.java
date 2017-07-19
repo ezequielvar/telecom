@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,7 +24,7 @@ String accountName = "Aaa Aaa";
 
 @AfterMethod
 public void tearDown() {
-	driver.close();
+//	driver.close();
 }
 
 @BeforeMethod
@@ -84,4 +83,11 @@ public void createNewAccount() {
 	    driver.switchTo().window(handle);}
 	driver.findElement(By.id("ext-gen121")).click();
 }
+
+@Test
+public void test() {
+	
+}
+
+
 }
