@@ -11,10 +11,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class setConexion{
-		WebDriver driver;
+		static WebDriver driver;
 
 		@BeforeTest
-		public void setUp() throws MalformedURLException{
+		public static void setUp() throws MalformedURLException{
 		DesiredCapabilities capability = DesiredCapabilities.chrome();
 		capability.setBrowserName("chrome");
 		capability.setPlatform(Platform.WINDOWS);
