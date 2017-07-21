@@ -27,10 +27,8 @@ public class Login extends BasePage {
 	//Constructor
 	
 	public Login(WebDriver driver){
-		
 		this.driver = driver;
         PageFactory.initElements(driver, this);
-
     }
 	
 	//Methods

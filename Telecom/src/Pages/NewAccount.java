@@ -167,11 +167,8 @@ public class NewAccount extends BasePage {
 	//Methods
 	
 	public NewAccount(WebDriver driver){
-		
 		this.driver = driver;
-
         PageFactory.initElements(driver, this);
-
     }
 	
 	public void createNewAcc(String name) {
@@ -183,7 +180,7 @@ public class NewAccount extends BasePage {
 		state.sendKeys("Buenos Aires");
 		zipCode.sendKeys("1429");
 		setSimpleDropdown(customerPriority, "High");
-		lastModifyEmailDate.sendKeys("18/07/2017");
+		lastModifyEmailDate.sendKeys("20/07/2017");
 //		contact.sendKeys("Aaa Aaa");
 		setSimpleDropdown(documentType, "DNI");
 		documentNumber.sendKeys("31879238");

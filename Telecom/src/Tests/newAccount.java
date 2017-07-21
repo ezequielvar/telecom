@@ -24,7 +24,7 @@ String accountName = "Aaa Aaa";
 
 @AfterMethod
 public void tearDown() {
-//	driver.close();
+	driver.close();
 }
 
 @BeforeMethod
@@ -84,7 +84,7 @@ public void createNewAccount() {
 	driver.findElement(By.id("ext-gen121")).click();
 }
 
-@Test
+//@Test
 public void test() {
 	
 }
