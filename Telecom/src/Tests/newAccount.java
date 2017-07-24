@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import Pages.AccountType;
 import Pages.Login;
 import Pages.NewAccount;
+import Pages.setConexion;
 
 public class newAccount extends TestBase {
 	
@@ -29,7 +30,8 @@ public void tearDown() {
 
 @BeforeMethod
 public void setup() throws Exception {
-
+	
+	setConexion.setUp();
 	System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
     ChromeOptions options = new ChromeOptions();
     options.addArguments("user-data-dir=C:\\Users\\pablo\\AppData\\Local\\Google\\Chrome\\User Data");
@@ -41,7 +43,7 @@ public void setup() throws Exception {
     
 }
 
-@Test
+@Test	
 public void createNewAccount() {
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("ext-gen33")).click();	
