@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class orderPage {
+public class NewOrder {
 	
 	WebDriver driver;
 	
