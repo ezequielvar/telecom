@@ -34,6 +34,8 @@ public Order(WebDriver driver) {
         PageFactory.initElements(driver, this);	
 }
 
-
+public void goToTaCPQ() {
+	taCPQ.click();
+}
 
 }

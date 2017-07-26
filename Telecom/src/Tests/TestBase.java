@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import Pages.Login;
+
 
 public class TestBase {
 	
@@ -26,5 +28,11 @@ public class TestBase {
 		driver.findElement(By.id("nav-tab-0")).click();
 		break;
 		}
+	}
+	
+	public void login(WebDriver driver) {
+		driver.get("https://test.salesforce.com/");
+	    Login page0 = new Login(driver);
+	    page0.ingresar();
 	}
 }

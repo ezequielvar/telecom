@@ -32,14 +32,7 @@ public void tearDown() {
 public void setup() throws Exception {
 	
 	setConexion.setUp();
-	System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-    ChromeOptions options = new ChromeOptions();
-    options.addArguments("user-data-dir=C:\\Users\\pablo\\AppData\\Local\\Google\\Chrome\\User Data");
-    options.addArguments("start-maximized");
-    driver = new ChromeDriver(options);
-    driver.get("https://test.salesforce.com/");
-    Login page = new Login(driver);
-    page.ingresar();
+//	setConexion.setupPablo();	
     
 }
 
