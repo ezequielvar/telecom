@@ -125,4 +125,8 @@ public SalesBase(WebDriver driver){
         PageFactory.initElements(driver, this);
 }
 
+public void goToOrdersTab() {
+	ordersTab.click();
+}
+
 }

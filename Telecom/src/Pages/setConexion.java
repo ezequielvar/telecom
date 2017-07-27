@@ -1,6 +1,8 @@
 package Pages;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -29,5 +31,14 @@ public class setConexion{
 		@Test
 		public void SimpleTest() {
 			driver.get("http://www.google.com");
+		}
+		
+		public static WebDriver setupPablo() {
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		    ChromeOptions options = new ChromeOptions();
+		    options.addArguments("user-data-dir=C:\\Users\\pablo\\AppData\\Local\\Google\\Chrome\\User Data");
+		    options.addArguments("start-maximized");
+		    driver = new ChromeDriver(options);
+		    return driver;
 		}
 }
