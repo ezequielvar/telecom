@@ -32,15 +32,19 @@ private List<WebElement> planButtons;
 @FindBy (how = How.CSS, using = ".slds-button__icon.slds-button__icon--")
 private List<WebElement> icons;
 
+@FindBy (how = How.CSS, using = ".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")
+private WebElement salesConfig;
+
+@FindBy (how = How.CLASS_NAME, using = "cpq-cart-item-root-product")
+private List<WebElement> plan;
+
 public Ta_CPQ(WebDriver driver) {
 	this.driver = driver;
     PageFactory.initElements(driver, this);	
 }
 
 public void addPlan() {
-	
 	addToCartButtons.get(6).click();
-
 }
 
 public void openArrow() {
@@ -66,6 +70,22 @@ public String getPaperCanLabel() {
 	String value = planButtons.get(3).getAttribute("title").toString();
 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(3));	
 	return value;
+}
+
+public void clickOnSalesConfig() {
+	salesConfig.click();
+}
+
+public void clickOnDelete() {
+	((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(3));
+}
+
+public Boolean isPlanPresent() {
+	Boolean a = false;
+	if (plan.size() > 0) {
+		a = true;
+	}
+	return a;
 }
 
 }
