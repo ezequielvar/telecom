@@ -38,6 +38,9 @@ private WebElement salesConfig;
 @FindBy (how = How.CLASS_NAME, using = "cpq-cart-item-root-product")
 private List<WebElement> plan;
 
+@FindBy (how = How.CLASS_NAME, using = "cpq-cart-item-no-children")
+private List<WebElement> planInformation;
+
 public Ta_CPQ(WebDriver driver) {
 	this.driver = driver;
     PageFactory.initElements(driver, this);	
@@ -84,6 +87,15 @@ public Boolean isPlanPresent() {
 	Boolean a = false;
 	if (plan.size() > 0) {
 		a = true;
+	}
+	return a;
+}
+
+public Boolean getPlanInformation() {
+	Boolean a = false;
+	if (planInformation.get(5).getText().equals("Cargo de Conexión")) {
+		a = true;
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(3));
 	}
 	return a;
 }
