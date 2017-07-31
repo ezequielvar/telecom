@@ -36,7 +36,7 @@ public class LineAssignment extends BasePage {
 	private List<WebElement> buttons;
 	
 	@FindBy (how = How.CLASS_NAME, using = "ng-binding")
-	private WebElement next;
+	private List<WebElement> next;
 	
 	@FindBy (how = How.CSS, using = ".slds-form-element__label.slds-text-color--error.ng-binding.ng-scope")
 	private WebElement noLineAvailableMessage;
@@ -62,7 +62,11 @@ public void cancelLineAssignment() {
 	buttons.get(0).click();
 	Alert alert = driver.switchTo().alert();
     alert.accept();
-    driver.findElement(By.id("ext-gen25"));
+    driver.findElement(By.id("ext-gen25")).click();
+}
+
+public void clickOnNext() {
+	next.get(18).click();
 }
 
 }
