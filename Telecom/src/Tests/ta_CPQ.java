@@ -27,14 +27,14 @@ public class ta_CPQ extends TestBase {
 
 	@AfterMethod
 	public void tearDown() {
-//		driver.close();
+		driver.close();
 	}
 
 	@BeforeMethod
 	public void setup() throws Exception {
 		
-//		setConexion.setUp();
-		this.driver = setConexion.setupPablo();	
+		setConexion.setUp();
+//		this.driver = setConexion.setupPablo();	
 		login(driver);
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
