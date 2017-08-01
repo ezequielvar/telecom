@@ -32,7 +32,9 @@ public class newContact extends ContactSearch {
 	@BeforeMethod
 	public void Init() throws Exception
 	{
-	setConexion.setUp();
+//	setConexion.setUp();
+	this.driver = setConexion.setupPablo();	
+
 	}
 		
 	@Test
