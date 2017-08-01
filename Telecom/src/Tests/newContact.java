@@ -19,7 +19,7 @@ public class newContact extends ContactSearch {
 	
 	private WebDriver driver;
 	String[] genero = {"masculino","femenino"};
-	String DNI;
+	String DNI = "DNI";
 	String[] DocValue = {"52698547","3569874563","365","ssss"};
 	ContactSearch contac = new ContactSearch(driver);
 	
@@ -32,7 +32,8 @@ public class newContact extends ContactSearch {
 	@BeforeMethod
 	public void Init() throws Exception
 	{
-	setConexion.setUp();
+		this.driver = setConexion.setupPablo();
+		driver.get("https://c.cs14.visual.force.com/apex/taClientCreationProcess?id=a1zc0000003EQUYAA4&designerPreviewId=a1zc0000003EQUYAA4&previewEmbedded=true&tabKey=1499800882480#/OS/a1zc0000003EQUYAA4/scriptState/new/true/true");
 	}
 		
 	@Test
