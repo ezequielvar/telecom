@@ -13,6 +13,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import Tests.center;
+import Tests.grid;
+
 public class Ta_CPQ extends BasePage {
 
 	final WebDriver driver;
@@ -98,6 +101,10 @@ public Boolean getPlanInformation() {
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(3));
 	}
 	return a;
+}
+
+public String getEmptyCartMessage() {
+	return driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-cart-items-msg")).getText();
 }
 
 }

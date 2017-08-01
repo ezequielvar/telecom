@@ -12,7 +12,7 @@ public class PaymentMethod extends BasePage{
 	final WebDriver driver;
 
 	@FindBy (how = How.ID, using = "SelectPM")
-	private WebElement paymentMethod;
+	private List<WebElement> paymentMethod;
 	
 	@FindBy (how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
 	private List<WebElement> buttons;
@@ -29,4 +29,19 @@ public void clickOnNext() {
 	nextAndPrevious.get(66).click();
 }
 
+public Boolean getPaymentMethod() {
+	Boolean a = false;
+	if (paymentMethod.get(0).getText().contains("Efectivo")) {
+		a = true;
+	}
+	return a;
+}
+
+public Boolean isPaymentMethodPresent() {
+	Boolean a = false;
+	if (paymentMethod.size() != 0) {
+		a = true;
+	}
+	return a;
+}
 }

@@ -27,10 +27,6 @@ public SerialInput(WebDriver driver) {
 	    PageFactory.initElements(driver, this);	
 }
 
-public void clickOnNext() {
-	assignNextAndPrevious.get(2).click();
-}
-
 public void setICCD(String serial) {
 	iccd.sendKeys(serial);
 }
@@ -39,8 +35,16 @@ public void clickOnValidateICCD() {
 	assignNextAndPrevious.get(71).click();
 }
 
-public String getValidationErrorMessage() {
+public String getAssignButtonLabel() {
+	return assignNextAndPrevious.get(71).getText();
+}
+
+public String getValidationMessage() {
 	return driver.findElement(By.cssSelector(".textWrapped.ng-binding.slds-text-color--error")).getText();
+}
+
+public void clickOnNext() {
+	assignNextAndPrevious.get(75).click();
 }
 
 }
