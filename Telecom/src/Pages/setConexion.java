@@ -41,4 +41,13 @@ public class setConexion{
 		    driver = new ChromeDriver(options);
 		    return driver;
 		}
+		
+		public static WebDriver setupEze() {
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		    ChromeOptions options = new ChromeOptions();
+		    options.addArguments("user-data-dir=C:\\Users\\Sofia Chardin\\AppData\\Local\\Google\\Chrome\\User Data");
+		    options.addArguments("start-maximized");
+		    driver = new ChromeDriver(options);
+		    return driver;
+		}
 }
