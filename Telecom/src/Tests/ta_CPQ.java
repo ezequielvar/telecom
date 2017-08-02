@@ -85,6 +85,7 @@ public class ta_CPQ extends TestBase {
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnDelete();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(page3.isPlanPresent());
 	}
 	
@@ -95,6 +96,7 @@ public class ta_CPQ extends TestBase {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals("Quitar el producto del carrito", page3.getPaperCanLabel());
@@ -259,6 +261,7 @@ public class ta_CPQ extends TestBase {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
