@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test name="Test(failed)">
+    <classes>
+      <class name="Tests.ta_CPQ">
+        <methods>
+          <include name="checkPaperCanLabel"/>
+          <include name="checkPaymentMethodIsPresent"/>
+          <include name="checkPlanIsDeleted"/>
+          <include name="checkOrderStatusIsPending"/>
+          <include name="setup"/>
+          <include name="checkCancelOrder"/>
+          <include name="tearDown"/>
+          <include name="rightICCDFormat"/>
+          <include name="checkNoLineAvailableMessageAndCancelPlan"/>
+        </methods>
+      </class> <!-- Tests.ta_CPQ -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

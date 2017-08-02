@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 public class setConexion{
 		static WebDriver driver;
 
+
 		//@BeforeTest
 		//public static void setUp() throws MalformedURLException{
 		//DesiredCapabilities capability = DesiredCapabilities.chrome();
@@ -22,8 +23,16 @@ public class setConexion{
 		//capability.setPlatform(Platform.WINDOWS);
 		//driver = new RemoteWebDriver(new URL("http://10.249.37.243:5557/wd/hub"), capability);
 	//	}
+//		@BeforeTest
+		public static void setUp() throws MalformedURLException{
+		DesiredCapabilities capability = DesiredCapabilities.chrome();
+		capability.setBrowserName("chrome");
+		capability.setPlatform(Platform.WINDOWS);
+		driver = new RemoteWebDriver(new URL("http://10.249.37.243:5557/wd/hub"), capability);
+		}
 
-		@AfterTest
+
+//		@AfterTest
 		public void kill(){
 			driver.quit();
 		}
@@ -42,10 +51,19 @@ public class setConexion{
 		    return driver;
 		}
 		
+
 		public static WebDriver setupLeo() {
 			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		    ChromeOptions options = new ChromeOptions();
 		    options.addArguments("user-data-dir=C:\\Users\\Xappia\\AppData\\Local\\Google\\Chrome\\User Data");
+		    options.addArguments("start-maximized");
+		    driver = new ChromeDriver(options);
+		    return driver;
+		}
+		public static WebDriver setupEze() {
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		    ChromeOptions options = new ChromeOptions();
+		    options.addArguments("user-data-dir=C:\\Users\\Sofia Chardin\\AppData\\Local\\Google\\Chrome\\User Data");
 		    options.addArguments("start-maximized");
 		    driver = new ChromeDriver(options);
 		    return driver;

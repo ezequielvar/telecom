@@ -2,6 +2,7 @@ package Pages;
 
 import java.util.List;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -80,6 +81,9 @@ final WebDriver driver;
 	
 	@FindBy (how = How.ID, using = "Order_Tab")
 	private WebElement ordersTab;
+	
+	@FindBy (how = How.ID, using = "01rc0000000DZDq_Tab")
+	private WebElement userSITTab;
 	
 	@FindBy (how = How.CLASS_NAME, using = "allTabsArrow")
 	private WebElement allTabs;
