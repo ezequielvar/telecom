@@ -62,7 +62,9 @@ public void cancelLineAssignment() {
 	buttons.get(0).click();
 	Alert alert = driver.switchTo().alert();
     alert.accept();
+	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
     driver.findElement(By.id("ext-gen25")).click();
+	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
 
 public void clickOnNext() {

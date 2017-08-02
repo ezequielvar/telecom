@@ -31,13 +31,14 @@ public void tearDown() {
 @BeforeMethod
 public void setup() throws Exception {
 	
-	setConexion.setUp();
-//	setConexion.setupPablo();	
+//	setConexion.setUp();
+	setConexion.setupPablo();	
     
 }
 
 @Test	
 public void createNewAccount() {
+	login(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("ext-gen33")).click();	
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

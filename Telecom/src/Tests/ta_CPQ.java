@@ -33,8 +33,8 @@ public class ta_CPQ extends TestBase {
 	@BeforeMethod
 	public void setup() throws Exception {
 		
-		setConexion.setUp();
-//		this.driver = setConexion.setupPablo();	
+//		setConexion.setUp();
+		this.driver = setConexion.setupPablo();	
 		login(driver);
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
@@ -51,6 +51,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkSimCardAssignment() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.openArrow();
@@ -61,6 +65,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkPaperCanIsPresent() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(page3.isPaperCanPresent());
@@ -69,6 +77,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkPlanIsDeleted() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnDelete();
@@ -78,6 +90,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkPaperCanLabel() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals("Quitar el producto del carrito", page3.getPaperCanLabel());
@@ -86,6 +102,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkNoLineAvailableMessageAndCancelPlan() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -99,6 +119,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkPlanInformation() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.openArrow();
@@ -110,6 +134,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void wrongICCDFormat() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -136,6 +164,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void rightICCDFormat() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -162,6 +194,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkAssignButtonIsAvailable() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -186,6 +222,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkOrderStatusIsPending() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -214,6 +254,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void deleteAllPlans() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
@@ -236,6 +280,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkCancelOrder() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -265,6 +313,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkCashAsValueForPaymentMethod() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -285,6 +337,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkPaymentMethodIsPresent() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
@@ -305,6 +361,10 @@ public class ta_CPQ extends TestBase {
 	@Test
 	public void checkDefaultValueForDeliveryMethod() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();

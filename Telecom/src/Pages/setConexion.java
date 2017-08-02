@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 public class setConexion{
 		static WebDriver driver;
 
-		@BeforeTest
+//		@BeforeTest
 		public static void setUp() throws MalformedURLException{
 		DesiredCapabilities capability = DesiredCapabilities.chrome();
 		capability.setBrowserName("chrome");
@@ -23,7 +23,7 @@ public class setConexion{
 		driver = new RemoteWebDriver(new URL("http://10.249.37.243:5557/wd/hub"), capability);
 		}
 
-		@AfterTest
+//		@AfterTest
 		public void kill(){
 			driver.quit();
 		}
