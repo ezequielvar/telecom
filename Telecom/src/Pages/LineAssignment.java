@@ -55,6 +55,7 @@ public void searchLineAvailable(String state, String city, String sufijo) {
 
 public String getNoLineMessage() {
 	arrow.click();
+	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	return noLineAvailableMessage.getText();
 }
 

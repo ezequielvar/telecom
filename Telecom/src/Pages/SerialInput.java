@@ -1,5 +1,6 @@
 package Pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -39,8 +40,17 @@ public String getAssignButtonLabel() {
 	return assignNextAndPrevious.get(71).getText();
 }
 
-public String getValidationMessage() {
-	return driver.findElement(By.cssSelector(".textWrapped.ng-binding.slds-text-color--error")).getText();
+public String getValidationMessage(String format) {
+	ArrayList<String> str = new ArrayList<String>();
+	switch(format) {
+	case "wrong":
+	str.add(driver.findElement(By.cssSelector(".textWrapped.ng-binding.slds-text-color--error")).getText());
+	break;
+	case "right":
+	str.add(driver.findElement(By.cssSelector(".textWrapped.ng-binding")).getText());
+	break;
+	}
+return str.get(0);
 }
 
 public void clickOnNext() {
