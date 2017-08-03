@@ -46,9 +46,9 @@ public void setup() throws Exception {
 @Test	
 public void createNewAccount() {
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
+	try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-	}
+	} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	goToLeftPanel(driver, "Cuentas");
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -89,6 +89,7 @@ public void createNewAccount() {
 	 for (String handle : driver.getWindowHandles()) {	 
 	    driver.switchTo().window(handle);}
 	driver.findElement(By.id("ext-gen121")).click();
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
 
 }
