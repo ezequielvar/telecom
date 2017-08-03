@@ -37,7 +37,6 @@ public class setConexion{
 			driver.quit();
 		}
 
-		@Test
 		public void SimpleTest() {
 			driver.get("http://www.google.com");	
 		}

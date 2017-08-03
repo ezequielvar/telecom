@@ -9,7 +9,7 @@ public class newOrder {
 	
 	private WebDriver driver;
 	
-	@Test
+	
 	
 
 	

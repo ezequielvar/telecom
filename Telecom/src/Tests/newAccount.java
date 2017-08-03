@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -32,15 +33,24 @@ public void tearDown() {
 public void setup() throws Exception {
 	
 //	setConexion.setUp();
-	setConexion.setupPablo();	
-    
+	this.driver = setConexion.setupPablo();	
+	login(driver);
+	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+		driver.findElement(By.id("tsidLabel")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+	}
 }
 
 @Test	
 public void createNewAccount() {
-	login(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.findElement(By.id("ext-gen33")).click();	
+	try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
+	} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	goToLeftPanel(driver, "Cuentas");
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	WebElement frame1 = driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(frame1);
@@ -57,11 +67,12 @@ public void createNewAccount() {
 	account.createNewAcc(accountName);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.switchTo().defaultContent();
-	driver.findElement(By.id("ext-gen33")).click();
+	goToLeftPanel(driver, "Cuentas");
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	WebElement frame4 = driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(frame4);
 	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas Las cuentas");
+	field.selectByVisibleText("Todas las cuentas");
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.navigate().refresh();
 	WebElement frame5 = driver.findElement(By.tagName("iframe"));
@@ -78,12 +89,7 @@ public void createNewAccount() {
 	 for (String handle : driver.getWindowHandles()) {	 
 	    driver.switchTo().window(handle);}
 	driver.findElement(By.id("ext-gen121")).click();
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
-
-//@Test
-public void test() {
-	
-}
-
 
 }

@@ -18,7 +18,7 @@ public class Ta_CPQ extends BasePage {
 private List<WebElement> addToCartButtons;
 	
 @FindBy (how = How.CSS, using = ".slds-button__icon.slds-button__icon--small.slds-button__icon--left.fix-slds-close-switch")
-private WebElement arrowPlan;
+private List<WebElement> arrowPlan;
 
 @FindBy (how = How.CLASS_NAME, using = "cpq-cart-item-currency-value")
 private List<WebElement> values;
@@ -48,7 +48,7 @@ public void addPlan() {
 }
 
 public void openArrow() {
-	arrowPlan.click();
+	arrowPlan.get(0).click();
 }
 
 public String getSimCardValue() {
@@ -82,7 +82,7 @@ public void clickOnDelete() {
 
 public Boolean isPlanPresent() {
 	Boolean a = false;
-	if (plan.size() > 0) {
+	if (arrowPlan.size() > 0) {
 		a = true;
 	}
 	return a;

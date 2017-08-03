@@ -36,6 +36,7 @@ public class ta_CPQ extends TestBase {
 //		setConexion.setUp();
 		this.driver = setConexion.setupPablo();	
 		login(driver);
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
@@ -45,7 +46,7 @@ public class ta_CPQ extends TestBase {
 		page1.goToRecentOrder();
 		Order page2 = new Order(driver);
 		page2.goToTaCPQ();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@Test
@@ -82,8 +83,9 @@ public class ta_CPQ extends TestBase {
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		page3.addPlan();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnDelete();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(page3.isPlanPresent());
 	}
 	
@@ -94,6 +96,7 @@ public class ta_CPQ extends TestBase {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals("Quitar el producto del carrito", page3.getPaperCanLabel());
@@ -158,7 +161,7 @@ public class ta_CPQ extends TestBase {
 		page8.setICCD("123456");
 		page8.clickOnValidateICCD();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("Error de formato", page8.getValidationMessage());
+		Assert.assertEquals("Error de formato", page8.getValidationMessage("wrong"));
 	}
 	
 	@Test
@@ -188,7 +191,7 @@ public class ta_CPQ extends TestBase {
 		page8.setICCD("1234567891");
 		page8.clickOnValidateICCD();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("El ICCID fue asignado", page8.getValidationMessage());
+		Assert.assertEquals("El ICCID fue asignado", page8.getValidationMessage("right"));
 	}
 	
 	@Test
@@ -258,6 +261,7 @@ public class ta_CPQ extends TestBase {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.addPlan();
