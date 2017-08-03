@@ -15,7 +15,7 @@ public class ValidationQuestions extends TestBase {
 	
 	
 	private WebDriver driver;
-	
+	 	
 	//@AfterMethod
 	//public void tearDown() {
 		//driver.close();
@@ -25,36 +25,37 @@ public class ValidationQuestions extends TestBase {
 	public void setup() throws Exception {
 		
 		
-  //  driver = new ChromeDriver();
+
 //		setConexion.setUp();
 	driver = setConexion.setupLeo();	
-	//driver.get("https://goo.gl/DZC54c");
+
 }
 	
 	@Test	
 	public void ValidationQuestion() {
 		
-		//driver.get("https://goo.gl/DZC54c");
-		//Login page1 = new Login(driver);
-			//page1.ingresar();
-			//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			//ContactSearch page2 = new ContactSearch(driver);
-			//driver.findElement(By.xpath("//*[@id='Sex0']/div/div[1]/label[1]/span[1]")).click();
-			//String docType = "DNI";
-			//String docValue= "33333333";
-			//String genero = "femenino";
-			//page2.searchContact(docType, docValue, genero);
-			//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			//ContactInformation page3 = new ContactInformation(driver);
-			//String nombre = "TestName"; 
-			//String apellido = "TestLastName";
-			//String fechaDeNacimiento = "14/05/1987";
-			//String mail = "asd@asd.com";
-			//page3.setContactInformation(nombre, apellido, fechaDeNacimiento, mail);
-			//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			//driver.findElement(By.id("Contact_nextBtn")).click();
-			//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			
+			/*driver.get("https://goo.gl/DZC54c");
+			Login page1 = new Login(driver);
+			page1.ingresar();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			ContactSearch page2 = new ContactSearch(driver);
+			driver.findElement(By.xpath("//*[@id='Sex0']/div/div[1]/label[1]/span[1]")).click();
+			String docType = "DNI";
+			String docValue= "33333333";
+			String genero = "femenino";
+			page2.searchContact(docType, docValue, genero);
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			ContactInformation page3 = new ContactInformation(driver);
+			String nombre = "TestName"; 
+			String apellido = "TestLastName";
+			String fechaDeNacimiento = "14/05/1987";
+			String mail = "asd@asd.com";
+			page3.setContactInformation(nombre, apellido, fechaDeNacimiento, mail);
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("Contact_nextBtn")).click();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			*/
+		
 	//Seleccion de metodo
 		driver.findElement(By.xpath("//*[@id='ValidationMethod0']/div/div[1]/label[2]/span[1]")).click();
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
