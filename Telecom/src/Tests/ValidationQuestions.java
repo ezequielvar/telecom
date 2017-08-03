@@ -56,7 +56,7 @@ public class ValidationQuestions extends TestBase {
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			*/
 		
-	//Seleccion de metodo
+	//Seleccion de metodo por preguntas
 		driver.findElement(By.xpath("//*[@id='ValidationMethod0']/div/div[1]/label[2]/span[1]")).click();
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  
@@ -94,7 +94,9 @@ public class ValidationQuestions extends TestBase {
 	
 	@Test	
 	public void ValidationTime() {
-		try {Thread.sleep(60000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//Seleccion de metodo por preguntas
+		driver.findElement(By.xpath("//*[@id='ValidationMethod0']/div/div[1]/label[2]/span[1]")).click();
+		try {Thread.sleep(65000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[@id='QAForm']/div/ng-include/div/div[2]"));
 		
 	}

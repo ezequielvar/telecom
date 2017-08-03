@@ -92,6 +92,15 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
+	@Test
+	public void NoMailCheckEmpty() {
+		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty"));
+	}
+	
+	public void NoMailCheckSelect () {
+		driver.findElement(By.id("EmailCheck")).click();
+		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-not-empty"));
+	}
 	
 }
 
