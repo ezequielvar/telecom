@@ -5,7 +5,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.Bill;
@@ -24,18 +26,31 @@ import org.testng.Assert;
 public class ta_CPQ extends TestBase {
 	
 	private WebDriver driver;
+	
+	@BeforeTest
+	public void mainSteup() {
+		this.driver = setConexion.setupPablo();	
+		login(driver);
+	}
+	
+	@AfterTest
+	public void tearDown2() {
+		driver.close();
+		
+	}
+	
+	
 
 	@AfterMethod
 	public void tearDown() {
-		driver.close();
+		driver.get("https://cs14.salesforce.com/home/home.jsp");
 	}
 
 	@BeforeMethod
 	public void setup() throws Exception {
 		
 //		setConexion.setUp();
-		this.driver = setConexion.setupPablo();	
-		login(driver);
+		
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
