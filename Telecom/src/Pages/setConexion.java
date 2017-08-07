@@ -1,4 +1,4 @@
-package Pages;
+ package Pages;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,7 +24,7 @@ public class setConexion{
 		//driver = new RemoteWebDriver(new URL("http://10.249.37.243:5557/wd/hub"), capability);
 	//	}
 //		@BeforeTest
-		public static void setUp() throws MalformedURLException{
+/*		public static void setUp() throws MalformedURLException{
 		DesiredCapabilities capability = DesiredCapabilities.chrome();
 		capability.setBrowserName("chrome");
 		capability.setPlatform(Platform.WINDOWS);
@@ -35,7 +35,7 @@ public class setConexion{
 //		@AfterTest
 		public void kill(){
 			driver.quit();
-		}
+		}*/
 
 		public void SimpleTest() {
 			driver.get("http://www.google.com");	
