@@ -1,4 +1,4 @@
-package Pages;
+ package Pages;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,7 +16,7 @@ public class setConexion{
 		static WebDriver driver;
 
 //		@BeforeTest
-		public static void setUp() throws MalformedURLException{
+/*		public static void setUp() throws MalformedURLException{
 		DesiredCapabilities capability = DesiredCapabilities.chrome();
 		capability.setBrowserName("chrome");
 		capability.setPlatform(Platform.WINDOWS);
@@ -26,7 +26,7 @@ public class setConexion{
 //		@AfterTest
 		public void kill(){
 			driver.quit();
-		}
+		}*/
 
 		@Test
 		public void SimpleTest() {
