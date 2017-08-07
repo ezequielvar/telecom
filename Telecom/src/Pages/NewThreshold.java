@@ -29,10 +29,16 @@ public class NewThreshold extends BasePage {
 	private WebElement active;
 	
 	@FindBy (how = How.ID, using = "00Nc0000001pWdh_unselected")
-	private WebElement value;
+	private WebElement leftValue;
+	
+	@FindBy (how = How.ID, using = "00Nc0000001pWdh_selected")
+	private WebElement rightValue;
 	
 	@FindBy (how = How.ID, using = "00Nc0000001pWdh_right_arrow")
 	private WebElement rightArrow;
+	
+	@FindBy (how = How.ID, using = "00Nc0000001pWdh_left_arrow")
+	private WebElement leftArrow;
 	
 	@FindBy (how = How.NAME, using = "save")
 	private WebElement save;
@@ -55,7 +61,13 @@ public class NewThreshold extends BasePage {
 		maximum.sendKeys(max);
 		minimum.sendKeys(min);
 		active.click();
-		setElementFromList(value, "Down", rightArrow);
+		setElementFromList(leftValue, "Down", rightArrow);
+		save.click();
+	}
+	
+	public void modifyThreshold() {
+		setElementFromList(leftValue, "Up", rightArrow);
+		setElementFromList(rightValue, "Down", leftArrow);
 		save.click();
 	}
 }

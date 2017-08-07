@@ -75,7 +75,10 @@ public class diagnosis extends TestBase {
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(2));
 		List<WebElement> squares = driver.findElements(By.cssSelector(".console-card.active"));
-		squares.get(0).click();
+		for (WebElement e : squares) {
+			if (e.getText().contains("INTERNET")) {
+		e.click(); }
+		}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[2]/div[3]/ng-include/section[2]/div[3]/ng-transclude/div/ng-include/div/div[1]/div/ng-include/div/ul/li[3]")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -110,7 +113,10 @@ public class diagnosis extends TestBase {
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(2));
 		List<WebElement> squares = driver.findElements(By.cssSelector(".console-card.active"));
-		squares.get(0).click();
+		for (WebElement e : squares) {
+			if (e.getText().contains("INTERNET")) {
+		e.click(); }
+		}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[2]/div[3]/ng-include/section[2]/div[3]/ng-transclude/div/ng-include/div/div[1]/div/ng-include/div/ul/li[3]")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -147,7 +153,12 @@ public class diagnosis extends TestBase {
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(2));
 		List<WebElement> squares = driver.findElements(By.cssSelector(".console-card.active"));
-		Assert.assertTrue(squares.get(0).getText().contains("INTERNET"));
+		Boolean a = false;
+		for (WebElement e : squares) {
+			if (e.getText().contains("INTERNET")) {
+		a = true; }
+		}		
+		Assert.assertTrue(a == true);
 	}
 
 }
