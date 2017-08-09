@@ -52,7 +52,7 @@ public void tearDown() {
 	List<WebElement> buttons = driver.findElements(By.cssSelector(".x-btn-text"));
 	buttons.get(2).click();
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.get("https://cs14.salesforce.com/home/home.jsp");
+	driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 }
 
 @BeforeMethod
