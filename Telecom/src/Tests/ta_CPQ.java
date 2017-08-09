@@ -38,12 +38,10 @@ public class ta_CPQ extends TestBase {
 		driver.close();
 		
 	}
-	
-	
 
 	@AfterMethod
 	public void tearDown() {
-		driver.get("https://cs14.salesforce.com/home/home.jsp");
+		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
 
 	@BeforeMethod

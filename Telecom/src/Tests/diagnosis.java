@@ -29,21 +29,17 @@ public class diagnosis extends TestBase {
 
 	@AfterTest
 	public void tearDown2() {
-//		driver.close();
+		driver.close();
 		
 	}
 
 	@AfterMethod
 	public void tearDown() {
-//		driver.get("https://cs14.salesforce.com/home/home.jsp");
+		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		
-//		setConexion.setUp();
-//		this.driver = setConexion.setupPablo();	
-//		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
