@@ -1,5 +1,6 @@
 package Pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -89,7 +90,7 @@ public class customerInformation extends BasePage {
 		setSimpleDropdown(gender, "Femenino");
 		birthDate.clear();
 		birthDate.sendKeys("11/06/1985");
-		update.get(104).click();
+		getElementFromList(update, "Actualizar").click();
 	}
 	
 	public void setDefaultValues() {
@@ -98,9 +99,41 @@ public class customerInformation extends BasePage {
 		lastName.clear();
 		lastName.sendKeys("Tech");
 //		setSimpleDropdown(documentType, "DNI");
+		document.sendKeys("32645432");
 		setSimpleDropdown(gender, "Masculino");
 		birthDate.clear();
 		birthDate.sendKeys("06/07/2016");
-		update.get(104).click();
+		getElementFromList(update, "Actualizar").click();
 	}
+	
+	public void setTwoFieldsWhichDontTriggerIdentityValidationProcess() {
+		setSimpleDropdown(gender, "Femenino");
+		birthDate.clear();
+		birthDate.sendKeys("11/06/1985");
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public void setThreeFieldsWhichTriggerIdentityValidationProcess() {
+		setSimpleDropdown(gender, "Femenino");
+		document.clear();
+		document.sendKeys("32645423");
+		birthDate.clear();
+		birthDate.sendKeys("11/06/1985");
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public Boolean isBirthDateAValidDateFormat() {
+		birthDate.clear();
+		birthDate.sendKeys("11A06[]1985");
+		getElementFromList(update, "Actualizar").click();
+		try {
+			driver.switchTo().alert().accept();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+	
+	
 }
