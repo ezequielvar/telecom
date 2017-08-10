@@ -4,12 +4,19 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+<<<<<<< HEAD
 import org.testng.annotations.AfterMethod;
+=======
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+>>>>>>> d9f1cbc31b324c9e90c17707d954d6ea663f99f7
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
 import Pages.ContactInformation;
+import Pages.ContactSearch;
+import Pages.Login;
 import Pages.setConexion;
 import Tests.createdContact;
 
@@ -128,12 +135,17 @@ public class NewContactInformation extends TestBase {
 	}
 	
 	@Test
+<<<<<<< HEAD
 	public void TS6941_noMailCheckSelect () 
 	{
+=======
+	public void NoMailCheckSelect () {
+>>>>>>> d9f1cbc31b324c9e90c17707d954d6ea663f99f7
 		driver.findElement(By.id("EmailCheck")).click();
 		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-not-empty"));
 	}
 	
+<<<<<<< HEAD
 	@Test
 	public void TS6934_mandatoryLastName()
 	{
@@ -158,5 +170,18 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.id("Birthdate")).click();
 		driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-.active"));
 	}
+=======
+	
+	
+	/*@Test
+	public void birthdatemask() {
+
+		driver.findElement(By.id("Birthdate")).click(); 
+		driver.findElement(By.xpath("//*[@id=\'datepickers-container\']/div[1]/div[1]/div/div[2]/div[18]")).click();
+		String actualString = driver.findElement(By.xpath("//input[@id='Birthdate']")).getText(); ;;
+		//Assert.assertTrue(actualString.contains("yyyy-MM-dd"));
+
+	}*/
+>>>>>>> d9f1cbc31b324c9e90c17707d954d6ea663f99f7
 }
 
