@@ -3,6 +3,7 @@ package Pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -61,6 +62,10 @@ public class customerInformation extends BasePage {
 		return lastName.getAttribute("required").toString();
 	}
 	
+	public String isFirstNameRequired() {
+		return name.getAttribute("required").toString();
+	}
+	
 	public String isEmailRequired() {
 		return email.getAttribute("required").toString();
 	}
@@ -99,7 +104,8 @@ public class customerInformation extends BasePage {
 		lastName.clear();
 		lastName.sendKeys("Tech");
 //		setSimpleDropdown(documentType, "DNI");
-		document.sendKeys("32645432");
+//		document.clear();
+//		document.sendKeys("32645432");
 		setSimpleDropdown(gender, "Masculino");
 		birthDate.clear();
 		birthDate.sendKeys("06/07/2016");
@@ -122,6 +128,18 @@ public class customerInformation extends BasePage {
 		getElementFromList(update, "Actualizar").click();
 	}
 	
+	public void modifyDocument(String number) {
+		document.clear();
+		document.sendKeys(number);
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public Boolean isDocumentModifyable() {
+		Boolean a = true;
+		try { document.clear(); } catch (org.openqa.selenium.InvalidElementStateException e) { a = false; }
+		return a;
+	}
+	
 	public Boolean isBirthDateAValidDateFormat() {
 		birthDate.clear();
 		birthDate.sendKeys("11A06[]1985");
@@ -132,6 +150,41 @@ public class customerInformation extends BasePage {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	public Boolean isYearPickerPresentInBirthDatePicker() {
+		Boolean a = false;
+		birthDate.clear();
+		driver.findElement(By.className("datepicker--nav-title")).click();
+		driver.findElement(By.className("datepicker--nav-title")).click();
+		if(driver.findElements(By.cssSelector(".datepicker--cell.datepicker--cell-year")).size() != 0) {
+			a = true;
+		}
+		return a;
+	}
+	
+	public String getCurrentValue() {
+		return name.getAttribute("value").toString();
+	}
+	
+	public void modifyNameAndCancel() {
+		name.clear();
+		name.sendKeys("Test");
+		getElementFromList(buttons, "Cancelar").click();
+		driver.switchTo().alert().accept();
+	}
+	
+	public void modifyMobilePhone() {
+		mobilePhone.clear();
+		mobilePhone.sendKeys("1159241458");
+		getElementFromList(update, "Actualizar").click();
+
+	}
+	
+	public void modifyOtherPhone() {
+		otherPhone.clear();
+		otherPhone.sendKeys("45534451");
+		getElementFromList(update, "Actualizar").click();
 
 	}
 	
