@@ -97,13 +97,6 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	}
 
-
-	private void waitFor(WebDriver driver2, By by) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 	@Test
 	public void TS7068_ValidationFields (){
 
