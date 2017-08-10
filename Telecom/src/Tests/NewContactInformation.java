@@ -3,11 +3,15 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
 import Pages.ContactInformation;
+import Pages.ContactSearch;
+import Pages.Login;
 import Pages.setConexion;
 
 public class NewContactInformation extends TestBase {
@@ -97,10 +101,22 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty"));
 	}
 	
+	@Test
 	public void NoMailCheckSelect () {
 		driver.findElement(By.id("EmailCheck")).click();
 		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-not-empty"));
 	}
 	
+	
+	
+	/*@Test
+	public void birthdatemask() {
+
+		driver.findElement(By.id("Birthdate")).click(); 
+		driver.findElement(By.xpath("//*[@id=\'datepickers-container\']/div[1]/div[1]/div/div[2]/div[18]")).click();
+		String actualString = driver.findElement(By.xpath("//input[@id='Birthdate']")).getText(); ;;
+		//Assert.assertTrue(actualString.contains("yyyy-MM-dd"));
+
+	}*/
 }
 
