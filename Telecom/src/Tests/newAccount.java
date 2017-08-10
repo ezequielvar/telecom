@@ -12,7 +12,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 
 import Pages.AccountType;
 import Pages.Login;
@@ -24,18 +26,43 @@ public class newAccount extends TestBase {
 private WebDriver driver;
 String accountName = "Aaa Aaa";
 
+@BeforeTest
+public void mainSteup() {
+	this.driver = setConexion.setupPablo();	
+	login(driver);
+}
+
+@AfterTest
+public void tearDown2() {
+	driver.close();
+	
+}
+
 @AfterMethod
 public void tearDown() {
-	driver.close();
+	driver.switchTo().defaultContent();
+	driver.findElement(By.id("navigatortab__scc-pt-0")).click();
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("ext-gen67")).click();
+	List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame6.get(1));
+	driver.findElement(By.name("delete")).click(); 
+	 for (String handle : driver.getWindowHandles()) {	 
+	    driver.switchTo().window(handle);}
+	List<WebElement> buttons = driver.findElements(By.cssSelector(".x-btn-text"));
+	buttons.get(2).click();
+	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 }
 
 @BeforeMethod
-public void setup() throws Exception {
+public void setUp() throws Exception {
 	
 //	setConexion.setUp();
-	this.driver = setConexion.setupPablo();	
-	login(driver);
+//	this.driver = setConexion.setupPablo();	
+//	login(driver);
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	System.out.println(driver.getCurrentUrl().toString());
 	if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -79,17 +106,6 @@ public void createNewAccount() {
 	driver.switchTo().frame(frame5);
 	List<WebElement> accounts = driver.findElements(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
 	Assert.assertEquals(accountName, accounts.get(0).getText());
-	driver.switchTo().defaultContent();
-	driver.findElement(By.id("navigatortab__scc-pt-0")).click();
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.findElement(By.id("ext-gen67")).click();
-	List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame6.get(1));
-	driver.findElement(By.name("delete")).click(); 
-	 for (String handle : driver.getWindowHandles()) {	 
-	    driver.switchTo().window(handle);}
-	driver.findElement(By.id("ext-gen121")).click();
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
 
 }

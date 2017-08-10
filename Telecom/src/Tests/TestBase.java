@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import Pages.Login;
 
@@ -34,5 +36,10 @@ public class TestBase {
 		driver.get("https://test.salesforce.com/");
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
+	}
+	
+	public void waitFor(WebDriver driver, By element) {
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(element));
 	}
 }

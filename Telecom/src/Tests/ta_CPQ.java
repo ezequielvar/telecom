@@ -5,7 +5,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.Bill;
@@ -24,18 +26,29 @@ import org.testng.Assert;
 public class ta_CPQ extends TestBase {
 	
 	private WebDriver driver;
+	
+	@BeforeTest
+	public void mainSteup() {
+		this.driver = setConexion.setupPablo();	
+		login(driver);
+	}
+	
+	@AfterTest
+	public void tearDown2() {
+		driver.close();
+		
+	}
 
 	@AfterMethod
 	public void tearDown() {
-		driver.close();
+		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
 
 	@BeforeMethod
 	public void setup() throws Exception {
 		
 //		setConexion.setUp();
-		this.driver = setConexion.setupPablo();	
-		login(driver);
+		
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
@@ -50,7 +63,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkSimCardAssignment() {
+	public void TS6816_checkSimCardAssignment() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -64,7 +77,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkPaperCanIsPresent() {
+	public void TS6830_checkPaperCanIsPresent() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -76,7 +89,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkPlanIsDeleted() {
+	public void TS6829_checkPlanIsDeleted() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -90,7 +103,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkPaperCanLabel() {
+	public void TS6831_checkPaperCanLabel() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -103,7 +116,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkNoLineAvailableMessageAndCancelPlan() {
+	public void TS6846_checkNoLineAvailableMessageAndCancelPlan() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -120,7 +133,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkPlanInformation() {
+	public void TS6847_checkPlanInformation() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -135,7 +148,7 @@ public class ta_CPQ extends TestBase {
 
 	
 	@Test
-	public void wrongICCDFormat() {
+	public void TS6864_wrongICCDFormat() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -165,7 +178,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void rightICCDFormat() {
+	public void TS6866_rightICCDFormat() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -195,7 +208,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkAssignButtonIsAvailable() {
+	public void TS6860_checkAssignButtonIsAvailable() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -223,7 +236,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkOrderStatusIsPending() {
+	public void TS6865_checkOrderStatusIsPending() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -255,7 +268,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void deleteAllPlans() {
+	public void TS6832_deleteAllPlans() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -282,7 +295,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkCancelOrder() {
+	public void TS7007_checkCancelOrder() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -315,7 +328,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkCashAsValueForPaymentMethod() {
+	public void TS6890_checkCashAsValueForPaymentMethod() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -339,7 +352,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkPaymentMethodIsPresent() {
+	public void TS6889_checkPaymentMethodIsPresent() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -363,7 +376,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void checkDefaultValueForDeliveryMethod() {
+	public void TS6895_checkDefaultValueForDeliveryMethod() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
