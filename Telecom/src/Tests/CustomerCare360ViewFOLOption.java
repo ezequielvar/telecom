@@ -42,8 +42,7 @@ private WebDriver driver;
 	driver = setConexion.setupLeo();	
 
 }
-	private void waitFor(WebDriver driver2, By by) {
-		}
+
 	
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {

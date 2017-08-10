@@ -42,8 +42,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		driver = setConexion.setupLeo();	
 
 	}
-		private void waitFor(WebDriver driver2, By by) {
-			}
+
 		
 		
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
