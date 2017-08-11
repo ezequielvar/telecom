@@ -88,9 +88,9 @@ public class customerInformation extends BasePage {
 	
 	public void setFieldsWhichDontTriggerIdentityValidationProcess() {
 		name.clear();
-		name.sendKeys("Aaa");
+		name.sendKeys("Bbb");
 		lastName.clear();
-		lastName.sendKeys("Aaa");
+		lastName.sendKeys("Bbb");
 //		setSimpleDropdown(documentType, "CUIL");
 		setSimpleDropdown(gender, "Femenino");
 		birthDate.clear();
@@ -100,13 +100,23 @@ public class customerInformation extends BasePage {
 	
 	public void setDefaultValues() {
 		name.clear();
-		name.sendKeys("Adrian");
+		name.sendKeys("Aaa");
 		lastName.clear();
-		lastName.sendKeys("Tech");
+		lastName.sendKeys("Aaa");
 //		setSimpleDropdown(documentType, "DNI");
 //		document.clear();
-//		document.sendKeys("32645432");
+//		document.sendKeys("12345678");
+		email.clear();
+		email.sendKeys("aaa.aaa@gmail.com");
 		setSimpleDropdown(gender, "Masculino");
+		mobilePhone.clear();
+		mobilePhone.sendKeys("1159241474");
+		phone.clear();
+		phone.sendKeys("45534014");
+		otherPhone.clear();
+		otherPhone.sendKeys("45514754");
+		cuil.clear();
+		cuil.sendKeys("23123456789");
 		birthDate.clear();
 		birthDate.sendKeys("06/07/2016");
 		getElementFromList(update, "Actualizar").click();
@@ -178,15 +188,56 @@ public class customerInformation extends BasePage {
 		mobilePhone.clear();
 		mobilePhone.sendKeys("1159241458");
 		getElementFromList(update, "Actualizar").click();
-
 	}
 	
 	public void modifyOtherPhone() {
 		otherPhone.clear();
 		otherPhone.sendKeys("45534451");
 		getElementFromList(update, "Actualizar").click();
-
 	}
 	
+	public void modifyFirstName() {
+		otherPhone.clear();
+		otherPhone.sendKeys("Bbb");
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public void modifyBirthDate() {
+		birthDate.clear();
+		birthDate.sendKeys("11/06/1980");
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public void modifyEmail() {
+		email.clear();
+		email.sendKeys("lalalala@lala.com");
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public void modifyLastName() {
+		lastName.clear();
+		lastName.sendKeys("Bbb");
+		getElementFromList(update, "Actualizar").click();
+	}
+	
+	public Boolean areNumbersAllowedInFirstNameAndLastName() {
+		Boolean a = false;
+		name.clear();
+		name.sendKeys("1234");
+		lastName.clear();
+		lastName.sendKeys("1234");
+		List<WebElement> lista = driver.findElements(By.cssSelector(".description.ng-binding"));
+		if((lista.get(6).getText().equals("El Nombre No Debe Tener Números.")) &&
+		   (lista.get(13).getText().equals("El Apellido No Debe Tener Números."))){
+			a = true;
+			}	
+		return a;
+	}
+	
+	public void modifyDniBy(String doc) {
+		document.clear();
+		document.sendKeys(doc);
+		getElementFromList(update, "Actualizar").click();
+	}
 	
 }

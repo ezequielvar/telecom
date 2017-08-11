@@ -54,7 +54,7 @@ return str.get(0);
 }
 
 public void clickOnNext() {
-	assignNextAndPrevious.get(75).click();
+	getElementFromList(assignNextAndPrevious, "Siguiente").click();
 }
 
 }

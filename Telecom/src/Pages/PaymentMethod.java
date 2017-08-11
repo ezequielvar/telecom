@@ -26,7 +26,7 @@ public PaymentMethod(WebDriver driver) {
 }
 
 public void clickOnNext() {
-	nextAndPrevious.get(66).click();
+	getElementFromList(nextAndPrevious, "Siguiente").click();
 }
 
 public Boolean getPaymentMethod() {

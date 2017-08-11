@@ -41,7 +41,7 @@ public String getOrderStatus() {
 }
 
 public void cancelLineAssignment() {
-	buttons.get(0).click();
+	getElementFromList(buttons, "Cancelar").click();
 	Alert alert = driver.switchTo().alert();
     alert.accept();
 	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

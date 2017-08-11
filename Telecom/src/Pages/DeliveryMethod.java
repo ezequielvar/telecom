@@ -28,7 +28,7 @@ public class DeliveryMethod extends BasePage{
 }
 	
 public void clickOnNext() {
-	nextAndPrevious.get(33).click();
+	getElementFromList(nextAndPrevious, "Siguiente").click();
 }
 	
 public String getCurrentValueForDeliveryMethod() {
