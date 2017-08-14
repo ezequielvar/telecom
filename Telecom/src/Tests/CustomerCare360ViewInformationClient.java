@@ -1,5 +1,6 @@
 package Tests;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.sql.Driver;
 import java.text.DateFormat;
@@ -40,12 +41,6 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 
 //			setConexion.setUp();
 		driver = setConexion.setupLeo();	
-
-	}
-
-		
-		
-	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		
 		
 		driver.get("https://cs14.salesforce.com/console?tsid=02uc0000000D6Hd")	;
@@ -68,16 +63,49 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 		waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
 
-		List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Adrian Tech']"));
+		List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 		accounts.get(0).click();
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+
+	
+	@Test
+	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
+		
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		
+		try {
+	        driver.findElement(By.id("eext-comp-1038-xcollapsed")).click();;
+	    } catch (NoSuchElementException e) {	
+	    }
 		
 		
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame1.get(5));
 		
+		driver.findElements(By.className("ext-webkit.ext-chromehg"));
+		driver.findElement(By.className("social"));
+		
+	}
+	
+	
+		
+	@Test
+	public void TS7138_BusinessDataPanelPicklistCommercialDataAccount() {
+
+		try {
+	        driver.findElement(By.id("eext-comp-1038-xcollapsed")).click();;
+	    } catch (NoSuchElementException e) {	
+	    }			
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame1.get(5));
+		driver.findElement(By.className("account-select"));
+		
+	}
 		
 		
 		
