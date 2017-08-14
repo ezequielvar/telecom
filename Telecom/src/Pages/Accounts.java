@@ -25,7 +25,7 @@ public class Accounts extends BasePage {
 	}
 	
 	public void clickOnV() {
-		abcFilters.get(22).click();
+		getElementFromList(abcFilters, "V").click();
 	}
 	
 	public void clickOnFirstAccount() {
