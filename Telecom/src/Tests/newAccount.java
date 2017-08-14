@@ -57,30 +57,29 @@ public void tearDown() {
 
 @BeforeMethod
 public void setUp() throws Exception {
-	
-//	setConexion.setUp();
-//	this.driver = setConexion.setupPablo();	
-//	login(driver);
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	System.out.println(driver.getCurrentUrl().toString());
 	if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
+		for (WebElement e : mainTabs) {
+			try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
+			}
+		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel(driver, "Cuentas");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement frame1 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame1);
 	}
 }
 
 @Test	
 public void createNewAccount() {
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-	} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	goToLeftPanel(driver, "Cuentas");
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement frame1 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame1);
 	driver.findElement(By.name("new")).click();
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

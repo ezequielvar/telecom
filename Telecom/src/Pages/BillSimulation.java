@@ -24,6 +24,6 @@ public BillSimulation(WebDriver driver) {
 }
 
 public void clickOnNext() {
-nextAndPrevious.get(52).click();
+getElementFromList(nextAndPrevious, "Siguiente").click();
 }
 }
