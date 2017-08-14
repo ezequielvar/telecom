@@ -24,7 +24,7 @@ public class customerInformationUpdates extends TestBase {
 
 	@BeforeTest
 	public void mainSteup() {
-		this.driver = setConexion.setupPablo();	
+		this.driver = setConexion.setupEze();	
 		login(driver);
 	}
 
