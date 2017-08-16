@@ -38,6 +38,11 @@ public class TestBase {
 	    page0.ingresar();
 	}
 	
+	public void login1(WebDriver driver) {
+		driver.get("https://goo.gl/ETjDYJ");
+	    Login page0 = new Login(driver);
+	    page0.ingresar();
+	}
 
 
 	public void waitFor(WebDriver driver, By element) {
