@@ -15,13 +15,13 @@ final WebDriver driver;
 	@FindBy (how = How.ID, using = "DocumentType")
 	private WebElement documentType;
 	
-	@FindBy (how = How.NAME, using = "loopname")
+	@FindBy (how = How.ID, using = "DNIDocument")
 	private WebElement document;
 	
 	@FindBy (how = How.CSS, using = ".slds-radio--faux.ng-scope")
 	private List<WebElement> gender;
 	
-	@FindBy (how = How.CLASS_NAME, using = "ng-binding")
+	@FindBy (how = How.ID, using = "ContactInfo_nextBtn")
 	private WebElement next;
 	
 	@FindBy (how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
@@ -45,5 +45,21 @@ public void searchContact(String docType, String docValue, String genero) {
 	}
 	next.click();
 }
+
+public void DNI(String DNI)
+{
+	document.sendKeys(DNI);
+}
+public void sex(String genero){
+	switch(genero) {
+	case "femenino":
+		gender.get(0).click();
+		break;
+	case "masculino":
+		gender.get(1).click();
+		break;
+	}
+}
+
 
 }
