@@ -41,12 +41,16 @@ public class TestBase {
 	    page0.ingresar();
 	}
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 47f72fc7842398e2d98a1e9e996aeef984756f16
 	public void login1(WebDriver driver) {
 		driver.get("https://goo.gl/ETjDYJ");
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
 	}
+<<<<<<< HEAD
 
 	    	
 	    
@@ -55,5 +59,13 @@ public class TestBase {
 				  .until(ExpectedConditions.presenceOfElementLocated(element));
 
 
+=======
+
+
+	public void waitFor(WebDriver driver, By element) {
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
+
+
+>>>>>>> 47f72fc7842398e2d98a1e9e996aeef984756f16
 	}
 }

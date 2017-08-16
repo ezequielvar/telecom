@@ -46,4 +46,20 @@ public void searchContact(String docType, String docValue, String genero) {
 	next.click();
 }
 
+public void DNI(String DNI)
+{
+	document.sendKeys(DNI);
+}
+public void sex(String genero){
+	switch(genero) {
+	case "femenino":
+		gender.get(0).click();
+		break;
+	case "masculino":
+		gender.get(1).click();
+		break;
+	}
+}
+
+
 }
