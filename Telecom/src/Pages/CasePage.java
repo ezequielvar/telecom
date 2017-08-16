@@ -1,16 +1,21 @@
-package Pages;
+		package Pages;
 
+
+import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.Test;
 
 
 public class CasePage extends BasePage {
 
-	static WebDriver driver;
+	final WebDriver driver;
 	
 	//Case information
 	
@@ -119,6 +124,10 @@ public class CasePage extends BasePage {
 		private WebElement deleteregist;
 		
 		
+		public CasePage(WebDriver driver){
+			this.driver = driver;
+	        PageFactory.initElements(driver, this);
+	}
 		//Methods
 		public void newcase(String namecase, String cid, String caseteam, String casedate,
 				String comments, String subject, String description,
@@ -165,9 +174,34 @@ public class CasePage extends BasePage {
 
 			
 		}
-
-
-
+	public void CreateCase() {
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(0));
+		driver.findElement(By.name("newCase")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(1));
+		driver.findElement(By.id("cas3")).sendKeys("Fernando Caree");
+		driver.findElement(By.id("cas4_lkwgt")).click();
+		String parentWindow = driver.getWindowHandle();
+		Set<String> handles =  driver.getWindowHandles();
+			for(String windowHandle  : handles)
+		       {
+		       if(!windowHandle.equals(parentWindow))
+		          {
+		    	   driver.switchTo().window(windowHandle);
+		    	   driver.manage().window().maximize();
+						try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					driver.findElement(By.xpath("//*[@id=\'lksrch\']")).sendKeys("Fernando Caree");
+					driver.findElement(By.name("go")).click();
+					}
+		         driver.switchTo().window(parentWindow); 
+		          }
+			       
+				
+		
+		}
 
 		
 }
