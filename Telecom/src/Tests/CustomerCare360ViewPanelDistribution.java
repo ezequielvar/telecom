@@ -60,11 +60,7 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 	
 	
 	@Test
-	public void TS7059_VerifyDisplayPanelPromotions() {
-		
-
-		
-		
+	public void TS7059_VerifyDisplayPanelPromotions() {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		try {
@@ -75,7 +71,6 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 		driver.switchTo().frame(frame1.get(4));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("promotions-section"));
-		
 	}
 	
 	@Test
@@ -91,10 +86,7 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 
 		driver.findElement(By.cssSelector(".console-card.active"));
-
 	}
-	
-	
 	
 	@Test
 	public void TS7200_VerifyDisplayLogo() {	

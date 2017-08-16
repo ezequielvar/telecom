@@ -205,7 +205,7 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		public void TS7112_ValidationDateFormat (){
 		
 		try {
-	    driver.findElement(By.id("ext-gen133")).click();;
+	    driver.findElement(By.id("ext-gen133")).click();
 	} catch (NoSuchElementException e) {	
 	}
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
