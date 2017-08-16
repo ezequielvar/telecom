@@ -73,7 +73,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		
 	}
 	
-	/*@Test
+		@Test
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -138,39 +138,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		dateDropDown.selectByVisibleText("Incidente Masivo");
 
 }
-	*/
 	
-	
-	@Test
-	public void CreateCase() {
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(0));
-		driver.findElement(By.name("newCase")).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("cas3")).sendKeys("Fernando Caree");
-		driver.findElement(By.id("cas4_lkwgt")).click();
-
-		String parentWindow = driver.getWindowHandle();
-		Set<String> handles =  driver.getWindowHandles();
-		   for(String windowHandle  : handles)
-		       {
-		       if(!windowHandle.equals(parentWindow))
-		          {
-		          driver.switchTo().window(windowHandle);
-		          driver.manage().window().maximize();
-					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-					driver.findElement(By.xpath("//*[@id=\'lksrch\']")).sendKeys("Fernando Caree");
-					driver.findElement(By.name("go")).click();
-					}
-		         driver.switchTo().window(parentWindow); 
-		          }
-		       
-			
-	
-	}
 	
 		
 		
