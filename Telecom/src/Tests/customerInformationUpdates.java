@@ -112,7 +112,7 @@ public class customerInformationUpdates extends TestBase {
 			List<WebElement> profileEdit = driver.findElements(By.className("profile-edit"));
 			profileEdit.get(0).click();
 			driver.switchTo().defaultContent();
-			
+	
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 			driver.switchTo().frame(frame6.get(4));
@@ -462,5 +462,17 @@ public class customerInformationUpdates extends TestBase {
 		Assert.assertTrue(page.areLettersAllowedInCuil());
 	}
 	
-	
+
+	@Test
+	public void TS7097_verifyNonOwnershipChange() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
+		driver.switchTo().frame(frame6.get(4));
+		waitFor(driver, (By.id("FirstName")));
+		customerInformation page = new customerInformation(driver);
+		page.modifyCuil();
+		Assert.assertTrue(page.notchansgetopname());
+		
+	}
 }
