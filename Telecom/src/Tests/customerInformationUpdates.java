@@ -28,7 +28,7 @@ public class customerInformationUpdates extends TestBase {
 
 	@BeforeTest
 	public void mainSteup() {
-		this.driver = setConexion.setupEze();	
+		this.driver = setConexion.setupLeo();	
 		login(driver);
 	}
 
@@ -112,6 +112,7 @@ public class customerInformationUpdates extends TestBase {
 			List<WebElement> profileEdit = driver.findElements(By.className("profile-edit"));
 			profileEdit.get(0).click();
 			driver.switchTo().defaultContent();
+			
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 			driver.switchTo().frame(frame6.get(4));
@@ -448,6 +449,17 @@ public class customerInformationUpdates extends TestBase {
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
+	}
+	
+	@Test
+	public void TS7207_verifyLettersAreNotAllowedInCuil() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
+		driver.switchTo().frame(frame6.get(4));
+		waitFor(driver, (By.id("FirstName")));
+		customerInformation page = new customerInformation(driver);
+		Assert.assertTrue(page.areLettersAllowedInCuil());
 	}
 	
 	
