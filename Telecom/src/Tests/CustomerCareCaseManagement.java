@@ -85,19 +85,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("00Nc0000001pWcr"));
-		Select dateDropDown=new Select(driver.findElement(By.id("00Nc0000001pWcr")));
-		dateDropDown.selectByVisibleText("App");
-		dateDropDown.selectByVisibleText("Chat");
-		dateDropDown.selectByVisibleText("Email");
-		dateDropDown.selectByVisibleText("IVR");
-		dateDropDown.selectByVisibleText("Personalizado");
-		dateDropDown.selectByVisibleText("Redes Sociales");
-		dateDropDown.selectByVisibleText("Sat Push");
-		dateDropDown.selectByVisibleText("SMS");
-		dateDropDown.selectByVisibleText("Telefónico");
-		dateDropDown.selectByVisibleText("USSD");
-		dateDropDown.selectByVisibleText("Web");
+		CasePage page = new CasePage(driver);
+		page.ValidChannelClosing();
 	}
 	
 	@Test
@@ -112,11 +101,9 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("00Nc0000001pWcx"));
-		Select dateDropDown=new Select(driver.findElement(By.id("00Nc0000001pWcx")));
-		dateDropDown.selectByVisibleText("Actualización de Datos del Cliente");
-		dateDropDown.selectByVisibleText("Reseteo de Clave");
-		dateDropDown.selectByVisibleText("Consulta técnica");
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesSubArea();
+
 	}
 	
 	@Test
@@ -131,11 +118,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("00Nc0000001pWcx"));
-		Select dateDropDown=new Select(driver.findElement(By.id("cas5")));
-		dateDropDown.selectByVisibleText("Sample Cases");
-		dateDropDown.selectByVisibleText("Trial");
-		dateDropDown.selectByVisibleText("Incidente Masivo");
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesType();
 
 }
 	
