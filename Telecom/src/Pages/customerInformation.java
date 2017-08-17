@@ -114,9 +114,9 @@ public class customerInformation extends BasePage {
 		mobilePhone.clear();
 		mobilePhone.sendKeys("1159241474");
 		phone.clear();
-		phone.sendKeys("45534014");
+		phone.sendKeys("4553401412");
 		otherPhone.clear();
-		otherPhone.sendKeys("45514754");
+		otherPhone.sendKeys("4551475412");
 		cuil.clear();
 		cuil.sendKeys("23123456789");
 		birthDate.clear();
@@ -262,8 +262,8 @@ public class customerInformation extends BasePage {
 		cuil.sendKeys("23267493724");
 		getElementFromList(update, "Actualizar").click();
 	}
-	public Boolean notchansgetopname() {
-		Boolean a = false;
+	public boolean notchansgetopname() {
+		boolean a = false;
 		driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("//*[text() ='Detalles']")).click();
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -273,5 +273,5 @@ public class customerInformation extends BasePage {
 			a = true;
 		}
 		return a;
-	}
+	}	
 }
