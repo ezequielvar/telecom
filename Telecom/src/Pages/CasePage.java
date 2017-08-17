@@ -1,6 +1,9 @@
 		package Pages;
 
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
@@ -198,10 +203,58 @@ public class CasePage extends BasePage {
 					}
 		         driver.switchTo().window(parentWindow); 
 		          }
-			       
-				
-		
+
 		}
 
+		public void ValidChannelClosing() {
 		
+			//Lista de Canales cerrados
+			ArrayList<String> Channel = new ArrayList<String>();
+			Channel.add("App");
+			Channel.add("Chat");
+			Channel.add("Email");
+			Channel.add("IVR");
+			Channel.add("Personalizado");
+			Channel.add("Redes Sociales");
+			Channel.add("Sat Push");
+			Channel.add("SMS");
+			Channel.add("Telefónico");
+			Channel.add("USSD");
+			Channel.add("Web");
+			
+			Select dateDropDown=new Select(driver.findElement(By.id("00Nc0000001pWcr")));
+			for(int i=0; i<Channel.size(); i++){
+				String ChannelClose = Channel.get(i);
+				dateDropDown.selectByVisibleText(ChannelClose);
+			}
+		}
+	
+	public void FieldsValuesSubArea(){
+	//Lista SubArea
+		ArrayList<String> SubArea = new ArrayList<String>();
+		SubArea.add("Actualización de Datos del Cliente");
+		SubArea.add("Reseteo de Clave");
+		SubArea.add("Consulta técnica");
+		Select dateDropDown=new Select(driver.findElement(By.id("00Nc0000001pWcx")));
+		for(int i=0; i<SubArea.size(); i++){
+			String ChannelClose = SubArea.get(i);
+			dateDropDown.selectByVisibleText(ChannelClose);
+		}
+	
+	}
+	
+	public void FieldsValuesType(){
+		//Lista SubArea
+			ArrayList<String> Type = new ArrayList<String>();
+			Type.add("Sample Cases");
+			Type.add("Trial");
+			Type.add("Trial");
+			Select dateDropDown=new Select(driver.findElement(By.id("cas5")));
+			for(int i=0; i<Type.size(); i++){
+				String ChannelClose = Type.get(i);
+				dateDropDown.selectByVisibleText(ChannelClose);
+			}
+		
+		}
+	
 }
