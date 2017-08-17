@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 public class customerInformation extends BasePage {
 	
@@ -254,6 +255,23 @@ public class customerInformation extends BasePage {
 		if((lista.get(9).getText().equals("Required"))){
 			a = true;
 			}	
+		return a;
+	}
+	public void modifyCuil() {
+		cuil.clear();
+		cuil.sendKeys("23267493724");
+		getElementFromList(update, "Actualizar").click();
+	}
+	public Boolean notchansgetopname() {
+		Boolean a = false;
+		driver.switchTo().defaultContent();
+		driver.findElement(By.xpath("//*[text() ='Detalles']")).click();
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(2));
+		List <WebElement> name = driver.findElements(By.className("topName"));
+		if((name.get(0).getText().equals("Aaa Aaa"))){
+			a = true;
+		}
 		return a;
 	}
 }
