@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -240,4 +241,19 @@ public class customerInformation extends BasePage {
 		getElementFromList(update, "Actualizar").click();
 	}
 	
+	public Boolean areLettersAllowedInCuil() {
+		
+		Boolean a = false;
+		cuil.clear();
+		try {
+		cuil.sendKeys("aaa");
+	    } catch (NoSuchElementException e) {	
+	    }	
+		List<WebElement> lista = driver.findElements(By.cssSelector(".description.ng-binding"));
+
+		if((lista.get(9).getText().equals("Required"))){
+			a = true;
+			}	
+		return a;
+	}
 }
