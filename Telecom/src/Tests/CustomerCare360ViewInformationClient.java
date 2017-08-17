@@ -17,7 +17,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.Login;
@@ -29,23 +31,23 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 	private WebDriver driver;
 	 	
-		//@AfterMethod
-		//public void tearDown() {
-			//driver.close();
-		//}
-		
+		@AfterMethod
+		public void tearDown() {
+		driver.close();
+		}
+		@BeforeTest
+		public void mainSeteup() {
+			this.driver = setConexion.setupLeo();	
+			login(driver);
+		}
 		@BeforeMethod
-		public void setup() throws Exception {
-			
-			
-
-//			setConexion.setUp();
-		driver = setConexion.setupLeo();	
-		
-		
-		driver.get("https://cs14.salesforce.com/console?tsid=02uc0000000D6Hd")	;
-		Login page1 = new Login(driver);
-		page1.ingresar();
+		public void setUpTest() {
+			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+				driver.findElement(By.id("tsidLabel")).click();
+				try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+			}
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
