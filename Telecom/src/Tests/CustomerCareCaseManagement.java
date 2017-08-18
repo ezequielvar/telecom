@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.CasePage;
@@ -24,37 +25,36 @@ public class CustomerCareCaseManagement extends TestBase {
 
 	private WebDriver driver;
 
-
-	/*@AfterMethod
+	@BeforeTest
+	public void mainSteup() {
+		this.driver = setConexion.setupLeo();	
+		login(driver);
+	}
+	@AfterMethod
 	public void tearDown() {
-		//driver.close();
+		
 		driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {
-		waitFor(driver, (By.className("x-toolbar-cell")));
 		
-		driver.findElement(By.id("ext-gen231")).click();
-		} catch (NoSuchElementException e) {	
+		waitFor(driver, (By.className("x-toolbar-cell")));
+		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
+		 driver.close();
 		}
-		}
-	*/
+	
 	
 	
 	@BeforeMethod
 	public void setup() throws Exception {
-		
-		
-
-//		setConexion.setUp();
-		
-		driver = setConexion.setupLeo();	
-		driver.get("https://cs14.salesforce.com/console")	;
-		Login page1 = new Login(driver);
-		page1.ingresar();
 			
-
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+			driver.findElement(By.id("tsidLabel")).click();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+		}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
 		for (WebElement e : mainTabs) {
@@ -73,7 +73,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		
 	}
 	
-		@Test
+	/*	@Test
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -85,19 +85,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("00Nc0000001pWcr"));
-		Select dateDropDown=new Select(driver.findElement(By.id("00Nc0000001pWcr")));
-		dateDropDown.selectByVisibleText("App");
-		dateDropDown.selectByVisibleText("Chat");
-		dateDropDown.selectByVisibleText("Email");
-		dateDropDown.selectByVisibleText("IVR");
-		dateDropDown.selectByVisibleText("Personalizado");
-		dateDropDown.selectByVisibleText("Redes Sociales");
-		dateDropDown.selectByVisibleText("Sat Push");
-		dateDropDown.selectByVisibleText("SMS");
-		dateDropDown.selectByVisibleText("Telefónico");
-		dateDropDown.selectByVisibleText("USSD");
-		dateDropDown.selectByVisibleText("Web");
+		CasePage page = new CasePage(driver);
+		page.ValidChannelClosing();
 	}
 	
 	@Test
@@ -112,12 +101,10 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("00Nc0000001pWcx"));
-		Select dateDropDown=new Select(driver.findElement(By.id("00Nc0000001pWcx")));
-		dateDropDown.selectByVisibleText("Actualización de Datos del Cliente");
-		dateDropDown.selectByVisibleText("Reseteo de Clave");
-		dateDropDown.selectByVisibleText("Consulta técnica");
-	}
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesSubArea();
+
+	}*/
 	
 	@Test
 	public void TS7088_CaseRelatedFieldsValuesType(){
@@ -131,11 +118,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("00Nc0000001pWcx"));
-		Select dateDropDown=new Select(driver.findElement(By.id("cas5")));
-		dateDropDown.selectByVisibleText("Sample Cases");
-		dateDropDown.selectByVisibleText("Trial");
-		dateDropDown.selectByVisibleText("Incidente Masivo");
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesType();
 
 }
 	

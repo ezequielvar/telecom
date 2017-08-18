@@ -26,11 +26,7 @@ public class customerInformationUpdates extends TestBase {
 	private WebDriver driver;
 	String accountName = "Aaa Aaa";
 
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
-		login(driver);
-	}
+
 
 	@AfterTest
 	public void tearDown2() {
@@ -53,7 +49,11 @@ public class customerInformationUpdates extends TestBase {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
-
+	@BeforeTest
+	public void mainSeteup() {
+		this.driver = setConexion.setupLeo();	
+		login(driver);
+	}
 	@BeforeMethod
 	public void setUpTest() {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
