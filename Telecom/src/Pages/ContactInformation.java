@@ -1,6 +1,5 @@
 package Pages;
 
-import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,8 +26,14 @@ final WebDriver driver;
 	@FindBy (how = How.CLASS_NAME, using = "slds-checkbox--faux")
 	private WebElement doesNotPossesEmail;
 	
-	@FindBy (how = How.CLASS_NAME, using = "ng-binding")
-	private List<WebElement> buttons;
+	@FindBy (how = How.ID, using = "UpdateContact")
+	private WebElement UpdateContact;
+	
+	@FindBy (how = How.ID, using = "Contact_prevBtn")
+	private WebElement PrevBtn;
+	
+	@FindBy (how = How.ID, using = "Contact_nextBtn")
+	private WebElement NextBtn;
 	
 	@FindBy (how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
 	private WebElement cancel;
@@ -43,8 +48,6 @@ public void setContactInformation(String nombre, String apellido, String fechaDe
 	lastName.sendKeys(apellido);
 	birthDate.sendKeys(fechaDeNacimiento);
 	email.sendKeys(mail);
-	buttons.get(0).click();
-	buttons.get(2).click();
 }
 
 }
