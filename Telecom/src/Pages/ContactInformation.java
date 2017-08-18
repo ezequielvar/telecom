@@ -20,7 +20,7 @@ final WebDriver driver;
 	@FindBy (how = How.ID, using = "Birthdate")
 	private WebElement birthDate;
 	
-	@FindBy (how = How.CSS, using = ".slds-input.form-control.ng-pristine.ng-empty.ng-invalid.ng-invalid-required.ng-valid-email.ng-touched")
+	@FindBy (how = How.CSS, using = ".slds-checkbox--faux")
 	private WebElement email;
 	
 	@FindBy (how = How.CLASS_NAME, using = "slds-checkbox--faux")
@@ -43,11 +43,10 @@ public ContactInformation(WebDriver driver){
         PageFactory.initElements(driver, this);
 }
 
-public void setContactInformation(String nombre, String apellido, String fechaDeNacimiento, String mail) {
+public void setContactInformation(String nombre, String apellido, String fechaDeNacimiento) {
 	name.sendKeys(nombre);
 	lastName.sendKeys(apellido);
 	birthDate.sendKeys(fechaDeNacimiento);
-	email.sendKeys(mail);
 }
 
 }
