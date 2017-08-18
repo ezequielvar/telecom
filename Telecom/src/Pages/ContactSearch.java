@@ -43,7 +43,7 @@ public void searchContact(String docType, String docValue, String genero) {
 		gender.get(1).click();
 		break;
 	}
-	next.click();
+	//next.click();
 }
 
 public void DNI(String DNI)
@@ -59,6 +59,7 @@ public void sex(String genero){
 		gender.get(1).click();
 		break;
 	}
+	next.click();
 }
 
 
