@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -21,7 +22,7 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 	private WebDriver driver;
 
 
-@AfterMethod
+@AfterTest
 public void tearDown() {
 		driver.close();
 }
@@ -31,8 +32,13 @@ public void mainSeteup() {
 	this.driver = setConexion.setupLeo();	
 	login(driver);
 }
+
+
+
+
 @BeforeMethod
 public void setUpTest() {
+	driver.switchTo().defaultContent();
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
@@ -76,13 +82,11 @@ public void setUpTest() {
 		driver.switchTo().frame(frame1.get(4));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("promotions-section"));
+		driver.switchTo().defaultContent();
 	}
 	
 	@Test
 	public void TS7058_VerifyDisplayServiceActive() {
-		
-		
-
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	
@@ -91,12 +95,14 @@ public void setUpTest() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 
 		driver.findElement(By.cssSelector(".console-card.active"));
+		driver.switchTo().defaultContent();
 	}
 	
 	@Test
 	public void TS7200_VerifyDisplayLogo() {	
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		driver.findElement(By.className("sd_custom_logo"));
+	
 	}
 	
 	@Test
@@ -108,6 +114,7 @@ public void setUpTest() {
 		driver.findElement(By.xpath("//*[text() ='Servicios']")).click();
 		driver.switchTo().frame(frame1.get(2));
 		driver.findElement(By.className("ta-alertMessage-content"));	
+		driver.switchTo().defaultContent();
 	}
 	
 	@Test
@@ -120,7 +127,10 @@ public void setUpTest() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
-		driver.findElement(By.className("account-select")).click();	
+		
+		driver.findElement(By.className("account-select-table")).click();	
+	
+		driver.switchTo().defaultContent();
 	}
 	@Test
 	public void TS7066_VerifyDisplayPanelAccountsClient() {	
@@ -132,7 +142,8 @@ public void setUpTest() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
-		driver.findElement(By.className("account-select-container")).click();	
+		driver.findElement(By.className("account-select-container")).click();
+		driver.switchTo().defaultContent();
 	}
 	@Test
 	public void TS7054_VerifyDisplayPanelBusinessData() {	
@@ -145,6 +156,7 @@ public void setUpTest() {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
 		driver.findElement(By.className("profile-box"));	
+		driver.switchTo().defaultContent();
 	}
 }
 

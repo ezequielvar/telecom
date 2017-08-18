@@ -19,6 +19,7 @@ import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -35,14 +36,14 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 		this.driver = setConexion.setupLeo();	
 		login(driver);
 	}
-	@AfterMethod
+	@AfterTest
 	public void tearDown() {
 	driver.close();
 	}
 	
 	@BeforeMethod
 	public void setup() throws Exception {
-		
+		driver.switchTo().defaultContent();	
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
@@ -68,16 +69,18 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 	driver.switchTo().defaultContent();
+	if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
+		driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+		}
 }
 	
 
 	@Test
 	public void TS7069_ValidationButtons () {
-		try {
-	        driver.findElement(By.id("ext-gen133")).click();
-	    } catch (NoSuchElementException e) {	
-	    }		
+
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));		
@@ -85,14 +88,12 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 		List<WebElement> botones = driver.findElements(By.className("profile-links"));
 	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
 	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
+	driver.switchTo().defaultContent();
 	}
 
 	@Test
 	public void TS7068_ValidationFields (){
-		try {
-        driver.findElement(By.id("ext-gen133")).click();;
-    } catch (NoSuchElementException e) {	
-    }
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
@@ -105,20 +106,19 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 		System.out.println(e.getText());
 		a++;
 	}*/
+	
 	Assert.assertEquals("Correo Electónico:", profileinfo.get(0).getText());
 	Assert.assertEquals("Teléfono:", profileinfo.get(1).getText());
 	Assert.assertEquals("Club Personal:", profileinfo.get(2).getText());
 	Assert.assertEquals("Categoría:", profileinfo.get(3).getText());
+	driver.switchTo().defaultContent();
 }
 
 
 @Test
 public void TS7070_ValidationClubPersonalBasico (){
 	String basico = "Categoría: Basico" ;
-	try {
-    driver.findElement(By.id("ext-gen133")).click();;
-} catch (NoSuchElementException e) {	
-}
+
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
@@ -126,33 +126,30 @@ driver.findElements(By.className("ext-webkit.ext-chromehg"));
 List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 driver.findElement(By.className("client-data-detail"));
 Assert.assertTrue(profileinfo.get(0).getText().contains(basico)); 
+driver.switchTo().defaultContent();
 }
 
 @Test
 public void TS7072_ValidationNPS(){
-	try {
-    driver.findElement(By.id("ext-gen133")).click();;
-} catch (NoSuchElementException e) {	
-}
+
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
 driver.findElements(By.className("ext-webkit.ext-chromehg"));
 driver.findElement(By.className("detail-card"));
-List<WebElement> profileinfo = driver.findElements(By.className("detail-card"));
+List<WebElement> profileinfo = driver.findElements(By.className("account-detail-content"));
 for(int i=1; i<20; i++){
 	String b = Integer.toString(i);
 	Assert.assertFalse(profileinfo.get(0).getText().contains("-"+b));
+	
 }
+driver.switchTo().defaultContent();
 }
 
-@Test
+//@Test
 public void TS7070_ValidationClubPersonalPremium (){
 	String premium = "Categoría: Premium" ;
-	try {
-    driver.findElement(By.id("ext-gen133")).click();;
-} catch (NoSuchElementException e) {	
-}
+
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
@@ -160,27 +157,22 @@ driver.findElements(By.className("ext-webkit.ext-chromehg"));
 List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 driver.findElement(By.className("client-data-detail"));
 Assert.assertTrue(profileinfo.get(0).getText().contains(premium)); 
+driver.switchTo().defaultContent();
 }
 
 	@Test
 	public void TS7126_ValidationPerfilPanel (){	
-		try {
-	    driver.findElement(By.id("ext-gen133")).click();;
-	} catch (NoSuchElementException e) {	
-	}
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
     driver.findElement(By.className("ng-hide"));
+    driver.switchTo().defaultContent();
 	}
 	
 	@Test
 	public void TS7106_ValidationNumberEstatus (){
-		try {
-	    driver.findElement(By.id("ext-gen133")).click();;
-	} catch (NoSuchElementException e) {	
-	}
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	driver.switchTo().frame(frame1.get(5));
@@ -201,18 +193,14 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	}
 	for(int i=0; i<profileinfo.size(); i+=2){
 		String b = (profileinfo.get(i).getText());
-		String a = Integer.toString(i);
-    Assert.assertTrue(b.contains(a));
+    Assert.assertTrue(b.contains("0"));
 	}
+	driver.switchTo().defaultContent();
 	}
 	
-		@Test
+	@Test
 		public void TS7112_ValidationDateFormat (){
-		
-		try {
-	    driver.findElement(By.id("ext-gen133")).click();
-	} catch (NoSuchElementException e) {	
-	}
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
@@ -225,44 +213,41 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		Boolean isDate1 = date1.matches(datePattern);
 	Assert.assertTrue(isDate1);	
 	}
+	driver.switchTo().defaultContent();
 	}
 	
 	@Test
 	public void TS7108_ValidationCustomerTransactionsViewFilter (){
-		try {
-	    driver.findElement(By.id("ext-gen133")).click();;
-	} catch (NoSuchElementException e) {	
-	}
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	driver.findElement(By.id("text-input-01"));	
+	driver.switchTo().defaultContent();
 }
 	
 	@Test
 	public void TS7110_ValidationCustomerTransactionsScroll(){
-	
-		try {
-	    driver.findElement(By.id("ext-gen133")).click();;
-	} catch (NoSuchElementException e) {	
-	}
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
 	((JavascriptExecutor)driver).executeScript("scroll(0,400)");
+	JavascriptExecutor javascript = (JavascriptExecutor) driver;
+	Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
+	assertTrue(VertscrollStatus);
+	driver.switchTo().defaultContent();
 	}
 	
 	@Test
 	public void TS7113_ValidationCustomerTransactionsIconType(){
 
-		try {
-	    driver.findElement(By.id("ext-comp-1013-xcollapsed")).click();;
-	} catch (NoSuchElementException e) {	
-	}
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement frame1 = driver.findElement(By.id("ext-comp-1022"));
-	driver.switchTo().frame(frame1);
+	List <WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(5));
 	driver.findElement(By.className("slds-icon_container"));
+	driver.switchTo().defaultContent();
 	}	
 }

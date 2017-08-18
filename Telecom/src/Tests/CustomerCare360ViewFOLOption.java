@@ -17,6 +17,7 @@ import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -30,7 +31,7 @@ public class CustomerCare360ViewFOLOption extends TestBase {
 	
 private WebDriver driver;
  	
-	@AfterMethod
+	@AfterTest
 	public void tearDown() {
 		driver.close();
 	}
@@ -42,6 +43,7 @@ public void mainSeteup() {
 }
 @BeforeMethod
 public void setUpTest() {
+	driver.switchTo().defaultContent();
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
@@ -68,9 +70,7 @@ public void setUpTest() {
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
 	driver.switchTo().defaultContent();
-}
-
-	
+}	
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -78,20 +78,21 @@ public void setUpTest() {
 		Assert.assertEquals("Billing Information", profileinfo.get(3).getText());
 	}
 	
-	@Test
-	public void TS7122_ValidationFieldAddFOL () {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.className("slds-truncate"));
-}
+
 	
 	@Test
 	public void TS7124_ValidationFormatTable () {
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.cssSelector(".ext-webkit.ext-chrome"));
 	}
-
 	
-	
+	@Test
+	public void TS7122_ValidationFieldAddFOL () {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(5));
+		driver.findElement(By.className("slds-truncate"));
+}
 	
 	
 	

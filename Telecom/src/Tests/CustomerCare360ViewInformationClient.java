@@ -18,6 +18,7 @@ import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -31,7 +32,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 	private WebDriver driver;
 	 	
-		@AfterMethod
+		@AfterTest
 		public void tearDown() {
 		driver.close();
 		}
@@ -41,7 +42,9 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			login(driver);
 		}
 		@BeforeMethod
+		
 		public void setUpTest() {
+			driver.switchTo().defaultContent();
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 				driver.findElement(By.id("tsidLabel")).click();
