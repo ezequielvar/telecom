@@ -67,6 +67,9 @@ public class CasePage extends BasePage {
 		@FindBy (how = How.ID, using = "00Nc0000001pWcs")
 		private WebElement caseduedate;
 		
+		@FindBy (how = How.ID, using = "CreatedDate_ileinner")
+		private WebElement caseDate;
+		
 		@FindBy (how = How.ID, using = "cas8")
 		private WebElement casepriority;
 		
@@ -179,6 +182,7 @@ public class CasePage extends BasePage {
 
 			
 		}
+		
 	public void CreateCase() {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(0));
@@ -257,4 +261,11 @@ public class CasePage extends BasePage {
 		
 		}
 	
+	public String getCaseDate(){
+		return caseDate.getText();
+	}
+	
+	public String getCaseDueDate(){
+		return caseduedate.getText();
+	}	
 }
