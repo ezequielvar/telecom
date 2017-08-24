@@ -28,7 +28,7 @@ public class CustomerCareCaseManagement extends TestBase {
 
 	@BeforeTest
 	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
+		this.driver = setConexion.setupPablo();	
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
@@ -44,7 +44,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		goToLeftPanel(driver, "Casos");
+		goToLeftPanel2(driver, "Casos");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
 		waitFor(driver, (By.name("fcf")));	
@@ -74,16 +74,21 @@ driver.close();
 	
 	
 	@BeforeMethod
-	public void setup() throws Exception {
-			
-
-		
+	public void setup() throws Exception {	
 	}
 	
-		@Test
+	@Test
+	public void PFTA_76_CreatedAndDueTimeInHoursFormatCheck(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(1));
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesType();
+	}	
+	
+	@Test
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
-
-
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
@@ -114,15 +119,9 @@ driver.close();
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
-
-}
+	}
+	
 	
 	
 		
-		
-	
-	
-	
-	
-	
 }
