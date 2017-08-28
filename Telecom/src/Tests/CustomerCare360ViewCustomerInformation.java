@@ -116,16 +116,17 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 @Test
 public void TS7070_ValidationClubPersonalBasico (){
-	String basico = "Categoría: Basico" ;
+	String basico = "Basico" ;
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-driver.findElements(By.className("ext-webkit.ext-chromehg"));
-List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
-driver.findElement(By.className("client-data-detail"));
-Assert.assertTrue(profileinfo.get(0).getText().contains(basico)); 
-driver.switchTo().defaultContent();
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(6));
+	driver.findElements(By.className("ext-webkit.ext-chromehg"));
+	List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
+	driver.findElement(By.className("client-data-detail"));
+	//access profileInfo, finds fourth element with client data (Categoria)
+	Assert.assertTrue(profileinfo.get(0).findElements(By.className("client-data-detail")).get(3).getText().contains(basico)); 
+	driver.switchTo().defaultContent();
 }
 
 @Test
