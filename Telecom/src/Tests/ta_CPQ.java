@@ -4,8 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -27,28 +29,22 @@ public class ta_CPQ extends TestBase {
 	
 	private WebDriver driver;
 	
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupPablo();	
-		login(driver);
+	@AfterClass
+	public void tearDown() {
+		driver.close();
 	}
 	
-	@AfterTest
-	public void tearDown2() {
-		driver.close();
-		
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
+	@BeforeClass
+	public void Init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
 	@BeforeMethod
-	public void setup() throws Exception {
-		
-//		setConexion.setUp();
-		
+	public void setup() throws Exception {		
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
