@@ -161,13 +161,12 @@ driver.switchTo().defaultContent();
 
 	@Test
 	public void TS7126_ValidationPerfilPanel (){	
-
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-	driver.findElements(By.className("ext-webkit.ext-chromehg"));
-    driver.findElement(By.className("ng-hide"));
-    driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(6));
+		driver.findElements(By.className("ext-webkit.ext-chromehg"));
+	    driver.findElement(By.className("ng-hide"));
+	    driver.switchTo().defaultContent();
 	}
 	
 	@Test
