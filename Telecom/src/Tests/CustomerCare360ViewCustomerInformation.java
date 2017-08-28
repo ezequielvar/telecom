@@ -124,7 +124,7 @@ try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 	driver.findElement(By.className("client-data-detail"));
-	//access profileInfo, finds fourth element with client data (Categoria)
+	//access profileInfo, finds fourth element with client data (Categoriax	)
 	Assert.assertTrue(profileinfo.get(0).findElements(By.className("client-data-detail")).get(3).getText().contains(basico)); 
 	driver.switchTo().defaultContent();
 }
@@ -133,15 +133,14 @@ try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread
 public void TS7072_ValidationNPS(){
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-driver.findElements(By.className("ext-webkit.ext-chromehg"));
-driver.findElement(By.className("detail-card"));
-List<WebElement> profileinfo = driver.findElements(By.className("account-detail-content"));
-for(int i=1; i<20; i++){
-	String b = Integer.toString(i);
-	Assert.assertFalse(profileinfo.get(0).getText().contains("-"+b));
-	
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(6));
+	driver.findElements(By.className("ext-webkit.ext-chromehg"));
+	driver.findElement(By.className("detail-card"));
+	List<WebElement> profileinfo = driver.findElements(By.className("account-detail-content"));
+	for(int i=1; i<20; i++){
+		String b = Integer.toString(i);
+		Assert.assertFalse(profileinfo.get(0).getText().contains("-"+b));
 }
 driver.switchTo().defaultContent();
 }
