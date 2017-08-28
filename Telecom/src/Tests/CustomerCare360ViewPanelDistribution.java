@@ -25,9 +25,9 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 	private WebDriver driver;
 
 
-@AfterClass
+@AfterTest
 public void tearDown() {
-//		driver.close();
+		driver.close();
 }
 //@AfterMethod
 public void alert (){
@@ -42,7 +42,7 @@ public void alert (){
 @BeforeClass
 public void init() throws Exception
 {
-	this.driver = setConexion.setupEze();
+	this.driver = setConexion.setupPablo();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	login(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -50,21 +50,11 @@ public void init() throws Exception
 
 @BeforeMethod
 public void setUpTest() {
+	driver.switchTo().defaultContent();
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	String a = driver.findElement(By.id("tsidLabel")).getText();
-	driver.findElement(By.id("tsidLabel")).click();
-	System.out.println(a);
-	if(a.equals("Ventas"))
-	{
-		System.out.println("True");
-		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-	}else
-	{
-		System.out.println("False");
-		driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	if (!driver.getCurrentUrl().toString().contains("https://cs14.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 	}
 		
@@ -87,11 +77,54 @@ public void setUpTest() {
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
 	driver.switchTo().defaultContent();
+} 
+
+//@BeforeMethod
+public void setUpTest2() {
+	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {	
+		String a = driver.findElement(By.id("tsidLabel")).getText();
+		driver.findElement(By.id("tsidLabel")).click();
+		System.out.println(a);
+		if(a.equals("Ventas"))
+		{
+			System.out.println("True");
+			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+		}else
+		{
+			System.out.println("False");
+			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("tsidLabel")).click();
+			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+		}
+	}
+	catch (NoSuchElementException NoSuchElemException){
+		System.out.println("ErrorTime");
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
+	for (WebElement e : mainTabs) {
+	try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
+	}
+	List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
+	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
+	goToLeftPanel(driver, "Cuentas");
+	WebElement frame0 = driver.findElement(By.tagName("iframe"));
+	driver.switchTo().frame(frame0);
+	waitFor(driver, (By.name("fcf")));	
+	Select field = new Select(driver.findElement(By.name("fcf")));
+	field.selectByVisibleText("Todas las cuentas");
+	
+	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
+
+	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
+	accounts.get(0).click();
+	driver.switchTo().defaultContent();
 }	
-	
-	
-	
-	
+		
 	@Test
 	public void TS7059_VerifyDisplayPanelPromotions() {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
