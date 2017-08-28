@@ -33,7 +33,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
  	
 	@BeforeTest
 	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
+		this.driver = setConexion.setupPablo();	
 		login(driver);
 	}
 	@AfterTest
@@ -80,15 +80,14 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	@Test
 	public void TS7069_ValidationButtons () {
-
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));		
+		driver.switchTo().frame(frame1.get(6));//It should be  6, instead of 5.
 		driver.findElement(By.className("profile-links-wrapper"));
 		List<WebElement> botones = driver.findElements(By.className("profile-links"));
-	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
-	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
-	driver.switchTo().defaultContent();
+		Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
+		Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
+		driver.switchTo().defaultContent();
 	}
 
 	@Test
