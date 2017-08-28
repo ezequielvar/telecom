@@ -38,7 +38,7 @@ private WebDriver driver;
 	
 @BeforeTest
 public void mainSeteup() {
-	this.driver = setConexion.setupLeo();	
+	this.driver = setConexion.setupPablo();	
 	login(driver);
 }
 @BeforeMethod
@@ -74,8 +74,16 @@ public void setUpTest() {
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> profileinfo = driver.findElements(By.className("tabText"));
-		Assert.assertEquals("Billing Information", profileinfo.get(3).getText());
+		String billingTabName = "Facturación";
+		boolean billingTabExist = false;
+		List<WebElement> availableTabs = driver.findElements(By.className("tabText"));
+		//Checks all tabs, and finds if some one matches billingTabName
+		for (WebElement tab : availableTabs) {
+			if (tab.getText().equals(billingTabName)) {
+				billingTabExist = true;
+			}
+		}
+		Assert.assertTrue(billingTabExist);
 	}
 	
 
