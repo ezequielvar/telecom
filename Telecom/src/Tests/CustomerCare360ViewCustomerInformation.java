@@ -12,14 +12,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -31,26 +34,44 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	private WebDriver driver;
  	
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
-		login(driver);
-	}
-	@AfterTest
+	@AfterClass
 	public void tearDown() {
-	driver.close();
+		//	driver.close();
+	}
+
+	@AfterMethod
+	public void alert (){
+		driver.get("https://cs14.salesforce.com/home/home.jsp");
+		try{
+			Alert alert = driver.switchTo().alert();
+			alert.accept();
+		}catch(org.openqa.selenium.NoAlertPresentException e){}
+	}
+	
+	@BeforeClass
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod
 	public void setup() throws Exception {
-		driver.switchTo().defaultContent();	
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+		String a = driver.findElement(By.id("tsidLabel")).getText();
+		driver.findElement(By.id("tsidLabel")).click();
+		if(a.equals("Ventas"))
+		{
+			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+		}else
+		{
+			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 		}
-		
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
 	for (WebElement e : mainTabs) {
@@ -78,16 +99,37 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 }
 	
 
+	/*@Test
+	public void TS7069_ValidationButtons () {
+
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(5));		
+	List<WebElement> asl = driver.findElements(By.className("profile-box"));
+	System.out.println(asl.size());
+	List<WebElement> botones = driver.findElements(By.className("profile-links"));
+	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
+	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
+	driver.switchTo().defaultContent();
+	}*/
+	
 	@Test
 	public void TS7069_ValidationButtons () {
 
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));		
-		driver.findElement(By.className("profile-links-wrapper"));
-		List<WebElement> botones = driver.findElements(By.className("profile-links"));
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	int i;
+	for(i=0; i < frame1.size(); i++)
+	{
+	driver.switchTo().frame(frame1.get(i));
+	try{List<WebElement> asl = driver.findElements(By.className("profile-box"));
+	asl.get(0);
+	System.out.println(i);
+	System.out.println("Si");
+	}catch(java.lang.IndexOutOfBoundsException e){System.out.println("No");};}
+	/*List<WebElement> botones = driver.findElements(By.className("profile-links"));
 	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
-	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
+	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());*/
 	driver.switchTo().defaultContent();
 	}
 
@@ -96,7 +138,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
+	driver.switchTo().frame(frame1.get(5));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	List<WebElement> profileinfo = driver.findElements(By.className("client-data-detail"));
 	driver.findElement(By.className("console-account-info"));
@@ -106,7 +148,6 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 		System.out.println(e.getText());
 		a++;
 	}*/
-	
 	Assert.assertEquals("Correo Electónico:", profileinfo.get(0).getText());
 	Assert.assertEquals("Teléfono:", profileinfo.get(1).getText());
 	Assert.assertEquals("Club Personal:", profileinfo.get(2).getText());

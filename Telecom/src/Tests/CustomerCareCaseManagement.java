@@ -4,6 +4,7 @@ package Tests;
 import java.util.List;
 import java.util.Set;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -12,8 +13,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -25,11 +28,19 @@ import Pages.setConexion;
 public class CustomerCareCaseManagement extends TestBase {
 
 	private WebDriver driver;
-
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
+	
+	
+	@BeforeClass
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+
+	@BeforeMethod
+	public void mainSteup() {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
@@ -57,7 +68,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		
 		driver.findElement(By.name("newCase")).click();
 	}
-	@AfterTest
+	
+	@AfterClass
 	public void tearDown() {
 		
 		driver.switchTo().defaultContent();
@@ -68,17 +80,18 @@ public class CustomerCareCaseManagement extends TestBase {
 		waitFor(driver, (By.className("x-toolbar-cell")));
 		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
-driver.close();
+		driver.close();	
 		}
 	
-	
-	
-	@BeforeMethod
-	public void setup() throws Exception {
-			
-
-		
+	@AfterMethod
+	public void alert (){
+		driver.get("https://cs14.salesforce.com/console");
+		try{
+			Alert alert = driver.switchTo().alert();
+			System.out.println(alert.getText());
+		}catch(org.openqa.selenium.NoAlertPresentException e){}
 	}
+
 	
 		@Test
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
