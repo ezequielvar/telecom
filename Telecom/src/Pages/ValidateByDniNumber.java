@@ -1,6 +1,8 @@
 package Pages;
 
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +20,9 @@ public class ValidateByDniNumber {
 	@FindBy (how = How.ID, using = "DocumentMethod_nextBtn")
 	private WebElement next;
 	
+	@FindBy (how = How.CLASS_NAME, using = "slds-m-bottom--small")
+	private List<WebElement> filesUploaded;
+	
 	@FindBy (how = How.ID, using = "FileDocumentImage")
 	private WebElement img;
 	
@@ -33,6 +38,9 @@ public class ValidateByDniNumber {
 	{
 		img.sendKeys("C:\\Users\\Sofia Chardin\\Desktop");
 		next.click();
+	}
+	public List<WebElement> getFilesUploaded() {
+		return filesUploaded;
 	}
 
 }

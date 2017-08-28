@@ -59,7 +59,7 @@ public void sex(String genero){
 		gender.get(1).click();
 		break;
 	}
-	next.click();
+	
 }
 
 
