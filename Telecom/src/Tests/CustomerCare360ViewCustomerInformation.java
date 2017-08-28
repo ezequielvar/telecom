@@ -241,12 +241,10 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	
 	@Test
 	public void TS7113_ValidationCustomerTransactionsIconType(){
-
-
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List <WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame1.get(5));
-	driver.findElement(By.className("slds-icon_container"));
-	driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(6));
+		driver.findElement(By.className("slds-icon_container"));
+		driver.switchTo().defaultContent();
 	}	
 }
