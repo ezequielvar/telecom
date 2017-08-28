@@ -37,20 +37,29 @@ public class TestBase {
 	
 	public void login(WebDriver driver) {
 		driver.get("https://test.salesforce.com/");
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//if(driver.findElement(By.id("idcard")).isDisplayed())
+		//{
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
+		//}else{
+			//driver.findElement(By.id("chooser")).click();
+	//	}
 	}
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> 47f72fc7842398e2d98a1e9e996aeef984756f16
 	public void login1(WebDriver driver) {
 		driver.get("https://goo.gl/ETjDYJ");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//if(driver.findElement(By.id("idcard")).isDisplayed())
+		//{
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
+		//}else{
+		//	driver.findElement(By.id("chooser")).click();
+		//}
 	}
-<<<<<<< HEAD
+
 
 	    	
 	    
@@ -58,14 +67,5 @@ public class TestBase {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
 				  .until(ExpectedConditions.presenceOfElementLocated(element));
 
-
-=======
-
-
-	public void waitFor(WebDriver driver, By element) {
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
-
-
->>>>>>> 47f72fc7842398e2d98a1e9e996aeef984756f16
 	}
 }

@@ -11,14 +11,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -32,24 +35,35 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 	private WebDriver driver;
 	 	
-		@AfterTest
-		public void tearDown() {
-		driver.close();
-		}
-		@BeforeTest
-		public void mainSeteup() {
-			this.driver = setConexion.setupLeo();	
-			login(driver);
-		}
-		@BeforeMethod
-		
-		public void setUpTest() {
-			driver.switchTo().defaultContent();
-			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
-				driver.findElement(By.id("tsidLabel")).click();
-				try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+	@AfterClass
+	public void tearDown() {
+			driver.close();
+	}
+	
+	@AfterMethod
+	public void alert (){
+		driver.get("https://cs14.salesforce.com/console");
+		try{
+			Alert alert = driver.switchTo().alert();
+			System.out.println(alert.getText());
+		}catch(org.openqa.selenium.NoAlertPresentException e){}
+	}
+
+	@BeforeClass
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}	
+	@BeforeMethod
+	public void setUpTest() {
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+			driver.findElement(By.id("tsidLabel")).click();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 			}
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -64,10 +78,8 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		driver.switchTo().frame(frame0);
 		waitFor(driver, (By.name("fcf")));	
 		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Todas las cuentas");
-		
+		field.selectByVisibleText("Todas las cuentas");	
 		waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-
 		List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 		accounts.get(0).click();
 		driver.switchTo().defaultContent();
