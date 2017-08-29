@@ -7,8 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -21,26 +23,24 @@ public class parametricThresholds extends TestBase {
 
 	private WebDriver driver;
 	
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupPablo();	
-		login(driver);
-	}
 
-	@AfterTest
+	@AfterClass
 	public void tearDown2() {
-		driver.close();
-		
+		driver.close();		
 	}
 
-	@AfterMethod
+	@BeforeMethod
 	public void tearDown() {
 		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
 
-	@BeforeMethod
-	public void setUp() throws Exception {
-		driver.get("https://cs14.salesforce.com/a3y?fcf=00Bc0000001LRmc");
+	@BeforeClass
+	public void Init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@Test

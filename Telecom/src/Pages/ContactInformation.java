@@ -48,5 +48,8 @@ public void setContactInformation(String nombre, String apellido, String fechaDe
 	lastName.sendKeys(apellido);
 	birthDate.sendKeys(fechaDeNacimiento);
 }
+public void nextPage() {
+	NextBtn.click();
+}
 
 }

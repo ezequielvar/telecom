@@ -10,7 +10,10 @@ import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -18,21 +21,50 @@ import org.testng.annotations.Test;
 import Pages.ContactSearch;
 import Pages.setConexion;
 import Pages.BasePage;
+import Pages.ContactInformation;
+import Tests.ValidationByDni;
 
 
 public class newClient extends TestBase {
 	
 	private WebDriver driver;
+	String Name = "Pepeasd";
+	String LastName = "Argentoasd";
+	String DateOfBirthday = "06/07/1988";
+	String DNI = "Documento Nacional de Identidad";
+	String[] DocValue = {"52694444","3569874563","365","ssss"};
 	
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupEze();
-		login(driver);
-	}
-	
-	@AfterMethod
+	@AfterClass
 	public void tearDown() {
 		driver.close();
+	}
+	
+	@BeforeClass
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login1(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	
+	@BeforeMethod
+	public void setup() throws Exception {
+		driver.get("https://goo.gl/ULLWHZ");
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch conts = new ContactSearch(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		conts.searchContact(DNI, DocValue[0], "femenino");
+		conts.sex("femenino");
+		driver.findElement(By.id("ContactInfo_nextBtn")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactInformation page = new ContactInformation(driver);
+		page.setContactInformation(Name, LastName, DateOfBirthday);
+		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		ValidationByDni validateDni = new ValidationByDni();
+		validateDni.attachFiles();
 	}
 	
 	@Test

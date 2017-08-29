@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.xssf.usermodel.XSSFSheet;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class massiveCreateAccounts  {
 	
@@ -16,13 +16,13 @@ public class massiveCreateAccounts  {
 	
 	FileInputStream fis=new FileInputStream(src);
 	
-	XSSFWorkbook wb=new XSSFWorkbook(fis);
+	//XSSFWorkbook wb=new XSSFWorkbook(fis);
 	
-	XSSFSheet sheet1 = wb.getSheetAt(0);
+	//XSSFSheet sheet1 = wb.getSheetAt(0);
 	
-	String data0 = sheet1.getRow(0).getCell(0).getStringCellValue();
+	//String data0 = sheet1.getRow(0).getCell(0).getStringCellValue();
 	
-	wb.close();
+	//wb.close();
 	
 	}
 	
