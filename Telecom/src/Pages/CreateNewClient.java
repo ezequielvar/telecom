@@ -90,4 +90,9 @@ public void createClient() {
 	buttons.get(1).click();
 }
 
+public void checkFloor()
+{
+	floorNumber.sendKeys("123");
+}
+
 }

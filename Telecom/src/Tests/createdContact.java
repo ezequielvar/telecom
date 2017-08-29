@@ -6,8 +6,13 @@ import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.ContactSearch;
@@ -21,21 +26,26 @@ public class createdContact extends TestBase {
 	
 	private WebDriver driver;
 	String[] genero = {"masculino","femenino"};
-	String DNI = "DNI";
+	String DNI = "Documento Nacional de Identidad";
 	String[] DocValue = {"52698547","3569874563","365","ssss"};
 	
-	
-	@AfterMethod
+	@AfterClass
 	public void tearDown() {
-		driver.close();
+		//driver.close();
 	}
-
 	
-	@BeforeMethod
+	@BeforeClass
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		login1(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try{login1(driver);}catch(org.openqa.selenium.NoSuchElementException e){}
+	}
+	
+	@BeforeMethod
+	public void Setup() throws Exception
+	{
+		driver.get("https://goo.gl/ETjDYJ");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -48,6 +58,7 @@ public class createdContact extends TestBase {
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.searchContact(DNI, DocValue[0], "femenino");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("ContactInfo_nextBtn")).click();
 		
 	}
 	
@@ -55,9 +66,9 @@ public class createdContact extends TestBase {
 	public void TS6965_verifiedFieldDNIShortNumer()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
-		base.setSimpleDropdown(type, "DNI");
+		base.setSimpleDropdown(type, DNI);
 		driver.findElement(By.id("DNIDocument")).sendKeys("123");
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-min.ng-valid-max.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-pattern"));
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-min-int.ng-valid-max-int.ng-invalid.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
 	}
 	
 	@Test
@@ -65,6 +76,7 @@ public class createdContact extends TestBase {
 	{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex("femenino");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@Test
@@ -72,16 +84,16 @@ public class createdContact extends TestBase {
 	{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex("masculino");
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@Test
 	public void TS6964_verifiedFieldDNILongNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
-		base.setSimpleDropdown(type, "DNI");
+		base.setSimpleDropdown(type, DNI);
 		driver.findElement(By.id("DNIDocument")).sendKeys("1234567894");
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-min.ng-valid-max.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-pattern"));
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-min-int.ng-valid-max-int.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-pattern"));
 	}
 	
 	@Test
@@ -103,8 +115,8 @@ public class createdContact extends TestBase {
 	public void TS6966_mandatoryDNI()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
-		base.setSimpleDropdown(type, "DNI");
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid-pattern.ng-valid-min.ng-valid-max.ng-invalid.ng-invalid-required"));
+		base.setSimpleDropdown(type, DNI);
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid-pattern.ng-valid-min-int.ng-valid-max-int.ng-invalid.ng-invalid-required"));
 	}
 	
 	@Test
@@ -137,7 +149,7 @@ public class createdContact extends TestBase {
 	public void TS6912_DNINumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
-		base.setSimpleDropdown(type, "DNI");
+		base.setSimpleDropdown(type, DNI);
 		driver.findElement(By.id("DNIDocument")).sendKeys("12312312");
 	}
 	
@@ -174,13 +186,13 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid-parse.ng-valid-pattern.ng-valid-minlength.ng-valid-maxlength.ng-invalid.ng-invalid-required"));
 	}
 	
-	//Falla @Test
+	@Test
 	public void TS6935_verifyFieldCUITNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
 		base.setSimpleDropdown(type, "CUIT");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid-parse.ng-valid-pattern.ng-valid-minlength.ng-valid-maxlength.ng-invalid.ng-invalid-required"));
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-pristine.ng-scope.ng-valid-mask.ng-valid-pattern.ng-invalid.ng-invalid-required.ng-valid-minlength.ng-valid-maxlength"));
 	}
 
 }

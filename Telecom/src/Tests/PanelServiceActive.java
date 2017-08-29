@@ -15,8 +15,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -29,15 +31,19 @@ public class PanelServiceActive extends TestBase {
 	
 	private WebDriver driver;
 	
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupEze();	
-		login(driver);
-	}
 	
-	@AfterTest
+	@AfterClass
 	public void tearDown2() {
 		driver.close();	
+	}
+	
+	@BeforeClass
+	public void Init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod
@@ -107,6 +113,7 @@ public class PanelServiceActive extends TestBase {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(2));
 		driver.findElement(By.xpath("/html/body/span/div/div/ng-include/div/form/div/input"));
+		driver.switchTo().defaultContent();
 	}
 	
 	@Test
@@ -135,6 +142,7 @@ public class PanelServiceActive extends TestBase {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(2));
 		assertNotSame(driver.findElement(By.xpath("/html/body/span/div/div/ng-include/div/div[2]/div[1]/ng-include/section/div[1]/div/h2")).getText(), "NULL");
+		driver.switchTo().defaultContent();
 	}
 	
 	@Test

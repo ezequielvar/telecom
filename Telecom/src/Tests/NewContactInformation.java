@@ -2,10 +2,15 @@ package Tests;
 
 
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -27,29 +32,35 @@ public class NewContactInformation extends TestBase {
 	String LastName = "Argento";
 	String Email = "pepe@gmail.com";
 	String DateOfBirthday = "06/07/1990";
+	String DateOfBirthdayWrong = "06/07/1890";
 	String[] genero = {"masculino","femenino"};
-	String DNI = "DNI";
+	String DNI = "Documento Nacional de Identidad";
 	String[] DocValue = {"52698547","3569874563","365","ssss"};
 	
-	//public NewContactInformation(WebDriver driver) {
-		//super(driver);
-	//}
-	
-	@AfterMethod
+	@AfterClass
 	public void tearDown() {
-	//	driver.close();
+		driver.close();
+	}
+	
+	@BeforeClass
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login1(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod
 	public void Setup() throws Exception
 	{
-		this.driver = setConexion.setupEze();
-		login1(driver);
+		driver.get("https://goo.gl/ULLWHZ");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.searchContact(DNI, DocValue[0], "femenino");
 		contact.sex("femenino");
+		driver.findElement(By.id("ContactInfo_nextBtn")).click();
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -57,7 +68,7 @@ public class NewContactInformation extends TestBase {
 	public void TS6901_nonExistentContact()
 	{
 		ContactInformation page = new ContactInformation(driver);
-		page.setContactInformation(Name, LastName, DateOfBirthday, Email);
+		page.setContactInformation(Name, LastName, DateOfBirthday);
 		driver.findElement(By.id("UpdateContact")).click();
 	}
 	
@@ -65,9 +76,10 @@ public class NewContactInformation extends TestBase {
 	public void TS6920_verifyValidateContact()
 	{
 		ContactInformation page = new ContactInformation(driver);
-		page.setContactInformation(Name, LastName, DateOfBirthday, Email);
+		page.setContactInformation(Name, LastName, DateOfBirthday);
+		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		driver.findElement(By.id("ValidationMethod0"));
+		
 	}
 	@Test
 	public void TS6909_numbersOnFieldLastName()
@@ -93,7 +105,8 @@ public class NewContactInformation extends TestBase {
 	@Test
 	public void TS6950_MoreThanFiveDigits()
 	{
-		driver.findElement(By.id("Birthdate")).sendKeys(DateOfBirthday +"4");
+		driver.findElement(By.id("Birthdate")).sendKeys(DateOfBirthdayWrong +"4");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
@@ -101,7 +114,8 @@ public class NewContactInformation extends TestBase {
 	public void birthdateLetters() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys("agosto");
-		driver.findElement(By.className(".slds-input ng-touched ng-dirty ng-valid-parse ng-not-empty ng-valid-required ng-invalid ng-invalid-valid"));
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-dirty.ng-invalid-valid.ng-valid-parse.ng-valid-required"));
 	}
 	
 	@Test
@@ -134,15 +148,15 @@ public class NewContactInformation extends TestBase {
 	
 	@Test
 	public void TS6974_mailCheckEmpty() 
-	{
-		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty"));
+	{	
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required"));
 	}
 	
 	@Test
 	public void TS6941_noMailCheckSelect () 
 	{
-		driver.findElement(By.id("EmailCheck")).click();
-		driver.findElement(By.cssSelector(".ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-not-empty"));
+		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid.ng-valid-required"));
 	}
 	
 
@@ -173,14 +187,18 @@ public class NewContactInformation extends TestBase {
 
 	
 	
-	/*@Test
+	@Test
 	public void birthdatemask() {
 
-		driver.findElement(By.id("Birthdate")).click(); 
-		driver.findElement(By.xpath("//*[@id=\'datepickers-container\']/div[1]/div[1]/div/div[2]/div[18]")).click();
-		String actualString = driver.findElement(By.xpath("//input[@id='Birthdate']")).getText(); ;;
-		//Assert.assertTrue(actualString.contains("yyyy-MM-dd"));
+		List<WebElement> profileinfo = driver.findElements(By.id("Birthdate")); 
+		 for(int i=1; i<profileinfo.size(); i+=2){
+		  String b = (profileinfo.get(i).getText());  
+		  String datePattern = "\\d{2}/\\d{2}/\\d{4}";
+		  String date1 = b;
+		  Boolean isDate1 = date1.matches(datePattern);
+		 Assert.assertTrue(isDate1);
+		 }
 
-	}*/
+	}
 }
 

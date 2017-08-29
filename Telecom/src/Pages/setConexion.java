@@ -41,6 +41,11 @@ public class setConexion{
 			driver.get("http://www.google.com");	
 		}
 		
+		public static WebDriver init()
+		{
+			driver.get("https://goo.gl/ULLWHZ");
+			return driver;
+		}
 		public static WebDriver setupPablo() {
 			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		    ChromeOptions options = new ChromeOptions();

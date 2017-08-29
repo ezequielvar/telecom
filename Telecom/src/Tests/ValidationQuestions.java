@@ -11,8 +11,9 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -22,24 +23,30 @@ public class ValidationQuestions extends TestBase {
 	
 	
 	private WebDriver driver;
-	 	
-	@AfterMethod
+	String Name = "Pepeasd";
+	String LastName = "Argentoasd";
+	String DateOfBirthday = "06/07/1988";
+	String DNI = "DNI";
+	String[] DocValue = {"52694444","3569874563","365","ssss"};
+	
+	@AfterClass
 	public void tearDown() {
 	driver.close();
 	}
+	
+	@BeforeClass
+	public void Init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login1(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 
 	@BeforeMethod
-	public void setup() throws Exception {
-		//setConexion.setUp();
-		driver = setConexion.setupLeo();	
+	public void Setup() throws Exception {
+		driver = setConexion.setupEze();	
 		login1(driver);
-		String Name = "Pepeasd";
-	String LastName = "Argentoasd";
-	
-		String DateOfBirthday = "06/07/1988";
-
-		String DNI = "DNI";
-		String[] DocValue = {"52694444","3569874563","365","ssss"};
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.searchContact(DNI, DocValue[0], "femenino");
@@ -100,7 +107,7 @@ public class ValidationQuestions extends TestBase {
 
 	}
 	
-//	@Test	
+	@Test	
 	public void ValidationTime() {
 		//Seleccion de metodo por preguntas
 		driver.findElement(By.xpath("//*[@id='ValidationMethod0']/div/div[1]/label[2]/span[1]")).click();

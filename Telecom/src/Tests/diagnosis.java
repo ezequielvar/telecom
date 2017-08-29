@@ -6,9 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,26 +19,31 @@ import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.diagnosisTab;
 import Pages.setConexion;
+import Pages.BasePage;
 
 public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupPablo();	
-		login(driver);
-	}
 
-	@AfterTest
+	@AfterClass
 	public void tearDown2() {
 		driver.close();
 		
 	}
+	
+	@BeforeClass
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 
 	@AfterMethod
 	public void tearDown() {
-		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
+	//	driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
 
 	@BeforeMethod
@@ -57,12 +65,13 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel(driver, "Cuentas");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement frame1 = driver.findElement(By.tagName("iframe"));
-		driver.switchTo().frame(frame1);
-		Accounts page0 = new Accounts(driver);
-		page0.clickOnV();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page0.clickOnFirstAccount();
+		WebElement frame0 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame0);
+		Select field = new Select(driver.findElement(By.name("fcf")));
+		field.selectByVisibleText("Todas las cuentas");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = 'Chronos Automata']"));
+		accounts.get(0).click();
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		List<WebElement> accountTabs = driver.findElements(By.className("tabText"));
@@ -81,6 +90,31 @@ public class diagnosis extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame3 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame3.get(4));
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("SelectedMotives")).click();
+		List<WebElement> drops1=driver.findElements(By.cssSelector("ul > li"));
+		//driver.findElement(By.xpath("//li[contains(text(),'No me funciona internet')]")).click();
+		//WebElement aa = driver.findElement(By.xpath("//*[@id=\"SelectBlock\"]/div/div/div[2]/child[2]/div/div/ng-form/div[2]/div[1]/ul/li[2]"));
+		//System.out.println(aa.getTagName());
+		//System.out.println(aa.getSize());
+		//List<WebElement> drops1=driver.findElements(By.tagName("li"));
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//List<WebElement> list = driver.findElements(By.xpath("//*[text() = 'No me funciona internet']"));
+		//list.get(0).click();
+		
+        System.out.println(drops1.size());
+        System.out.println(drops1.get(1).getText());
+        drops1.get(0).click();
+        /*for(WebElement  obj1:drops1)
+        {
+        	JavascriptExecutor executor = (JavascriptExecutor) driver;
+        	executor.executeScript("arguments[1].click();", obj1);
+        	System.out.println(obj1.getText());
+        }*/
+		driver.findElement(By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[6]/div/section/form/div[1]/div/child[3]/div/ng-form/div/div/div[2]/child[2]/div/div/ng-form/div[2]/div[1]/ul/li[4]"));
+		WebElement aaa = driver.findElement(By.id("SelectedMotives"));
+		BasePage base = new BasePage();
+		//base.setSimpleDropdown(aa, "No me funciona internet");
 		diagnosisTab page1 = new diagnosisTab(driver);
 		page1.setMotive();
 		Assert.assertTrue(page1.isExecuteButtonPresent());
