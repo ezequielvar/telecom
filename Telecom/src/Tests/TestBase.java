@@ -1,5 +1,7 @@
 package Tests;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,6 +37,20 @@ public class TestBase {
 		}
 	}
 	
+	public void goToLeftPanel2(WebDriver driver, String selection) {
+		WebElement element = driver.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(element, 245, 20).click().build().perform();
+		WebElement dropDown = driver.findElement(By.id("navigator-sbmenu"));
+		List<WebElement> sections = dropDown.findElements(By.className("x-menu-list-item"));
+		for (WebElement section : sections) {
+			if (section.getText().equals(selection)) {
+				section.click();
+				break;
+			}
+		}
+	}
+	
 	public void login(WebDriver driver) {
 		driver.get("https://test.salesforce.com/");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -47,7 +63,6 @@ public class TestBase {
 	//	}
 	}
 	
-
 	public void login1(WebDriver driver) {
 		driver.get("https://goo.gl/ETjDYJ");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -55,16 +70,33 @@ public class TestBase {
 		//{
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
+
+	}	    	
+	    
+	public void waitFor2(WebDriver driver, By element) {
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(element));
+	}
+	public void waitFor(WebDriver driver, By element) {
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
+	}
+
 		//}else{
 		//	driver.findElement(By.id("chooser")).click();
 		//}
-	}
+
 	    
-	public void waitFor(WebDriver driver, By element) {
+/*public void waitFor(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+<<<<<<< HEAD
 				  .until(ExpectedConditions.presenceOfElementLocated(element));}
 
 	public void waitFor2(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
 	}
+=======
+
+				  .until(ExpectedConditions.presenceOfElementLocated(element));
+*/
 }
+

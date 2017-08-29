@@ -34,7 +34,16 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	private WebDriver driver;
  	
+
+	@BeforeTest
+	public void mainSteup() {
+		this.driver = setConexion.setupPablo();	
+		login(driver);
+	}
+	@AfterTest
+
 	@AfterClass
+
 	public void tearDown() {
 		//	driver.close();
 	}
@@ -102,6 +111,16 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	/*@Test
 	public void TS7069_ValidationButtons () {
 
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(6));//It should be  6, instead of 5.
+		driver.findElement(By.className("profile-links-wrapper"));
+		List<WebElement> botones = driver.findElements(By.className("profile-links"));
+		Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
+		Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
+		driver.switchTo().defaultContent();
+
+
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	driver.switchTo().frame(frame1.get(5));		
@@ -131,6 +150,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
 	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());*/
 	driver.switchTo().defaultContent();
+
 	}
 
 	@Test
@@ -148,48 +168,48 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 		System.out.println(e.getText());
 		a++;
 	}*/
-	Assert.assertEquals("Correo Electónico:", profileinfo.get(0).getText());
-	Assert.assertEquals("Teléfono:", profileinfo.get(1).getText());
+	Assert.assertEquals("Correo ElectÃ³nico:", profileinfo.get(0).getText());
+	Assert.assertEquals("TelÃ©fono:", profileinfo.get(1).getText());
 	Assert.assertEquals("Club Personal:", profileinfo.get(2).getText());
-	Assert.assertEquals("Categoría:", profileinfo.get(3).getText());
+	Assert.assertEquals("CategorÃ­a:", profileinfo.get(3).getText());
 	driver.switchTo().defaultContent();
 }
 
 
 @Test
 public void TS7070_ValidationClubPersonalBasico (){
-	String basico = "Categoría: Basico" ;
+	String basico = "Basico" ;
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-driver.findElements(By.className("ext-webkit.ext-chromehg"));
-List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
-driver.findElement(By.className("client-data-detail"));
-Assert.assertTrue(profileinfo.get(0).getText().contains(basico)); 
-driver.switchTo().defaultContent();
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(6));
+	driver.findElements(By.className("ext-webkit.ext-chromehg"));
+	List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
+	driver.findElement(By.className("client-data-detail"));
+	//access profileInfo, finds fourth element with client data (Categoriax	)
+	Assert.assertTrue(profileinfo.get(0).findElements(By.className("client-data-detail")).get(3).getText().contains(basico)); 
+	driver.switchTo().defaultContent();
 }
 
 @Test
 public void TS7072_ValidationNPS(){
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-driver.findElements(By.className("ext-webkit.ext-chromehg"));
-driver.findElement(By.className("detail-card"));
-List<WebElement> profileinfo = driver.findElements(By.className("account-detail-content"));
-for(int i=1; i<20; i++){
-	String b = Integer.toString(i);
-	Assert.assertFalse(profileinfo.get(0).getText().contains("-"+b));
-	
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(6));
+	driver.findElements(By.className("ext-webkit.ext-chromehg"));
+	driver.findElement(By.className("detail-card"));
+	List<WebElement> profileinfo = driver.findElements(By.className("account-detail-content"));
+	for(int i=1; i<20; i++){
+		String b = Integer.toString(i);
+		Assert.assertFalse(profileinfo.get(0).getText().contains("-"+b));
 }
 driver.switchTo().defaultContent();
 }
 
 //@Test
 public void TS7070_ValidationClubPersonalPremium (){
-	String premium = "Categoría: Premium" ;
+	String premium = "CategorÃ­a: Premium" ;
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -203,13 +223,12 @@ driver.switchTo().defaultContent();
 
 	@Test
 	public void TS7126_ValidationPerfilPanel (){	
-
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-	driver.findElements(By.className("ext-webkit.ext-chromehg"));
-    driver.findElement(By.className("ng-hide"));
-    driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(6));
+		driver.findElements(By.className("ext-webkit.ext-chromehg"));
+	    driver.findElement(By.className("ng-hide"));
+	    driver.switchTo().defaultContent();
 	}
 	
 	@Test
@@ -261,8 +280,8 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	public void TS7108_ValidationCustomerTransactionsViewFilter (){
 
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
+	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+	driver.switchTo().frame(frame1.get(6));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	driver.findElement(By.id("text-input-01"));	
 	driver.switchTo().defaultContent();
@@ -283,12 +302,10 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	
 	@Test
 	public void TS7113_ValidationCustomerTransactionsIconType(){
-
-
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List <WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame1.get(5));
-	driver.findElement(By.className("slds-icon_container"));
-	driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(6));
+		driver.findElement(By.className("slds-icon_container"));
+		driver.switchTo().defaultContent();
 	}	
 }
