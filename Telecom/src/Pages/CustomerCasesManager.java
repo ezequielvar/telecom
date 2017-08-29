@@ -13,35 +13,49 @@ public class CustomerCasesManager {
 
 final WebDriver driver;
 
+private List<WebElement> cases;
+
 //Case information
 	public CustomerCasesManager(WebDriver driver) {
 		this.driver = driver;
+		
+		List<WebElement> iFrames = driver.findElements(By.tagName("iframe"));
+		for (WebElement frame : iFrames) {
+			driver.switchTo().frame(frame);
+			if(driver.findElement(By.id("ext-gen12")) != null) {
+				break;
+			}
+		}
+		cases = driver.findElements(By.className("x-grid3-row"));
 	}
 	
-	@FindBy (how = How.CSS, using = "div.x-grid3-row")
-	private List<WebElement> casos;
+	@FindBy (how = How.TAG_NAME, using = "iframe")
+	private List<WebElement> iFrames;
 	
 	@FindBy (how = How.ID, using = "phSearchInput")
 	private WebElement searcher;
 	
-	public WebElement getCase(String numeroCaso) {
-		System.out.println(casos);
-		for (WebElement caso : casos) {
-			System.out.println(caso.getText());
-			System.out.println(caso.findElement(By.xpath("//div[@id=CASES_CASE_NUMBER]")).findElement(By.tagName("a")).getText());
-			if (caso.findElement(By.xpath("//div[@id=CASES_CASE_NUMBER]")).findElement(By.tagName("a")).getText().equals(numeroCaso)) {
-				return caso;
+	public List<WebElement> getCases(){
+		return cases;
+	}
+	
+	private WebElement getCaseLink(WebElement caseElement) {
+		return caseElement.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER")).findElement(By.tagName("a"));
+	}
+	
+	public WebElement getCase(String caseNumber) {
+		for (WebElement currectCase : cases) {
+			//System.out.println(currectCase.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER")).findElement(By.tagName("a")).getText());
+			if (getCaseLink(currectCase).getText().equals(caseNumber)) {
+				return currectCase;
 			}
 		}
-		return casos.get(0);
+		System.out.println("Numero de Caso no encontrado, se devuelve el 7mo.");
+		return cases.get(6);
 	}
 	
-	//returns the first search Result
-	public WebElement getSearchResult(String search) {
-		driver.findElement(By.id("searchBoxClearContainer")).click();
-		searcher.sendKeys("00001121");
-		return driver.findElement(By.className("autocompleteMatch"));
+	public void clickCase(String caseNumber) {
+		getCaseLink(getCase(caseNumber)).click();
 	}
-	
 	
 }

@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -47,9 +49,9 @@ public class CustomerCareCaseManagement extends TestBase {
 		field.selectByVisibleText("Mis casos");
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		/*List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(0));
-		driver.findElement(By.name("newCase")).click();
+		driver.findElement(By.name("newCase")).click();*/
 	}
 	/*
 	@AfterTest
@@ -74,16 +76,27 @@ driver.close();
 	
 	@Test
 	public void PFTA_76_CreatedAndDueTimeInHoursFormatCheck(){
+		
+		String dateWithHourPattern = "(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2})";
+
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
+
+		CustomerCasesManager customerCasesManagerPage = new CustomerCasesManager(driver);
+
+		customerCasesManagerPage.clickCase("00001678");
+		CasePage page = new CasePage(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		SelectCaseRegisterType selectPage = new SelectCaseRegisterType(driver);
-		selectPage.continueToCreate();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//customerCManagerPage.getCase("00001211").click();
-		CasePage page = new CasePage(driver);
-		System.out.println(page.getCaseDate()); //24h format
+		System.out.println(page.getCaseDate());
+		System.out.println(page.getCaseDueDate());
+
+		Assert.assertTrue(page.getCaseDate().matches(dateWithHourPattern));
+		Assert.assertTrue(page.getCaseDueDate().matches(dateWithHourPattern));
+		
 	}	
 	
 	@Test

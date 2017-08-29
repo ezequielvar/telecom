@@ -63,9 +63,12 @@ public class CasePage extends BasePage {
 		
 		@FindBy (how = How.ID, using = "cas11")
 		private WebElement caseorigin;
-		
+				
 		@FindBy (how = How.ID, using = "00Nc0000001pWcs")
 		private WebElement caseduedate;
+		
+		@FindBy (how = How.ID, using = "00Nc0000001pWcs_ileinner")
+		private WebElement rawcaseduedate;
 		
 		@FindBy (how = How.ID, using = "CreatedDate_ileinner")
 		private WebElement caseDate;
@@ -266,6 +269,13 @@ public class CasePage extends BasePage {
 	}
 	
 	public String getCaseDueDate(){
-		return caseduedate.getText();
+		return rawcaseduedate.getText();
+		/*List<WebElement> inputs = driver.findElements(By.tagName("input"));
+		for (WebElement input : inputs) {
+			if (input.getAttribute("id").equals("00Nc0000001pWcs")) {
+				return input.getText();
+			}
+		}
+		return "";*/
 	}	
 }
