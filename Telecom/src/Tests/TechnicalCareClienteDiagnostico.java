@@ -59,7 +59,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 	
 	@Test
 	public void DiagnosticsFixedBroadbandUPDOWN() {
-		value = "UP/DOWN";
+		value = "UP/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();
 		page.clearvalues();
@@ -68,7 +68,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 }
 	@Test
 	public void DiagnosticsFixedBroadbandDOWNDOWN() {
-		value = "DOWN/DOWN";
+		value = "Down/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();
 		page.clearvalues();
@@ -77,7 +77,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 }
 	@Test
 	public void DiagnosticsFixedBroadbandNOTSESION() {
-		value = "Sin Sesion";
+		value = "Sin Sesión";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();
 		page.clearvalues();
