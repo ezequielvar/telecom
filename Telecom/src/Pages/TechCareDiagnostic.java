@@ -72,13 +72,13 @@ public class TechCareDiagnostic extends BasePage  {
 			case "UP/UP":
 				setSimpleDropdown(listunselect, value);
 				break;
-			case "UP/DOWN":
+			case "UP/Down":
 				setSimpleDropdown(listunselect, value);
 				break;
-			case "DOWN/DOWN":
+			case "Down/Down":
 				setSimpleDropdown(listunselect, value);
 				break;
-			case "Sin Sesion":
+			case "Sin Sesión":
 				setSimpleDropdown(listunselect, value);
 				break;
 			}
