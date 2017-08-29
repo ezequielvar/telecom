@@ -84,16 +84,6 @@ public class TestBase {
 		//}else{
 		//	driver.findElement(By.id("chooser")).click();
 		//}
-	}
-	public void waitFor(WebDriver driver, By element) {
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
-				  .until(ExpectedConditions.presenceOfElementLocated(element));}
-
-	public void waitFor2(WebDriver driver, By element) {
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
-
-	}
-
 	    
 /*public void waitFor(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
