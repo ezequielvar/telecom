@@ -48,7 +48,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 	}
 	
 	@Test
-	public void DiagnosticsFixedBroadbandUPUP() {
+	public void TS6755_DiagnosticsFixedBroadbandUPUP() {
 		value = "UP/UP";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();
@@ -58,7 +58,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 }
 	
 	@Test
-	public void DiagnosticsFixedBroadbandUPDOWN() {
+	public void TS6756_DiagnosticsFixedBroadbandUPDOWN() {
 		value = "UP/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();
@@ -67,7 +67,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		page.validvalue(value);
 }
 	@Test
-	public void DiagnosticsFixedBroadbandDOWNDOWN() {
+	public void TS6757_DiagnosticsFixedBroadbandDOWNDOWN() {
 		value = "Down/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();
@@ -76,7 +76,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		page.validvalue(value);
 }
 	@Test
-	public void DiagnosticsFixedBroadbandNOTSESION() {
+	public void TS6759_DiagnosticsFixedBroadbandNOTSESION() {
 		value = "Sin Sesión";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectfile();

@@ -37,6 +37,12 @@ private WebDriver driver;
 @AfterClass
 public void tearDown() {
 		driver.close();
+	}
+	
+@BeforeTest
+public void mainSeteup() {
+	this.driver = setConexion.setupEze();	
+
 }
 
 @AfterMethod
@@ -92,8 +98,16 @@ public void setUpTest() {
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> profileinfo = driver.findElements(By.className("tabText"));
-		Assert.assertEquals("Billing Information", profileinfo.get(3).getText());
+		String billingTabName = "Facturaci�n";
+		boolean billingTabExist = false;
+		List<WebElement> availableTabs = driver.findElements(By.className("tabText"));
+		//Checks all tabs, and finds if some one matches billingTabName
+		for (WebElement tab : availableTabs) {
+			if (tab.getText().equals(billingTabName)) {
+				billingTabExist = true;
+			}
+		}
+		Assert.assertTrue(billingTabExist);
 	}
 	
 

@@ -63,9 +63,15 @@ public class CasePage extends BasePage {
 		
 		@FindBy (how = How.ID, using = "cas11")
 		private WebElement caseorigin;
-		
+				
 		@FindBy (how = How.ID, using = "00Nc0000001pWcs")
 		private WebElement caseduedate;
+		
+		@FindBy (how = How.ID, using = "00Nc0000001pWcs_ileinner")
+		private WebElement rawcaseduedate;
+		
+		@FindBy (how = How.ID, using = "CreatedDate_ileinner")
+		private WebElement caseDate;
 		
 		@FindBy (how = How.ID, using = "cas8")
 		private WebElement casepriority;
@@ -179,6 +185,7 @@ public class CasePage extends BasePage {
 
 			
 		}
+		
 	public void CreateCase() {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(0));
@@ -257,4 +264,18 @@ public class CasePage extends BasePage {
 		
 		}
 	
+	public String getCaseDate(){
+		return caseDate.getText();
+	}
+	
+	public String getCaseDueDate(){
+		return rawcaseduedate.getText();
+		/*List<WebElement> inputs = driver.findElements(By.tagName("input"));
+		for (WebElement input : inputs) {
+			if (input.getAttribute("id").equals("00Nc0000001pWcs")) {
+				return input.getText();
+			}
+		}
+		return "";*/
+	}	
 }
