@@ -59,6 +59,7 @@ public class TestBase {
 		//	driver.findElement(By.id("chooser")).click();
 		//}
 	}
+<<<<<<< HEAD
 	public void waitFor(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
 				  .until(ExpectedConditions.presenceOfElementLocated(element));}
@@ -67,4 +68,14 @@ public class TestBase {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
 
 	}
+=======
+
+	    
+/*public void waitFor(WebDriver driver, By element) {
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+
+				  .until(ExpectedConditions.presenceOfElementLocated(element));
+*/
+>>>>>>> 1641d47f9b6af17ddff188bce52a708f2ca6a3b3
 }
+
