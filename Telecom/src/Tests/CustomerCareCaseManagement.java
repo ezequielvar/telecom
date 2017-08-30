@@ -76,23 +76,19 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().defaultContent();
 
 		driver.switchTo().frame(frame1.get(0));
-
-
 	}
 	
 	@AfterClass
 	public void tearDown() {
-		/*
-		driver.switchTo().defaultContent();
+		/*driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
 		waitFor(driver, (By.className("x-toolbar-cell")));
 		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
-		driver.close();	*/
-		}
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));*/
+		driver.close();	
+	}
 	
 	@AfterMethod
 	public void alert (){
@@ -100,10 +96,10 @@ public class CustomerCareCaseManagement extends TestBase {
 		try{
 			Alert alert = driver.switchTo().alert();
 			System.out.println(alert.getText());
+			alert.accept();
 		}catch(org.openqa.selenium.NoAlertPresentException e){}
 	}
 
-	
 	@Test
 	public void PFTA78_ValidateDueTimeLogic(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -119,7 +115,6 @@ public class CustomerCareCaseManagement extends TestBase {
 		System.out.println(page.getCaseDate());
 		Assert.assertEquals(page.getCaseDueDate(), page.getCaseDate());
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
 	}
 	
 	@Test
