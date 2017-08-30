@@ -56,16 +56,16 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 			alert.accept();
 		}catch(org.openqa.selenium.NoAlertPresentException e){}
 	}
-	
+	/*
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	
+	*/
 	@BeforeMethod
 	public void setup() throws Exception {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -182,7 +182,7 @@ public void TS7070_ValidationClubPersonalBasico (){
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame1.get(6));
+	driver.switchTo().frame(frame1.get(5));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 	driver.findElement(By.className("client-data-detail"));
@@ -196,7 +196,7 @@ public void TS7072_ValidationNPS(){
 
 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame1.get(6));
+	driver.switchTo().frame(frame1.get(5));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	driver.findElement(By.className("detail-card"));
 	List<WebElement> profileinfo = driver.findElements(By.className("account-detail-content"));
@@ -225,7 +225,7 @@ driver.switchTo().defaultContent();
 	public void TS7126_ValidationPerfilPanel (){	
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(6));
+		driver.switchTo().frame(frame1.get(5));
 		driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	    driver.findElement(By.className("ng-hide"));
 	    driver.switchTo().defaultContent();
@@ -281,7 +281,7 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame1.get(6));
+	driver.switchTo().frame(frame1.get(5));
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	driver.findElement(By.id("text-input-01"));	
 	driver.switchTo().defaultContent();
@@ -304,7 +304,7 @@ List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	public void TS7113_ValidationCustomerTransactionsIconType(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List <WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(6));
+		driver.switchTo().frame(frame1.get(5));
 		driver.findElement(By.className("slds-icon_container"));
 		driver.switchTo().defaultContent();
 	}	
