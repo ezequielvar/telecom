@@ -38,16 +38,7 @@ public class CustomerCareCasesManagement extends TestBase {
 	
 	@AfterTest
 	public void tearDown() {
-		/*
-		driver.switchTo().defaultContent();
-		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		waitFor(driver, (By.className("x-toolbar-cell")));
-		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
-driver.close();*/
+		driver.close();
 	}
 		
 	@Test
