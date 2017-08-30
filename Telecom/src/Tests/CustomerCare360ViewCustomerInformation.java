@@ -34,18 +34,10 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	private WebDriver driver;
  	
-
-	@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupPablo();	
-		login(driver);
-	}
-	@AfterTest
-
 	@AfterClass
 
 	public void tearDown() {
-		//	driver.close();
+			driver.close();
 	}
 
 	@AfterMethod
