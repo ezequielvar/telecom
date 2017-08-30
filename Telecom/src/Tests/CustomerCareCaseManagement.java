@@ -23,6 +23,7 @@ import org.testng.annotations.Test;
 
 import Pages.CasePage;
 import Pages.Login;
+import Pages.SelectCaseRegisterType;
 import Pages.setConexion;
 
 public class CustomerCareCaseManagement extends TestBase {
@@ -33,7 +34,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -42,7 +43,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	@BeforeMethod
 	public void mainSteup() {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+		if (!driver.getCurrentUrl().toString().contains("https://cs14.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
@@ -65,13 +66,23 @@ public class CustomerCareCaseManagement extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(0));
-		
 		driver.findElement(By.name("newCase")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		driver.switchTo().defaultContent();
+		SelectCaseRegisterType selectCaseRegTypePage = new SelectCaseRegisterType(driver);
+		selectCaseRegTypePage.continueToCreate();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+
+		driver.switchTo().frame(frame1.get(0));
+
+
 	}
 	
 	@AfterClass
 	public void tearDown() {
-		
+		/*
 		driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
@@ -80,7 +91,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		waitFor(driver, (By.className("x-toolbar-cell")));
 		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
-		driver.close();	
+		driver.close();	*/
 		}
 	
 	@AfterMethod
@@ -93,10 +104,26 @@ public class CustomerCareCaseManagement extends TestBase {
 	}
 
 	
-		@Test
+	@Test
+	public void PFTA78_ValidateDueTimeLogic(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frames.get(1));//CaseCreation frame
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesType();
+		page.setCaseDueDate("01/08/2017 10:47");//older than today date.
+		page.save();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		System.out.println(page.getCaseDueDate());
+		System.out.println(page.getCaseDate());
+		Assert.assertEquals(page.getCaseDueDate(), page.getCaseDate());
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+	}
+	
+	@Test
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
-
-
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
@@ -119,23 +146,14 @@ public class CustomerCareCaseManagement extends TestBase {
 	
 	@Test
 	public void TS7088_CaseRelatedFieldsValuesType(){
-
-
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
+	}
+	
 
-}
-	
-	
-		
-		
-	
-	
-	
-	
 	
 }
