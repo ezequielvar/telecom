@@ -135,22 +135,26 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	@Test
 	public void TS7069_ValidationButtons () {
 
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	int i;
-	for(i=0; i < frame1.size(); i++)
-	{
-	driver.switchTo().frame(frame1.get(i));
-	try{List<WebElement> asl = driver.findElements(By.className("profile-box"));
-	asl.get(0);
-	System.out.println(i);
-	System.out.println("Si");
-	}catch(java.lang.IndexOutOfBoundsException e){System.out.println("No");};}
-	/*List<WebElement> botones = driver.findElements(By.className("profile-links"));
-	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
-	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());*/
-	driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frames.get(5));
 
+		/*for(int i=0; i < frames.size(); i++){
+			driver.switchTo().frame(frames.get(i));
+			try{
+				List<WebElement> asl = driver.findElements(By.className("profile-box"));
+				asl.get(0);
+				System.out.println(i);
+				System.out.println("Si");
+			}catch(java.lang.IndexOutOfBoundsException e){
+				System.out.println(e.getMessage());
+				System.out.println("No");
+			}
+		}*/
+		List<WebElement> botones = driver.findElements(By.className("profile-links"));
+		Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
+		Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
+		driver.switchTo().defaultContent();
 	}
 
 	@Test
