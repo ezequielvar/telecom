@@ -1,6 +1,10 @@
 package Tests;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -109,11 +113,29 @@ public class CustomerCareCaseManagement extends TestBase {
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
 		page.setCaseDueDate("01/08/2017 10:47");//older than today date.
+		page.setContactName("Robo Tech");;
 		page.save();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		System.out.println(page.getCaseDueDate());
 		System.out.println(page.getCaseDate());
-		Assert.assertEquals(page.getCaseDueDate(), page.getCaseDate());
+		
+		DateFormat dateWithHourFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm");
+		Date caseDueDate = null;
+		try {
+			caseDueDate = dateWithHourFormat.parse(page.getCaseDueDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Date caseCreatedDate = null;
+		try {
+			caseCreatedDate = dateWithHourFormat.parse(page.getCaseDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Assert.assertTrue(caseDueDate.after(caseCreatedDate) || caseDueDate.equals(caseCreatedDate));
+
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
