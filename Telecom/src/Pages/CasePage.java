@@ -264,18 +264,21 @@ public class CasePage extends BasePage {
 		
 		}
 	
+	public void setCaseDueDate(String dueDate) {
+		caseduedate.sendKeys(dueDate);
+	}
+	
+	
 	public String getCaseDate(){
 		return caseDate.getText();
 	}
 	
 	public String getCaseDueDate(){
 		return rawcaseduedate.getText();
-		/*List<WebElement> inputs = driver.findElements(By.tagName("input"));
-		for (WebElement input : inputs) {
-			if (input.getAttribute("id").equals("00Nc0000001pWcs")) {
-				return input.getText();
-			}
-		}
-		return "";*/
 	}	
+	
+	public void save() {
+		save.click();
+	}
+	
 }
