@@ -105,7 +105,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	}
 
 	@Test
-	public void PFTA78_ValidateDueTimeLogic(){
+	public void TS7083_ValidateDueTimeLogic(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -113,7 +113,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
 		page.setCaseDueDate("01/08/2017 10:47");//older than today date.
-		page.setContactName("Robo Tech");;
+		page.setContactName("Robo Tech");
 		page.save();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		System.out.println(page.getCaseDueDate());
@@ -171,6 +171,23 @@ public class CustomerCareCaseManagement extends TestBase {
 		page.FieldsValuesType();
 	}
 	
+	@Test
+	public void TS7195_CaseRelatedCreateValuesCheck(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for (WebElement currentFrame : frames) {
+			try {
+				driver.switchTo().frame(currentFrame);
+				driver.findElement(By.id("ext-comp-1426"));
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+				continue;
+			}
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-	
+	}
+
 }
