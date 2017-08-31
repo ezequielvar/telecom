@@ -34,7 +34,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
