@@ -68,27 +68,31 @@ public class CustomerCareCaseResolutionTime extends TestBase {
 				continue;
 			}
 		}
-}
+	}
 	
 	@AfterClass
 	public void tearDown() {
 		driver.close();
 	}
 	
-	/*
-	@AfterMethod
-	public void alert (){
-
-	}*/
-	/*
-	@BeforeMethod
-	public void setup() throws Exception {	
-	}
-	*/
 	
 	@Test
 	public void TS7094_checkCaseResolutionTimeExistence(){
 		driver.findElement(By.className("x-grid3-row-table")); //Only CRT have this className in this frame.
+	}
+	
+	@Test
+	public void TS7095_CaseResolTimeAdminConfig(){
+		WebElement modifyButton = null;
+		for (WebElement a : driver.findElement(By.id("00Bc0000001K9hh_filterLinks")).findElements(By.tagName("a"))){
+			System.out.println(a.getText());
+			if (a.getText().equals("Modificar")) {
+				modifyButton = a;
+				break;
+			}
+		}
+		Assert.assertTrue(modifyButton != null);
+		modifyButton.click();
 	}
 	
 }
