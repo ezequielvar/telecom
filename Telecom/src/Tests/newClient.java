@@ -19,6 +19,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.ContactSearch;
+import Pages.ValidationMethodSelection;
 import Pages.setConexion;
 import Pages.BasePage;
 import Pages.ContactInformation;
@@ -32,7 +33,8 @@ public class newClient extends TestBase {
 	String LastName = "Argentoasd";
 	String DateOfBirthday = "06/07/1988";
 	String DNI = "Documento Nacional de Identidad";
-	String[] DocValue = {"52694444","3569874563","365","ssss"};
+	String[] DocValue = {"10000000","3569874563","365","ssss"};
+	private String validationType = "document";
 	
 	@AfterClass
 	public void tearDown() {
@@ -63,8 +65,11 @@ public class newClient extends TestBase {
 		page.setContactInformation(Name, LastName, DateOfBirthday);
 		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		ValidationByDni validateDni = new ValidationByDni();
-		validateDni.attachFiles();
+		ValidationMethodSelection validation = new ValidationMethodSelection(driver);
+		validation.setValidationType(validationType);
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\Codigo de seguridad.PNG");
+		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
 	}
 	
 	@Test

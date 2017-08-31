@@ -22,8 +22,8 @@ import Pages.ValidationMethodSelection;
 public class ValidationByDni extends TestBase{
 	
 	private WebDriver driver;
-	String DNI = "DNI";
-	String[] DocValue = {"52698547","3569874563","365","ssss"};
+	String DNI = "Documento Nacional de Identidad";
+	String[] DocValue = {"10000000","3569874563","365","ssss"};
 	private String Name = "alex";
 	private String LastName = "ray";
 	private String DateOfBirthday = "08/08/1990";
@@ -48,13 +48,14 @@ public class ValidationByDni extends TestBase{
 	@BeforeMethod
 	public void Setup() throws Exception
 	{
-		this.driver = setConexion.setupEze();
-		login1(driver);
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://goo.gl/ETjDYJ");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		driver.findElement(By.className("slds-radio--faux")).click();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.searchContact(DNI, DocValue[0], "femenino");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.sex("femenino");
+		driver.findElement(By.id("ContactInfo_nextBtn")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactInformation page = new ContactInformation(driver);
 		page.setContactInformation(Name, LastName, DateOfBirthday);
