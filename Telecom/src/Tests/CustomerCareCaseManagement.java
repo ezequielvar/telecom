@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -14,19 +13,15 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.CasePage;
-import Pages.Login;
 import Pages.SelectCaseRegisterType;
 import Pages.setConexion;
 
@@ -78,7 +73,6 @@ public class CustomerCareCaseManagement extends TestBase {
 		selectCaseRegTypePage.continueToCreate();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-
 		driver.switchTo().frame(frame1.get(0));
 	}
 	
@@ -105,7 +99,56 @@ public class CustomerCareCaseManagement extends TestBase {
 	}
 
 	@Test
+	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(1));
+		CasePage page = new CasePage(driver);
+		page.ValidChannelClosing();
+	}
+
+	@Test
+	public void TS7090_CaseRelatedFieldsValuesSubArea(){
+
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(1));
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesSubArea();
+	}
+
+	@Test
+	public void TS7088_CaseRelatedFieldsValuesType(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(1));
+		CasePage page = new CasePage(driver);
+		page.FieldsValuesType();
+	}
+
+	@Test
+	public void TS7195_CaseRelatedCreateValuesCheck(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for (WebElement currentFrame : frames) {
+			try {
+				driver.switchTo().frame(currentFrame);
+				driver.findElement(By.id("ext-comp-1426"));
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+				continue;
+			}
+		}
+	}
+
+	@Test
 	public void TS7083_ValidateDueTimeLogic(){
+		//Pre-requirement : no other cases or new cases tabss.
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -115,9 +158,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		page.setCaseDueDate("01/08/2017 10:47");//older than today date.
 		page.setContactName("Robo Tech");
 		page.save();
+
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		System.out.println(page.getCaseDueDate());
-		System.out.println(page.getCaseDate());
 		
 		DateFormat dateWithHourFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm");
 		Date caseDueDate = null;
@@ -137,57 +179,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		Assert.assertTrue(caseDueDate.after(caseCreatedDate) || caseDueDate.equals(caseCreatedDate));
 
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
-	
-	@Test
-	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.ValidChannelClosing();
-	}
-	
-	@Test
-	public void TS7090_CaseRelatedFieldsValuesSubArea(){
-
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.FieldsValuesSubArea();
-		
-	}
-	
-	@Test
-	public void TS7088_CaseRelatedFieldsValuesType(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.FieldsValuesType();
-	}
-	
-	@Test
-	public void TS7195_CaseRelatedCreateValuesCheck(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		for (WebElement currentFrame : frames) {
-			try {
-				driver.switchTo().frame(currentFrame);
-				driver.findElement(By.id("ext-comp-1426"));
-				break;
-			}catch(NoSuchElementException noSuchElemExcept) {
-				driver.switchTo().defaultContent();
-				continue;
-			}
-		}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 	}
-
+	
 }
