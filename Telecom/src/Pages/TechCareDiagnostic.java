@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,6 +18,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import Tests.TestBase;
 
 
 public class TechCareDiagnostic extends BasePage  {
@@ -35,7 +37,10 @@ public class TechCareDiagnostic extends BasePage  {
 			private WebElement filterP;
 	
 			@FindBy (how = How.XPATH, using = "//*[@id=\'ext-gen11\']/div[1]/table/tbody/tr/td[9]")
-			private WebElement celdavalue;
+			private WebElement celdavalue1;
+			
+			@FindBy (how = How.XPATH, using = "//*[@id=\'ext-gen11\']/div[2]/table/tbody/tr/td[9]")
+			private WebElement celdavalue2; 
 			
 			@FindBy (how = How.XPATH, using = "//*[@id=\'00Nc0000001pWdh_selected\']")
 			private WebElement listselect;
@@ -52,12 +57,54 @@ public class TechCareDiagnostic extends BasePage  {
 			@FindBy (how = How.XPATH, using = "//*[@id=\'saveButton\']")
 			private WebElement save;
 			
+			
+		//Pages
+		public void selectpage(String module) {
+			switch(module) {
+			case "1":
+			driver.get("https://cs14.salesforce.com/a3y?fcf=00Bc0000001LRmc");
+			break;
+			case "2":
+				if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+					driver.findElement(By.id("tsidLabel")).click();
+					try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+				}
+					waitFor(driver, (By.cssSelector(".x-border-panel")));		
+					List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
+					for (WebElement e : mainTabs) {
+							try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
+							}
+					List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
+					TestBase test = new TestBase();
+					test.goToLeftPanel(driver, "Cuentas");
+					WebElement frame0 = driver.findElement(By.tagName("iframe"));
+					driver.switchTo().frame(frame0);
+					waitFor(driver, (By.name("fcf")));	
+					Select field = new Select(driver.findElement(By.name("fcf")));
+					field.selectByVisibleText("Vista Tech");
+			break;
+			}
+		}
+		private void waitFor(WebDriver driver2, By by) {
+			// TODO Auto-generated method stub
+			
+		}
 		//Methods
-		public void selectfile() {
+		public void selectfile(String value) {
 			Actions action = new Actions(driver);   
 			filterP.click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			action.moveToElement(celdavalue).doubleClick().perform();}
+			switch(value) {
+			case "1":
+				try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				action.moveToElement(celdavalue1).doubleClick().perform();
+			case "2":
+				try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				action.moveToElement(celdavalue2).doubleClick().perform();}
+			
+			}
+			
 			
 		public void clearvalues() {
 			Select dateDropDown=new Select(listselect);
@@ -81,32 +128,74 @@ public class TechCareDiagnostic extends BasePage  {
 			case "Sin Sesión":
 				setSimpleDropdown(listunselect, value);
 				break;
-			}
-			
+			case " ":
+				break;}
 			selectvalue.click();
 			save.click();}
 		
-		public void validvalue(String value) {
+		public void validvalue1(String value) {
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			switch(value) {
 			case "UP-UP":
-				Assert.assertEquals(celdavalue.getText() ,value);
+				Assert.assertEquals(celdavalue1.getText() ,value);
 				break;
 			case "UP-DOWN":
-				Assert.assertEquals(celdavalue.getText() ,value);
+				Assert.assertEquals(celdavalue1.getText() ,value);
 				break;
 			case "DOWN-DOWN":
-				Assert.assertEquals(celdavalue.getText() ,value);
+				Assert.assertEquals(celdavalue1.getText() ,value);
 				break;
 			case "Sin Sesion":
-				Assert.assertEquals(celdavalue.getText() ,value);
+				Assert.assertEquals(celdavalue1.getText() ,value);
+				break;
+			case "":
+				Assert.assertEquals(celdavalue1.getText() ,value);
 				break;}
 			}
+		public void validvalue2(String value) {
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			switch(value) {
+			case "UP-UP":
+				Assert.assertEquals(celdavalue2.getText() ,value);
+				break;
+			case "UP-DOWN":
+				Assert.assertEquals(celdavalue2.getText() ,value);
+				break;
+			case "DOWN-DOWN":
+				Assert.assertEquals(celdavalue2.getText() ,value);
+				break;
+			case "Sin Sesion":
+				Assert.assertEquals(celdavalue2.getText() ,value);
+				break;
+			case "":
+				Assert.assertEquals(celdavalue2.getText() ,value);
+				break;}
+			}
+		public void openrightpanel() {
+			driver.switchTo().defaultContent();
+			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-east")).size() != 0) {
+				driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-east")).click();
+				}
+		}
 		
+		public void selectaccounttech() {
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.navigate().refresh();
+			WebElement frame4 = driver.findElement(By.tagName("iframe"));
+			driver.switchTo().frame(frame4);
+			waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));		
+			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = 'Adrian Tech']"));
+			accounts.get(0).click();
+			driver.switchTo().defaultContent();
+		}
 			
-			
-			
-			
+		public void SelectTechnicalAssistance() {
+			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame1.get(5));
+			List<WebElement> btns = driver.findElements(By.xpath("//*[text() = 'Asistencia Técnica']"));
+			btns.get(0).click();
+			driver.switchTo().defaultContent();
+		}
 			
 			
 			

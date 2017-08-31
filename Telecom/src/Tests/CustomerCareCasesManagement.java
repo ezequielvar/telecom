@@ -42,7 +42,7 @@ public class CustomerCareCasesManagement extends TestBase {
 	}
 		
 	@Test
-	public void PFTA107_DeleteCasesAdminRestrictedMessage() {
+	public void TS7095_DeleteCasesAdminRestrictedMessage() {
 		String adminRestrictedMsg = "El primer error de validación encontrado fue \"Solo el administrador puede eliminar casos generados.\"";
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCasesManager CCManagerPage = new CustomerCasesManager(driver);

@@ -268,6 +268,10 @@ public class CasePage extends BasePage {
 		caseduedate.sendKeys(dueDate);
 	}
 	
+	public void setContactName(String contactName) {//*Robo Tech
+		casename.sendKeys(contactName);
+	}
+	
 	
 	public String getCaseDate(){
 		return caseDate.getText();

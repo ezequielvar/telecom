@@ -42,10 +42,26 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		this.driver = setConexion.setupEze();	
 		login(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://cs14.salesforce.com/a3y?fcf=00Bc0000001LRmc");
+		
 	}
 	@AfterClass
 	public void tearDown() {
+		value = "UP/Down";
+		TechCareDiagnostic page = new TechCareDiagnostic(driver);
+		page.selectpage("1");
+		page.selectfile("1");
+		page.clearvalues();
+		page.selectvalues(value);
+		page.validvalue1(value);
+		value = "Down/Down";
+		page.selectfile("1");
+		page.selectvalues(value);
+		page.validvalue1(value);
+		value = "UP/UP";
+		page.selectfile("2");
+		page.clearvalues();
+		page.selectvalues(value);
+		page.validvalue1(value);
 	driver.close();
 	}
 	
@@ -53,37 +69,73 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 	public void TS6755_DiagnosticsFixedBroadbandUPUP() {
 		value = "UP/UP";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
-		page.selectfile();
+		page.selectpage("1");
+		page.selectfile("1");
 		page.clearvalues();
 		page.selectvalues(value);
-		page.validvalue(value);
+		page.validvalue1(value);
+		page.selectfile("2");
+		page.clearvalues();
+		page.selectvalues(value);
+		page.validvalue2(value);
 }
 	
 	@Test
 	public void TS6756_DiagnosticsFixedBroadbandUPDOWN() {
 		value = "UP/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
-		page.selectfile();
+		page.selectpage("1");
+		page.selectfile("1");
 		page.clearvalues();
 		page.selectvalues(value);
-		page.validvalue(value);
+		page.validvalue1(value);
+		page.selectfile("2");
+		page.clearvalues();
+		page.selectvalues(value);
+		page.validvalue2(value);
 }
 	@Test
 	public void TS6757_DiagnosticsFixedBroadbandDOWNDOWN() {
 		value = "Down/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
-		page.selectfile();
+		page.selectpage("1");
+		page.selectfile("1");
 		page.clearvalues();
 		page.selectvalues(value);
-		page.validvalue(value);
+		page.validvalue1(value);
+		page.selectfile("2");
+		page.clearvalues();
+		page.selectvalues(value);
+		page.validvalue2(value);
 }
 	@Test
 	public void TS6759_DiagnosticsFixedBroadbandNOTSESION() {
 		value = "Sin Sesión";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
-		page.selectfile();
+		page.selectpage("1");
+		page.selectfile("1");
 		page.clearvalues();
 		page.selectvalues(value);
-		page.validvalue(value);
+		page.validvalue1(value);
+		page.selectfile("2");
+		page.clearvalues();
+		page.selectvalues(value);
+		page.validvalue2(value);
 }
+	@Test
+	public void TS6410_DiagnosticsServiceIndifferentEnteringTechCarefrom360view() {
+		TechCareDiagnostic page = new TechCareDiagnostic(driver);
+		page.selectpage("2");
+}
+	@Test
+	public void TS6484_DiagnosticsIndifferentserviceWithoutselectingservice() {
+		TechCareDiagnostic page = new TechCareDiagnostic(driver);
+		page.selectpage("2");
+		page.selectaccounttech();
+		page.openrightpanel();
+		page.SelectTechnicalAssistance();
+		
+}
+	
+	
 }
