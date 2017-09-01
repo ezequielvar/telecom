@@ -172,9 +172,8 @@ public class TechCareDiagnostic extends BasePage  {
 				break;}
 			}
 		public void openrightpanel() {
-			driver.switchTo().defaultContent();
-			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-east")).size() != 0) {
-				driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-east")).click();
+			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
+				driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
 				}
 		}
 		
@@ -183,22 +182,86 @@ public class TechCareDiagnostic extends BasePage  {
 			driver.navigate().refresh();
 			WebElement frame4 = driver.findElement(By.tagName("iframe"));
 			driver.switchTo().frame(frame4);
-			waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));		
+			waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = 'Adrian Tech']"));
 			accounts.get(0).click();
 			driver.switchTo().defaultContent();
 		}
 			
-		public void SelectTechnicalAssistance() {
+		public void SelectGestion(String gestion) {
 			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-			driver.switchTo().frame(frame1.get(5));
-			List<WebElement> btns = driver.findElements(By.xpath("//*[text() = 'Asistencia Técnica']"));
-			btns.get(0).click();
-			driver.switchTo().defaultContent();
-		}
+			driver.switchTo().frame(frame1.get(4));
+			driver.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font"));
+			//driver.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font"));
 			
-			
-			
+			List <WebElement> btns = driver.findElements(By.cssSelector(".slds-text-body_regular.ta-button-font"));
+			/*Integer a = 0; 
+			for (WebElement e: btns) {
+				System.out.println(a);
+				System.out.println(e.getText());
+				a++;
+			}*/
+			switch (gestion){
+			case "Actualizar Pago":
+				btns.get(0).click();
+				break;
+			case "Pague su Factura":
+				btns.get(1).click();
+				break;
+			case "Cambie su Dirección de Facturación":
+				btns.get(2).click();
+				break;
+			case "Reporte Falla de Servicio":
+				btns.get(3).click();
+				break;
+			case "Reporte Problema con Packs":
+				btns.get(4).click();
+				break;
+			case "Añadir Familiar":
+				btns.get(5).click();
+				break;
+			case "Ver Uso":
+				btns.get(6).click();
+				break;
+			case "Actualización del servicio":
+				btns.get(7).click();
+				break;
+			case "Asistencia Técnica":
+				btns.get(8).click();
+				break;
+			case "Ver Prefactibilidad":
+				btns.get(9).click();
+				break;
+			case "Nueva Venta":
+				btns.get(10).click();
+				break;
+			case "Sugerencias":
+				btns.get(11).click();
+				break;
+			case "Movimientos de cuenta de facturación":
+				btns.get(12).click();
+				break;
+			case "Servicio Técnico":
+				btns.get(13).click();
+				break;
+			case "Eventos Masivos":
+				btns.get(14).click();
+				break;
+			case	"Detalle de Consumos":
+				btns.get(15).click();
+				break;
+			case	"Cambios de condición impositiva":
+				btns.get(16).click();
+				break;
+			case	"Cambio de ciclo":
+				btns.get(17).click();
+				break;
+			case	"Knowledge":
+				btns.get(18).click();
+				break;
+			}driver.switchTo().defaultContent();}
+		
 			
 			
 			
