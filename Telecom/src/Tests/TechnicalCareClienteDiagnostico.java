@@ -33,6 +33,7 @@ import Pages.setConexion;
 
 public class TechnicalCareClienteDiagnostico extends TestBase  {
 	String value;
+	String gestion;
 	private WebDriver driver;
  	
 	@BeforeTest
@@ -127,11 +128,15 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 }
 	@Test
 	public void TS6484_DiagnosticsIndifferentserviceWithoutselectingservice() {
+		gestion = "Asistencia Técnica";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectpage("2");
 		page.selectaccounttech();
-		page.openrightpanel();
-		page.SelectTechnicalAssistance();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
+			}
+		page.SelectGestion(gestion);
 		
 }
 	
