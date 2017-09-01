@@ -110,7 +110,7 @@ public class customerInformationUpdates extends TestBase {
 			driver.switchTo().defaultContent();
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+			   driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
 			}
 			List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame5.get(5));
