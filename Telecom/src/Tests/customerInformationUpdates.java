@@ -81,6 +81,7 @@ public class customerInformationUpdates extends TestBase {
 			waitFor(driver, (By.name("fcf")));	
 			Select field = new Select(driver.findElement(By.name("fcf")));
 			field.selectByVisibleText("Todas las cuentas");
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.name("new")).click();
 			driver.switchTo().defaultContent();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

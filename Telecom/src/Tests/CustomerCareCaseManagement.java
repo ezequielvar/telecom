@@ -1,6 +1,10 @@
 package Tests;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +38,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -101,7 +105,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	}
 
 	@Test
-	public void PFTA78_ValidateDueTimeLogic(){
+	public void TS7083_ValidateDueTimeLogic(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -109,11 +113,29 @@ public class CustomerCareCaseManagement extends TestBase {
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
 		page.setCaseDueDate("01/08/2017 10:47");//older than today date.
+		page.setContactName("Robo Tech");
 		page.save();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		System.out.println(page.getCaseDueDate());
 		System.out.println(page.getCaseDate());
-		Assert.assertEquals(page.getCaseDueDate(), page.getCaseDate());
+		
+		DateFormat dateWithHourFormat = new SimpleDateFormat("dd/mm/yyyy hh:mm");
+		Date caseDueDate = null;
+		try {
+			caseDueDate = dateWithHourFormat.parse(page.getCaseDueDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Date caseCreatedDate = null;
+		try {
+			caseCreatedDate = dateWithHourFormat.parse(page.getCaseDate());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Assert.assertTrue(caseDueDate.after(caseCreatedDate) || caseDueDate.equals(caseCreatedDate));
+
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -149,6 +171,23 @@ public class CustomerCareCaseManagement extends TestBase {
 		page.FieldsValuesType();
 	}
 	
+	@Test
+	public void TS7195_CaseRelatedCreateValuesCheck(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for (WebElement currentFrame : frames) {
+			try {
+				driver.switchTo().frame(currentFrame);
+				driver.findElement(By.id("ext-comp-1426"));
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+				continue;
+			}
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-	
+	}
+
 }

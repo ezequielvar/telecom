@@ -26,7 +26,7 @@ public class ValidationQuestions extends TestBase {
 	String Name = "Pepeasd";
 	String LastName = "Argentoasd";
 	String DateOfBirthday = "06/07/1988";
-	String DNI = "DNI";
+	String DNI = "Documento Nacional de Identidad";
 	String[] DocValue = {"52694444","3569874563","365","ssss"};
 	
 	@AfterClass
@@ -45,8 +45,7 @@ public class ValidationQuestions extends TestBase {
 
 	@BeforeMethod
 	public void Setup() throws Exception {
-		driver = setConexion.setupEze();	
-		login1(driver);
+		driver.get("https://goo.gl/ETjDYJ");
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.searchContact(DNI, DocValue[0], "femenino");

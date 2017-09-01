@@ -27,7 +27,7 @@ public class createdContact extends TestBase {
 	private WebDriver driver;
 	String[] genero = {"masculino","femenino"};
 	String DNI = "Documento Nacional de Identidad";
-	String[] DocValue = {"52698547","3569874563","365","ssss"};
+	String[] DocValue = {"10000000","3569874563","365","ssss"};
 	
 	@AfterClass
 	public void tearDown() {
@@ -39,7 +39,9 @@ public class createdContact extends TestBase {
 	{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try{login1(driver);}catch(org.openqa.selenium.NoSuchElementException e){}
+		driver.get("https://goo.gl/ETjDYJ");
+		login1(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod
@@ -124,8 +126,8 @@ public class createdContact extends TestBase {
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
 		base.setSimpleDropdown(type, "Pasaporte");
-		driver.findElement(By.id("PassportDocument")).sendKeys("123");
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-maxlength.ng-invalid.ng-invalid-pattern.ng-valid-required.ng-invalid-minlength"));
+		driver.findElement(By.id("PassportDocument")).sendKeys("1");
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
 	}
 	
 	@Test
@@ -134,7 +136,6 @@ public class createdContact extends TestBase {
 		WebElement type = driver.findElement(By.id("DocumentType"));
 		base.setSimpleDropdown(type, "Pasaporte");
 		driver.findElement(By.id("PassportDocument")).sendKeys("1231231234");
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-valid-minlength.ng-invalid.ng-invalid-pattern.ng-invalid-maxlength"));
 	}
 	
 	@Test

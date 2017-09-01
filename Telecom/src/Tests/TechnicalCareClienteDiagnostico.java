@@ -19,8 +19,10 @@ import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -36,14 +38,14 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 	String gestion;
 	private WebDriver driver;
  	
-	@BeforeTest
+	@BeforeClass
 	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
+		this.driver = setConexion.setupEze();	
 		login(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
-//	@AfterTest
+	@AfterClass
 	public void tearDown() {
 		value = "UP/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
