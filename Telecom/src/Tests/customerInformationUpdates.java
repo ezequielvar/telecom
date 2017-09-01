@@ -81,6 +81,7 @@ public class customerInformationUpdates extends TestBase {
 			waitFor(driver, (By.name("fcf")));	
 			Select field = new Select(driver.findElement(By.name("fcf")));
 			field.selectByVisibleText("Todas las cuentas");
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.name("new")).click();
 			driver.switchTo().defaultContent();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -110,7 +111,7 @@ public class customerInformationUpdates extends TestBase {
 			driver.switchTo().defaultContent();
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+			   driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
 			}
 			List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame5.get(5));
