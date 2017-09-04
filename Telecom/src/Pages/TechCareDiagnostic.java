@@ -57,6 +57,9 @@ public class TechCareDiagnostic extends BasePage  {
 			@FindBy (how = How.XPATH, using = "//*[@id=\'saveButton\']")
 			private WebElement save;
 			
+			@FindBy (how = How.XPATH, using = "//*[@id=\'LookupSelectofService\']")
+			private WebElement SelectService;
+			
 			
 		//Pages
 		public void selectpage(String module) {
@@ -192,8 +195,6 @@ public class TechCareDiagnostic extends BasePage  {
 		public void SelectGestion(String gestion) {
 			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame1.get(4));
-			driver.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font"));
-			//driver.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font"));
 			
 			List <WebElement> btns = driver.findElements(By.cssSelector(".slds-text-body_regular.ta-button-font"));
 			/*Integer a = 0; 
@@ -264,7 +265,13 @@ public class TechCareDiagnostic extends BasePage  {
 		
 			
 			
-			
+			public void SelectService () {
+				List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+				driver.switchTo().frame(frame1.get(0));
+		SelectService.click();
+		List <WebElement> Service = driver.findElements(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
+		Service.get(3).click();
+			}
 			
 			
 			
