@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -29,13 +30,12 @@ public class diagnosis extends TestBase {
 	@AfterClass
 	public void tearDown2() {
 		driver.close();
-		
 	}
 	
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -49,7 +49,7 @@ public class diagnosis extends TestBase {
 	@BeforeMethod
 	public void setUp() throws Exception {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+		if (!driver.getCurrentUrl().toString().startsWith("https://cs14.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
@@ -190,5 +190,34 @@ public class diagnosis extends TestBase {
 		}		
 		Assert.assertTrue(a == true);
 	}
+
+	@Test
+	public void TS0000_diagnosticInternetCheck() {
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
+		} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel(driver, "Cuentas");
+		clickLeftPanel(driver);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Accounts accountPage = new Accounts(driver);
+		//Selecciono Vista Tech
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));//uncommentIfNeeded.
+		accountPage.accountSelect("Vista Tech");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//select accountName "Robo Tech", currently has index 10.
+		accountPage.selectAccountByName("Robo Tech");		
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		Select serviceSelector = new Select(accountPage.getServiceSelector());
+		serviceSelector.selectByVisibleText("Internet");
+		
+		//accountSelect;;
+	}
+
+
 
 }
