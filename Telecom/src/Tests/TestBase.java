@@ -81,6 +81,17 @@ public class TestBase {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
 	}
 
+	
+	public void clickLeftPanel(WebDriver driver) {
+		List<WebElement> buttons = driver.findElements(By.tagName("button"));
+		for (WebElement btn : buttons) {
+			if(btn.getAttribute("id").equals("ext-gen33")) {
+				btn.click();
+				break;
+			}
+		}
+	}
+	
 		//}else{
 		//	driver.findElement(By.id("chooser")).click();
 		//}
