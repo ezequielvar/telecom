@@ -30,13 +30,13 @@ public class diagnosis extends TestBase {
 
 	@AfterClass
 	public void tearDown2() {
-		driver.close();
+//		driver.close();
 	}
 	
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -212,11 +212,19 @@ public class diagnosis extends TestBase {
 		accountPage.selectAccountByName("Robo Tech");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		WebElement serviceSelector = (accountPage.getServiceSelector());
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame.get(4));
+		driver.findElement(By.id("LookupSelectofService")).click();
+		WebElement select = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
+		List<WebElement> asd = select.findElements(By.tagName("li"));
+		System.out.println(asd.size());
+		((JavascriptExecutor)driver).executeScript("var select = arguments[0]; for(var i = 0; i < select.options.length; i++){ if(select.options[i].text == arguments[1]){ select.options[i].selected = true; } }", select, "Internet");
+		/*WebElement serviceSelector = (accountPage.getServiceSelector());
 		System.out.println(serviceSelector.getAttribute("aria-hidden"));
 		serviceSelector.click();
-		serviceSelector.sendKeys("Internet");
+		serviceSelector.sendKeys("Internet");*/
 		//accountSelect;
 	}
 
