@@ -21,6 +21,7 @@ import Pages.Accounts;
 import Pages.diagnosisTab;
 import Pages.setConexion;
 import Pages.BasePage;
+import Pages.TechCareDiagnostic;
 
 public class diagnosis extends TestBase {
 	
@@ -208,14 +209,15 @@ public class diagnosis extends TestBase {
 		accountPage.accountSelect("Vista Tech");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");		
+		accountPage.selectAccountByName("Robo Tech");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		Select serviceSelector = new Select(accountPage.getServiceSelector());
-		serviceSelector.selectByVisibleText("Internet");
-		
-		//accountSelect;;
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		WebElement serviceSelector = (accountPage.getServiceSelector());
+		System.out.println(serviceSelector.getAttribute("aria-hidden"));
+		serviceSelector.click();
+		serviceSelector.sendKeys("Internet");
+		//accountSelect;
 	}
 
 
