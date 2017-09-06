@@ -4,6 +4,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -26,9 +27,9 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod
+	@AfterClass
 	public void tearDown() {
-	//	driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
+		driver.close();
 	}
 
 	@BeforeMethod
