@@ -27,11 +27,10 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 
 	private WebDriver driver;
 
-<<<<<<< HEAD
-	@BeforeTest
+
+	/*@BeforeTest
 	public void mainSteup() {
 		this.driver = setConexion.setupEze();	
-=======
 	@BeforeClass
 	public void init() throws Exception
 	{
@@ -39,12 +38,11 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
+	}*/
 	
 	@BeforeMethod
 	public void mainSetup() {
 		this.driver = setConexion.setupPablo();	
->>>>>>> ef7bcd9c10a9d82673a537aceb64c20f47986698
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
@@ -76,25 +74,29 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.close();
-	}
-	
-	@AfterMethod
-	public void alert (){
+		
 		driver.get("https://cs14.salesforce.com/console");
 		try{
 			Alert alert = driver.switchTo().alert();
 			System.out.println(alert.getText());
 			alert.accept();
 		}catch(org.openqa.selenium.NoAlertPresentException e){}
+		driver.close();
 	}
+	
+	/*
+	@AfterMethod
+	public void alert (){
+
+	}*/
 	/*
 	@BeforeMethod
 	public void setup() throws Exception {	
 	}
 	*/
+	
 	@Test
-	public void PFTA_76_CreatedAndDueTimeInHoursFormatCheck(){
+	public void TS7202_CreatedAndDueTimeInHoursFormatCheck(){
 		
 		String dateWithHourPattern = "(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2})";
 
@@ -103,7 +105,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 
 		CustomerCasesManager customerCasesManagerPage = new CustomerCasesManager(driver);
 
-		customerCasesManagerPage.clickCase("00001678");
+		customerCasesManagerPage.clickCase("00001372");
 		CasePage page = new CasePage(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -117,14 +119,14 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	}
 	
 	@Test
-	public void PFTA_VisualizeDueDate(){
+	public void TS7082_VisualizeDueDate(){
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 
 		CustomerCasesManager customerCasesManagerPage = new CustomerCasesManager(driver);
 
-		customerCasesManagerPage.clickCase("00001678");
+		customerCasesManagerPage.clickCase("00001372");
 		CasePage page = new CasePage(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
