@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.ContactMotivesManager;
 import Pages.NewContactMotive;
 import Pages.setConexion;
 
@@ -32,20 +33,21 @@ public class ABMdeMotivoAdmin extends TestBase {
 
 	@BeforeMethod
 	public void setUp() throws Exception {
-		/*if (!driver.getCurrentUrl().toString().startsWith("https://cs14.salesforce.com/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-		}*/
 		//TODO: add how to get to ABM de Motivo
+		String motivesAbmURL = "https://cs14.salesforce.com/a41?fcf=00Bc0000001LRma&rolodexIndex=-1&page=1";
+		if (!driver.getCurrentUrl().toString().equals(motivesAbmURL)){
+			driver.get(motivesAbmURL);
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 	}
 	
 	@Test
 	public void TS12587_Agregar_nuevo_motivo() {
-		String newMotiveURL = "https://cs14.salesforce.com/a41/e?common.udd.actions.ActionsUtilORIG_URI=%2Fa41c00000023SvT%2Fe&retURL=%2Fa41c0000002I61F&_CONFIRMATIONTOKEN=VmpFPSxNakF4Tnkwd09TMHdPVlF4Tnpvd016b3hPUzQ0T1ROYSxHNENsbmpDWlJxcGI5Rld2eXJ2cWZvLFpEWXlOVFV6";
-		driver.get(newMotiveURL);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//String newMotiveURL = "https://cs14.salesforce.com/a41/e?common.udd.actions.ActionsUtilORIG_URI=%2Fa41c00000023SvT%2Fe&retURL=%2Fa41c0000002I61F&_CONFIRMATIONTOKEN=VmpFPSxNakF4Tnkwd09TMHdPVlF4Tnpvd016b3hPUzQ0T1ROYSxHNENsbmpDWlJxcGI5Rld2eXJ2cWZvLFpEWXlOVFV6";
+		//driver.get(newMotiveURL);
+		driver.findElement(By.name("new")).click();
 		NewContactMotive newCMPage = new NewContactMotive(driver);
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String motiveName = "motivo Nuevo TS12587";
 		String descripcion = "Descripcion para el test.";
 		newCMPage.getContactMotiveName().sendKeys(motiveName);
@@ -56,9 +58,18 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals(driver.findElement(By.id("Name_ileinner")).getText(), motiveName); //checks name input with current.
 		Assert.assertEquals(driver.findElement(By.id("00Nc0000001pWdl_ileinner")).getText(), descripcion); //checks descripcion input with current.
-		driver.findElement(By.name("del")).click();//deletes motive.
+		/*
+		driver.findElement(By.name("del")).click(); //deletes motive.
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
+		*/
+		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click(); //goes back to main page for ABM.
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactMotivesManager cMMPage = new ContactMotivesManager(driver);
+		//index 4 is the motiveName
+		Assert.assertEquals(cMMPage.getMotiveByName(motiveName).findElements(By.className("x-grid3-col")).get(4).getText(), motiveName);
+		cMMPage.deleteMotiveByName(motiveName);
+
 	}
 	
 
