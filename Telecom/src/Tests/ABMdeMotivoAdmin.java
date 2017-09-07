@@ -2,15 +2,12 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.ContactMotive;
 import Pages.ContactMotiveManager;
 import Pages.ContactMotivesManager;
 import Pages.setConexion;
@@ -24,6 +21,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	private String motiveName = "motivo Nuevo para Tests"; // needed for 12587 and 12589 (ADD and DEL motive)
 	private String descripcion = "Descripcion para el test.";
 	private String servicio = "Llamadas ilimitadas";
+	private String motivesAbmURL = "https://cs14.salesforce.com/a41?fcf=00Bc0000001LRma&rolodexIndex=-1&page=1";
 	
 	@BeforeClass
 	public void init() throws Exception
@@ -42,7 +40,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	@BeforeMethod
 	public void setUp() throws Exception {
 		//TODO: add how to get to ABM de Motivo
-		String motivesAbmURL = "https://cs14.salesforce.com/a41?fcf=00Bc0000001LRma&rolodexIndex=-1&page=1";
+		
 		if (!driver.getCurrentUrl().toString().equals(motivesAbmURL)){
 			driver.get(motivesAbmURL);
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -110,6 +108,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		Assert.assertEquals(contactMMPage.getServicio().getAttribute("value"), servicio);
 		contactMMPage.cancel();
 	}
+	
 	/*
 	@Test(priority = 4, groups ="b", dependsOnGroups = "a")
 	public void TS12589_ABM_de_Motivo_Asociar_Motivo_A_Incidente_Masivo() {
@@ -143,9 +142,5 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		Assert.assertEquals(cMMPage.getMotiveByName(motiveName), null); //The motive doesnt exist anymore :( 
-	}
-
-
-	
-	
+	}	
 }
