@@ -2,12 +2,15 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.ContactMotive;
 import Pages.ContactMotiveManager;
 import Pages.ContactMotivesManager;
 import Pages.setConexion;
@@ -107,7 +110,28 @@ public class ABMdeMotivoAdmin extends TestBase {
 		Assert.assertEquals(contactMMPage.getServicio().getAttribute("value"), servicio);
 		contactMMPage.cancel();
 	}
+	/*
+	@Test(priority = 4, groups ="b", dependsOnGroups = "a")
+	public void TS12589_ABM_de_Motivo_Asociar_Motivo_A_Incidente_Masivo() {
+		//expected main page for ABM of motives.
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//The Motive Name here is: Nombre Motivo MODIFICADO.
+		ContactMotivesManager cMMPage = new ContactMotivesManager(driver);
+		cMMPage.openMotiveByName(motiveName);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactMotive CMPage = new ContactMotive(driver);
+		CMPage.newCase();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//Could use AccountType
+		WebElement registerTypeSelect = driver.findElement(By.id("p3"));
+		CMPage.setSimpleDropdown(registerTypeSelect, "Incidente Masivo");
+		driver.findElement(By.name("save")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.name("save")).click();
+
+	}*/
 	
+	//@Test(priority = 5, groups ="c", dependsOnGroups = "b") //change to this when TS12589-MassiveIncident works.
 	@Test(priority = 4, groups ="b", dependsOnGroups = "a")
 	public void TS12589_ABM_de_Motivo_Quitar_Motivo() {
 		//expected main page for ABM of motives.
@@ -118,7 +142,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		cMMPage.deleteMotiveByName(motiveName); //here its deleted
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		Assert.assertEquals(cMMPage.getMotiveByName(motiveName), null); //The motive doesnt exist anymore :(
+		Assert.assertEquals(cMMPage.getMotiveByName(motiveName), null); //The motive doesnt exist anymore :( 
 	}
 
 

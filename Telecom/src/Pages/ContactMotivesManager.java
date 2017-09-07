@@ -72,4 +72,11 @@ public class ContactMotivesManager extends BasePage{
 			//does Nothing.
 		}
 	}
+	
+	public void openMotiveByName(String motiveName) {
+		WebElement motive = getMotiveByName(motiveName);
+		//The index for the name is 4, has "a" element
+		motive.findElements(By.className("x-grid3-col")).get(4).findElement(By.tagName("a")).click();
+	}
+	
 }
