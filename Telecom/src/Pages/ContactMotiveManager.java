@@ -13,8 +13,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class NewContactMotive extends BasePage{
-	
+public class ContactMotiveManager extends BasePage{
+	//NOTA: Modificar Motivo de Contacto, y Nuevo Motivo de Contacto, tienen los mismos elementos. 07/09/2017
 	WebDriver driver;
 	
 	@FindBy (how = How.ID, using ="Name")
@@ -35,30 +35,17 @@ public class NewContactMotive extends BasePage{
 	@FindBy (how = How.NAME , using ="save")
 	private WebElement saveBtn; //button. id doesnt change.
 	
-	public NewContactMotive(WebDriver driver){
+	@FindBy (how = How.NAME , using ="cancel")
+	private WebElement cancelBtn; //button. id doesnt change.
+	
+	public ContactMotiveManager(WebDriver driver){
 		this.driver = driver;
-		driver.switchTo().defaultContent();//this is in mainPage, so no iframes.
+		driver.switchTo().defaultContent(); //this is in mainPage, so no iframes.
         PageFactory.initElements(driver, this);
 	}
-/*	
-	public WebElement getFrame() {//frame
-		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		for (WebElement currentFrame : frames) {
-			driver.switchTo().defaultContent();
-			driver.switchTo().frame(currentFrame);
-			try {
-				contactMotiveName.getText();//confirms that this element exists in this frame.
-				System.out.println(contactMotiveName.getText());
-				return currentFrame;
-			}catch(NoSuchElementException noSuchElemExcept){
-				System.out.println("Exception here!");
-			}
-		}
-		return null;
-	}*/
 	
 	public WebElement getContactMotiveName() {
-		return driver.findElement(By.id("Name"));
+		return contactMotiveName;
 	}
 
 	public WebElement getDescripcion() {
@@ -84,4 +71,16 @@ public class NewContactMotive extends BasePage{
 	public void save() {
 		saveBtn.click();
 	}
+	
+	public void cancel() {
+		cancelBtn.click();
+	}
+
+	public void clearValues() {
+		// TODO Auto-generated method stub
+		getContactMotiveName().clear();
+		getDescripcion().clear();
+		getServicio().clear();
+	}
+	
 }
