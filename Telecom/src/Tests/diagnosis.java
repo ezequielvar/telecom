@@ -217,10 +217,9 @@ public class diagnosis extends TestBase {
 		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame.get(4));
 		driver.findElement(By.id("LookupSelectofService")).click();
-		WebElement select = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
-		List<WebElement> asd = select.findElements(By.tagName("li"));
-		System.out.println(asd.size());
-		((JavascriptExecutor)driver).executeScript("var select = arguments[0]; for(var i = 0; i < select.options.length; i++){ if(select.options[i].text == arguments[1]){ select.options[i].selected = true; } }", select, "Internet");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[1].click()");
 		/*WebElement serviceSelector = (accountPage.getServiceSelector());
 		System.out.println(serviceSelector.getAttribute("aria-hidden"));
 		serviceSelector.click();
