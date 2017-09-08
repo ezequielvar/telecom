@@ -241,5 +241,51 @@ public class diagnosis extends TestBase {
 	}
 
 
+	@Test
+	public void TS6256_Boton_Ejecutar_Grisado_Chequeo() {
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
+		} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel(driver, "Cuentas");
+		clickLeftPanel(driver);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Accounts accountPage = new Accounts(driver);
+		//Selecciono Vista Tech
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
+		accountPage.accountSelect("Vista Tech");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//select accountName "Robo Tech", currently has index 10.
+		accountPage.selectAccountByName("Robo Tech");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame.get(4));
+		//Service Selector
+		Assert.assertFalse(accountPage.isExecuteButtonPresent());
+		driver.findElement(By.id("LookupSelectofService")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertFalse(accountPage.isExecuteButtonPresent());
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
+		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertFalse(accountPage.isExecuteButtonPresent());
+		accountPage.continueFromService(); //next page.
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//Contact Motive Selector
+		driver.findElement(By.id("SelectedMotivesLookup")).click();
+		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		// the index for "No me funciona internet" is 8, 9 elements, 
+		//some not visible (previous option elements)
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[8].click()");
+		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(accountPage.isExecuteButtonPresent());
 
+		//execute.
+		//accountPage.executeInternetDiagnosis();		
+	}
 }

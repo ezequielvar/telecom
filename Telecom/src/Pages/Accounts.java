@@ -231,6 +231,15 @@ public class Accounts extends BasePage {
 		motiveSelectedContinue.click();
 	}
 	
+	public boolean isExecuteButtonPresent() {
+		try {
+			executeDiagnosisBtn.isDisplayed();
+			return true;
+		}catch(NoSuchElementException noSuchElemExcept) {
+			return false;
+		}
+	}
+	
 	public void executeInternetDiagnosis() {
 		executeDiagnosisBtn.click();
 	}
