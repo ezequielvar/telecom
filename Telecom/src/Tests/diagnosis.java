@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -36,7 +37,7 @@ public class diagnosis extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -205,7 +206,7 @@ public class diagnosis extends TestBase {
 		Accounts accountPage = new Accounts(driver);
 		//Selecciono Vista Tech
 		driver.switchTo().defaultContent();
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));//uncommentIfNeeded.
+		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
 		accountPage.accountSelect("Vista Tech");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//select accountName "Robo Tech", currently has index 10.
@@ -216,15 +217,36 @@ public class diagnosis extends TestBase {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame.get(4));
+		//Service Selector
 		driver.findElement(By.id("LookupSelectofService")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
+<<<<<<< HEAD
 		js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[1].click()");
 		/*WebElement serviceSelector = (accountPage.getServiceSelector());
 		System.out.println(serviceSelector.getAttribute("aria-hidden"));
 		serviceSelector.click();
 		serviceSelector.sendKeys("Internet");*/
 		//accountSelect;
+=======
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
+		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accountPage.continueFromService(); //next page.
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//Contact Motive Selector
+		driver.findElement(By.id("SelectedMotivesLookup")).click();
+		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		// the index for "No me funciona internet" is 8, 9 elements, 
+		//some not visible (previous option elements)
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[8].click()");
+		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//execute.
+		accountPage.executeInternetDiagnosis();
+		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//checks togglers Text
+		Assert.assertTrue(accountPage.isTextInTogglersPresent("Estado del Servicio"));
+		Assert.assertTrue(accountPage.isTextInTogglersPresent("Asistencia"));
+>>>>>>> 16b9d0913538d391fa26ac831d83f591676832e4
 	}
 
 
