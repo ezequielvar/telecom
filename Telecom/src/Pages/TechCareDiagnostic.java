@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -135,6 +136,14 @@ public class TechCareDiagnostic extends BasePage  {
 				break;}
 			selectvalue.click();
 			save.click();}
+		
+		public void selectManyValues(List<String> values) {
+			for(String value : values) {
+				setSimpleDropdown(listunselect, value);
+				selectvalue.click();
+			}
+			save.click();
+		}
 		
 		public void validvalue1(String value) {
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

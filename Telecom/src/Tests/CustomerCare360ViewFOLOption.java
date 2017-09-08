@@ -34,10 +34,19 @@ public class CustomerCare360ViewFOLOption extends TestBase {
 	
 private WebDriver driver;
  	
-@AfterClass
+//@AfterClass
 public void tearDown() {
 		driver.close();
 	}
+<<<<<<< HEAD
+=======
+	
+//@BeforeTest
+public void mainSeteup() {
+	this.driver = setConexion.setupLeo();	
+
+}
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 
 @AfterMethod
 public void alert (){
@@ -51,7 +60,7 @@ public void alert (){
 @BeforeClass
 public void init() throws Exception
 {
-	this.driver = setConexion.setupEze();
+	this.driver = setConexion.setupLeo();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	login(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -84,11 +93,12 @@ public void setUpTest() {
 	field.selectByVisibleText("Todas Las cuentas");
 	
 	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
-	accounts.get(0).click();
+	accounts.get(0).click();	
 	driver.switchTo().defaultContent();
 }	
+
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -107,7 +117,7 @@ public void setUpTest() {
 
 	
 	@Test
-	public void TS7124_ValidationFormatTable () {
+	public void TS7123_Visualizar_Formato_Tabla () {
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.cssSelector(".ext-webkit.ext-chrome"));
 	}

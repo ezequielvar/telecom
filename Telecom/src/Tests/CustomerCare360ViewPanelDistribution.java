@@ -1,5 +1,6 @@
 package Tests;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -17,7 +18,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.CustomerCare;
 import Pages.Login;
+import Pages.TechCareDiagnostic;
 import Pages.setConexion;
 
 public class CustomerCare360ViewPanelDistribution extends TestBase {
@@ -25,7 +28,7 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 	private WebDriver driver;
 
 
-@AfterTest
+//@AfterTest
 public void tearDown() {
 		driver.close();
 }
@@ -42,19 +45,23 @@ public void alert (){
 @BeforeClass
 public void init() throws Exception
 {
+<<<<<<< HEAD
 	this.driver = setConexion.setupEze();
+=======
+	this.driver = setConexion.setupLeo();
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	login(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
 
-@BeforeMethod
+@BeforeClass
 public void setUpTest() {
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	if (!driver.getCurrentUrl().toString().contains("https://cs14.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 	}
 		
@@ -66,18 +73,22 @@ public void setUpTest() {
 	List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 	goToLeftPanel(driver, "Cuentas");
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	WebElement frame0 = driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(frame0);
 	waitFor(driver, (By.name("fcf")));	
 	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas las cuentas");
-	
-	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-
+	field.selectByVisibleText("Vista Care");
+	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));	
+	driver.findElement(By.xpath("//*[text() ='Andres Care']")).click();;
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
+	
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 	driver.switchTo().defaultContent();
-} 
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+}
 
 //@BeforeMethod
 public void setUpTest2() {
@@ -117,22 +128,21 @@ public void setUpTest2() {
 	waitFor(driver, (By.name("fcf")));	
 	Select field = new Select(driver.findElement(By.name("fcf")));
 	field.selectByVisibleText("Todas las cuentas");
-	
 	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	accounts.get(0).click();
 	driver.switchTo().defaultContent();
 }	
 		
 	@Test
-	public void TS7059_VerifyDisplayPanelPromotions() {		
+	public void TS7059_Verificar_Visualizar_Panel_Promociones() {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		try {
-			driver.findElement(By.id("ext-comp-1037-xcollapsed")).click();
-	    } catch (NoSuchElementException e) {	
-	    }		
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+			}		
 		
 		driver.switchTo().frame(frame1.get(4));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -141,7 +151,7 @@ public void setUpTest2() {
 	}
 	
 	@Test
-	public void TS7058_VerifyDisplayServiceActive() {
+	public void TS7058_Visualizar_Panel_Servicios_Activos() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 	
@@ -161,7 +171,7 @@ public void setUpTest2() {
 	}
 	
 	@Test
-	public void TS7202_VerifyDisplayPanelAlert() {	
+	public void TS7060_Visualizar_Panel_Alertas() {	
 
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -174,10 +184,10 @@ public void setUpTest2() {
 	
 	@Test
 	public void TS7201_VerifyDisplayfilterAccounts() {	
-		try {
-	        driver.findElement(By.id("eext-comp-1038-xcollapsed")).click();;
-	    } catch (NoSuchElementException e) {	
-	    }
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+			}
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -189,10 +199,10 @@ public void setUpTest2() {
 	}
 	@Test
 	public void TS7066_VerifyDisplayPanelAccountsClient() {	
-		try {
-	        driver.findElement(By.id("eext-comp-1038-xcollapsed")).click();;
-	    } catch (NoSuchElementException e) {	
-	    }
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+			}
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -202,10 +212,10 @@ public void setUpTest2() {
 	}
 	@Test
 	public void TS7054_VerifyDisplayPanelBusinessData() {	
-		try {
-	        driver.findElement(By.id("eext-comp-1038-xcollapsed")).click();;
-	    } catch (NoSuchElementException e) {	
-	    }
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
+			}
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -213,5 +223,116 @@ public void setUpTest2() {
 		driver.findElement(By.className("profile-box"));	
 		driver.switchTo().defaultContent();
 	}
+	@Test
+	public void TS7061_Visualizar_Panel_Sesiones_Guiadas() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openrightpanel();
+		page.verificaciondebotonesdegestion();
+		driver.switchTo().defaultContent();
+	}
+	
+	@Test
+	public void TS7062_Visualizar_Panel_Gestiones_abandonadas() {	
+		CustomerCare page = new CustomerCare(driver);
+		page.openrightpanel();
+		page.GestionAbandonadapanel();
+		driver.switchTo().defaultContent();
+	}
+	
+	@Test
+	public void TS7063_Contraccion_Paneles() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("todosOFF");
+		page.verificacrhideleft("todosOFF");
+		page.closeleftpanel();
+		page.openrightpanel();
+		page.panelder("todos");
+		page.verificarhideright("todosOFF");
+		page.closerightpanel();
+		driver.switchTo().defaultContent();
+	}
+	@Test
+	public void TS7064_Contraccion_Panel_Datos_Comerciales() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.verificarnohidedatoscomerciales();
+		driver.switchTo().defaultContent();
+	}
+	@Test
+	public void TS7065_Expansion_Paneles() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("todosON");
+		page.verificacrhideleft("todosON");
+		page.closeleftpanel();
+		page.openrightpanel();
+		page.panelder("todos");
+		page.verificarhideright("todosON");
+		page.closerightpanel();
+		driver.switchTo().defaultContent();
+	}	
+//360 View Customer Key Metrics
+	@Test
+	public void TS7074_Key_Metrics_Visualizar_Picklist() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.verificarpicklist();
+		driver.switchTo().defaultContent();
+	}
+	
+	@Test
+	public void TS7075_Key_Metrics_Funcionamiento_Picklist() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.funcionamientopicklist();
+		driver.switchTo().defaultContent();
+
+	}
+	@Test
+	public void TS7076_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Intereses_personales() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("perfil");
+		page.validarbtnsperfil("Intereses Personales");
+		driver.switchTo().defaultContent();
+}
+	@Test
+	public void TS7078_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Criterios_de_compra() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("perfil");
+		page.validarbtnsperfil("Criterios de compra");
+		driver.switchTo().defaultContent();
 }
 
+	@Test
+	public void TS7079_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Familia() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("perfil");
+		page.validarbtnsperfil("Familia");
+}
+	@Test
+	public void TS7080_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Productos_de_interes() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("perfil");
+		page.validarbtnsperfil("Productos de interes");
+}
+	@Test
+	public void TS7081_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Preocupaciones() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.panelizq("perfil");
+		page.validarbtnsperfil("Preocupaciones");
+}
+	@Test
+	public void TS7082() throws ParseException {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		page.comparaciondefechas();
+	}
+	
+	
+}
