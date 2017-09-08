@@ -36,7 +36,14 @@ public class Accounts extends BasePage {
 	
 	private List<WebElement> rightActionButtons;
 
-	private WebElement inpSelectService;
+	@FindBy (how = How.ID, using = "SelectServiceStep_nextBtn")
+	private WebElement serviceSelectedContinue; //button
+
+	@FindBy (how = How.ID, using = "SelectMotiveDiagnosis_nextBtn")
+	private WebElement motiveSelectedContinue; //button	
+	
+	@FindBy (how = How.ID, using = "RemoteActionInternet")
+	private WebElement executeDiagnosisBtn; //button	
 	//Methods
 	
 	public Accounts(WebDriver driver) {
@@ -137,7 +144,6 @@ public class Accounts extends BasePage {
 			for(WebElement actBtn : rightActionButtons) {
 				if (actBtn.getText().equals(buttonName)) {
 					actBtn.findElement(By.tagName("button")).click();
-					System.out.println("ButtonPressed");
 				}
 			}
 		}catch(NoSuchElementException noSuchElemExcept) {
@@ -215,6 +221,28 @@ public class Accounts extends BasePage {
 				break;
 			}
 		}
+	}
+	
+	public void continueFromService() {
+		serviceSelectedContinue.click();
+	}
+	
+	public void continueFromMotive() {
+		motiveSelectedContinue.click();
+	}
+	
+	public void executeInternetDiagnosis() {
+		executeDiagnosisBtn.click();
+	}
+
+	public boolean isTextInTogglersPresent(String textToFind) {
+		List<WebElement> togglers = driver.findElements(By.className("slds-form-element__label--toggleText"));
+		for (WebElement toggle : togglers) {
+			if (toggle.getText().contains(textToFind)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/*public void selectTabByName(String tabName) {
