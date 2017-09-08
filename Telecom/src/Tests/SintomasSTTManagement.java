@@ -1,9 +1,12 @@
 package Tests;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import Pages.HomeBase;
 import Pages.SintomasSSTManager;
@@ -32,10 +35,12 @@ public class SintomasSTTManagement extends TestBase {
 		if (!driver.getCurrentUrl().toString().startsWith(symptomsListURL)){
 			driver.get(symptomsListURL); //TODO: change to actual path.
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			/*
 			HomeBase homePage = new HomeBase(driver);
 			homePage.openAppsMenu();
 			homePage.selectAppFromMenuByName("Ventas");
 			homePage.selectMainTabByName("Síntomas de STT");
+			*/
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
@@ -45,14 +50,32 @@ public class SintomasSTTManagement extends TestBase {
 		driver.close();
 	}
 	
+	@Test
 	public void TS12605_SST_Sintomas_Consistencia(){
-		SintomasSSTManager sstManagePage = new SintomasSSTManager(driver);
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		//this is How the page handles the selection
-		sstManagePage.selectToSeeByName("ABM de Síntomas STT");
+		sstManagerPage.selectToSeeByName("ABM de Síntomas STT");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sstManagePage.selectToSeeByName("All");
+		sstManagerPage.selectToSeeByName("All");
 		//TODO: wrap symptoms here, and wrap symptoms in Manager
+		//to be tested
+		List<String> symptomsRegInSSTView = sstManagerPage.getSymptomsRegisterNumbers();
+		
+		//TODO: get the symptomsRegInAdmin
+		HomeBase homePage = new HomeBase(driver);
+		homePage.openAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
 		//manager: https://cs14.salesforce.com/console?tsid=02uc0000000D6Hd
 		//TODO: compare both, to have, same quantity of elements, and elements themselves.
 	}
 }
+
+
+
+
+
+
+
+

@@ -35,7 +35,7 @@ final WebDriver driver;
 	private WebElement helpAndInformation;
 	
 	@FindBy (how = How.ID, using = "tsidButton")
-	private WebElement sales;
+	private WebElement mainMenuButton;
 	
 	@FindBy (how = How.ID, using = "tsid-menuItems")
 	private WebElement menuOptionsWrapper;
@@ -140,12 +140,13 @@ final WebDriver driver;
 	}
 	
 	public void openAppsMenu() {
-		sales.click();
+		mainMenuButton.click();
 	}
 	
 	public void selectAppFromMenuByName(String optionName) {
 		//each option is a menuButtonMenuLink class
-		List<WebElement> options = menuOptionsWrapper.findElements(By.className("menuButtonMenuLink"));
+//		List<WebElement> options = menuOptionsWrapper.findElements(By.className("menuButtonMenuLink"));
+		List<WebElement> options = menuOptionsWrapper.findElements(By.tagName("a"));
 		for (WebElement option : options) {
 			if(option.getText().equals(optionName)){
 				option.click();
@@ -156,7 +157,9 @@ final WebDriver driver;
 	}
 
 	public void selectMainTabByName(String tabName) {
-		List<WebElement> tabs = tabsWrapperBar.findElements(By.className("menuButtonMenuLink"));
+//		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("li"));
+		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("a"));
+
 		for(WebElement tab : tabs) {
 			if(tab.getText().equals(tabName)){
 				tab.findElement(By.tagName("a")).click();

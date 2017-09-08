@@ -22,8 +22,11 @@ public class SintomasSSTManager extends BasePage{
 	
 	WebDriver driver;
 	
-	@FindBy (how = How.ID, using ="fcf")
+	@FindBy (how = How.NAME, using ="fcf")
 	private WebElement toSeeSelect; //selector.
+
+	@FindBy (how = How.CLASS_NAME, using ="x-grid3-scroller")
+	private WebElement symptomsWrapper;
 	
 	public SintomasSSTManager(WebDriver driver){
 		this.driver = driver;
@@ -33,6 +36,16 @@ public class SintomasSSTManager extends BasePage{
 	
 	public void selectToSeeByName(String option) {
 		setSimpleDropdown(toSeeSelect, option);
+	}
+	
+	public List<String> getSymptomsRegisterNumbers(){
+		List<String> symptomsRegNums = null;
+		List<WebElement> symptoms = symptomsWrapper.findElements(By.className("x-grid3-row-table"));
+		for(WebElement symptom : symptoms) {
+			//index 3
+			symptomsRegNums.add(symptom.findElements(By.className("x-grid3-col")).get(3).getText());
+		}
+		return symptomsRegNums;
 	}
 	
 }
