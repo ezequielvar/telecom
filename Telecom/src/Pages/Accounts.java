@@ -86,6 +86,20 @@ public class Accounts extends BasePage {
 		getElementFromList(abcFilters, "V").click();
 	}
 
+	public void clickOnLetter(String letter) {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		//try {
+			for(WebElement frame : frames) {
+				driver.switchTo().frame(frame);
+				if(!abcFilters.isEmpty()) {
+					getElementFromList(abcFilters, letter).click();
+					break;
+				}
+			}
+		//}catch(){}
+	}
+	
 	public void clickOnFirstAccount() {
 		firstAccount.click();
 	}
@@ -93,51 +107,34 @@ public class Accounts extends BasePage {
 	public void accountSelect(String cuentaBuscar) {
 		//String regexSelector = "\\w+listSelect\\b";
 		accountSelect = new Select(driver.findElement(By.tagName("select")));
-		accountSelect.selectByVisibleText(cuentaBuscar);;
+		accountSelect.selectByVisibleText(cuentaBuscar);
 	}
 	
 	public void deployEastPanel() {
-		for (WebElement currentFrame : frames) {
-			try {
-				driver.switchTo().defaultContent();
-				driver.switchTo().frame(currentFrame);				
-				if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
-					driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
-					System.out.println(driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-east")));
-					System.out.println("PanelDeployed");
-				}
-			}catch(NoSuchElementException noSuchElemExcept){
-				System.out.println("PanelNotDeployed");
-				//System.out.println(frames.size());
-
-				/*}catch(WebDriverException WDExcept){
-					
-				}*/
-			}
+		driver.switchTo().defaultContent();
+		try {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		}catch(NoSuchElementException noSuchElemExcept){
 		}
 	}
 	
 	public void clickRightPanelButtonByName(String buttonName) {
 		//abro el panel lateral derecho (si esta cerrado)
-		//try {
-			//boton derecho para desplegar
-			deployEastPanel();
-			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-
-		//}catch(NoSuchElementException noSuchElemExcept) {
+		deployEastPanel();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		driver.switchTo().defaultContent();
+		List<WebElement> frames2 = driver.findElements(By.tagName("iframe"));
+		for (int i=0; i < frames2.size();i++) {
 			driver.switchTo().defaultContent();
-			List<WebElement> frames2 = driver.findElements(By.tagName("iframe"));
-			for (int i=0; i < frames2.size();i++) {
-				driver.switchTo().defaultContent();
-				driver.switchTo().frame(frames2.get(i));
-				try {
-					driver.findElement(By.className("startActions-item")).getText();//checks this is the panel's tab.
-					break;
-				}catch(NoSuchElementException noElemExcept) {
-					//System.out.println("Buttons Not Found");
-				}
+			driver.switchTo().frame(frames2.get(i));
+			try {
+				driver.findElement(By.className("startActions-item")).getText();//checks this is the panel's tab.
+				break;
+			}catch(NoSuchElementException noElemExcept) {
+				//System.out.println("Buttons Not Found");
 			}
-		
+		}
 		try {
 			rightActionButtons = driver.findElements(By.className("startActions-item"));
 			//System.out.println(rightActionButtons.size());
@@ -184,7 +181,6 @@ public class Accounts extends BasePage {
 				}
 			}
 		}
-		
 		for (WebElement account : accountsList) {
 			//The index for the account name is 2.
 			WebElement currentAccountName = account.findElements(By.className("x-grid3-cell-inner")).get(2);
@@ -196,13 +192,12 @@ public class Accounts extends BasePage {
 	
 	public WebElement getServiceSelector() {
 		driver.switchTo().defaultContent();
-		
 		for(WebElement currentFrame : frames) {
 			try {
 				//WebElement inputSelect = driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-empty.ng-valid-validate-val-lookup.ng-invalid.ng-invalid-required"));
 				//WebElement inputSelect = driver.findElement(By.id("LookupSelectofService"));
 				WebElement inputSelect = driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding"));
-				System.out.println("Found.");
+				//System.out.println("Found.");
 				return inputSelect;//TODO: Get Input
 			}catch(NoSuchElementException noSuchElemExcept) {
 				System.out.println("Select not found.");
@@ -245,24 +240,25 @@ public class Accounts extends BasePage {
 	}
 
 	public boolean isTextInTogglersPresent(String textToFind) {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		List<WebElement> togglers = driver.findElements(By.className("slds-form-element__label--toggleText"));
+		
+		for(WebElement frame : frames) {
+			driver.switchTo().frame(frame);
+			togglers = driver.findElements(By.className("slds-form-element__label--toggleText"));
+			if(togglers.size() > 3) {
+				break;
+			}
+			driver.switchTo().defaultContent();
+		}
+		
 		for (WebElement toggle : togglers) {
-			if (toggle.getText().contains(textToFind)) {
+			if (toggle.getText().toLowerCase().contains(textToFind.toLowerCase())) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	/*public void selectTabByName(String tabName) {
-		driver.switchTo().defaultContent();
-		for (WebElement currentFrame : frames) {
-			driver.switchTo().frame(currentFrame);
-			try {
-				
-			}
-			
-		}
-	}*/
 	
 }
