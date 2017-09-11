@@ -139,7 +139,7 @@ final WebDriver driver;
 		ordersTab.click();
 	}
 	
-	public void openAppsMenu() {
+	public void switchAppsMenu() {
 		mainMenuButton.click();
 	}
 	
@@ -148,21 +148,23 @@ final WebDriver driver;
 //		List<WebElement> options = menuOptionsWrapper.findElements(By.className("menuButtonMenuLink"));
 		List<WebElement> options = menuOptionsWrapper.findElements(By.tagName("a"));
 		for (WebElement option : options) {
-			if(option.getText().equals(optionName)){
+			if(option.getText().toLowerCase().equals(optionName.toLowerCase())){
 				option.click();
 				return;
 			}
 		}
 		System.out.println("Opcion NO encontrada.");
+		switchAppsMenu();
 	}
 
 	public void selectMainTabByName(String tabName) {
 //		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("li"));
+		driver.switchTo().defaultContent();
 		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("a"));
 
-		for(WebElement tab : tabs) {
-			if(tab.getText().equals(tabName)){
-				tab.findElement(By.tagName("a")).click();
+		for(WebElement tab : tabs) {//tabs LINKS
+			if(tab.getText().toLowerCase().equals(tabName.toLowerCase())){
+				tab.click();
 				return;
 			}
 		}

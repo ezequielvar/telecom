@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -28,6 +29,10 @@ public class SintomasSSTManager extends BasePage{
 	@FindBy (how = How.CLASS_NAME, using ="x-grid3-scroller")
 	private WebElement symptomsWrapper;
 	
+	//ADMIN manager elements
+	@FindBy (how = How.ID, using ="ext-gen10")
+	private WebElement symptomsWrapperForAdmin; //selector.
+	
 	public SintomasSSTManager(WebDriver driver){
 		this.driver = driver;
 		driver.switchTo().defaultContent();//this is in mainPage, so no iframes.
@@ -39,7 +44,8 @@ public class SintomasSSTManager extends BasePage{
 	}
 	
 	public List<String> getSymptomsRegisterNumbers(){
-		List<String> symptomsRegNums = null;
+		driver.switchTo().defaultContent();
+		List<String> symptomsRegNums = new ArrayList<String>();
 		List<WebElement> symptoms = symptomsWrapper.findElements(By.className("x-grid3-row-table"));
 		for(WebElement symptom : symptoms) {
 			//index 3
@@ -47,5 +53,20 @@ public class SintomasSSTManager extends BasePage{
 		}
 		return symptomsRegNums;
 	}
+	
+	//ADMIN Manager methods
+	
+	public List<String> getSymptomsRegisterNumbersForAdmin(){
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.tagName("iframe")));//The first iframe is the right one.
+		List<String> symptomsRegNums = new ArrayList<String>();
+		List<WebElement> symptoms = symptomsWrapperForAdmin.findElements(By.className("x-grid3-row"));
+		for(WebElement symptom : symptoms) {
+			//index 3
+			symptomsRegNums.add(symptom.findElements(By.className("x-grid3-col")).get(3).getText());
+		}
+		return symptomsRegNums;
+	}	
+	
 	
 }

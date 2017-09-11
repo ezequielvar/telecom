@@ -44,7 +44,7 @@ public class TestBase {
 		WebElement dropDown = driver.findElement(By.id("navigator-sbmenu"));
 		List<WebElement> sections = dropDown.findElements(By.className("x-menu-list-item"));
 		for (WebElement section : sections) {
-			if (section.getText().equals(selection)) {
+			if (section.getText().toLowerCase().equals(selection.toLowerCase())) {
 				section.click();
 				break;
 			}

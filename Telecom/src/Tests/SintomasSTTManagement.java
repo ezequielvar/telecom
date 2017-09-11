@@ -1,8 +1,10 @@
 package Tests;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -35,12 +37,14 @@ public class SintomasSTTManagement extends TestBase {
 		if (!driver.getCurrentUrl().toString().startsWith(symptomsListURL)){
 			driver.get(symptomsListURL); //TODO: change to actual path.
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			/*
+			
 			HomeBase homePage = new HomeBase(driver);
-			homePage.openAppsMenu();
+			homePage.switchAppsMenu();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			homePage.selectAppFromMenuByName("Ventas");
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			homePage.selectMainTabByName("Síntomas de STT");
-			*/
+			
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
@@ -59,18 +63,33 @@ public class SintomasSTTManagement extends TestBase {
 		sstManagerPage.selectToSeeByName("All");
 		//TODO: wrap symptoms here, and wrap symptoms in Manager
 		//to be tested
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 		List<String> symptomsRegInSSTView = sstManagerPage.getSymptomsRegisterNumbers();
-		
+		for(String regNum : symptomsRegInSSTView) {
+			System.out.println(regNum);
+		}
 		//TODO: get the symptomsRegInAdmin
 		HomeBase homePage = new HomeBase(driver);
-		homePage.openAppsMenu();
+		homePage.switchAppsMenu();
 		homePage.selectAppFromMenuByName("Consola FAN");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		//manager: https://cs14.salesforce.com/console?tsid=02uc0000000D6Hd
-		//TODO: compare both, to have, same quantity of elements, and elements themselves.
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<String> symptomsRegInSSTViewForAdmin = sstManagerPage.getSymptomsRegisterNumbersForAdmin();
+		Assert.assertTrue((new HashSet(symptomsRegInSSTViewForAdmin)).equals((new HashSet(symptomsRegInSSTView))));
+		//symptomsRegInSSTView.add("unStringDeMas"); //this proves HashSet is working correctly.
+		//Assert.assertFalse((new HashSet(symptomsRegInSSTViewForAdmin)).equals((new HashSet(symptomsRegInSSTView))));
+
 	}
 }
+
+
+
+
+
+
 
 
 
