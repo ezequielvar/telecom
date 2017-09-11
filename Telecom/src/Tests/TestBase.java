@@ -3,6 +3,7 @@ package Tests;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -38,9 +39,24 @@ public class TestBase {
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
-		WebElement element = driver.findElement(By.className("x-btn-split"));
+		/*WebElement element = driver.findElement(By.className("x-btn-split"));
 		Actions builder = new Actions(driver);   
-		builder.moveToElement(element, 245, 20).click().build().perform();
+		builder.moveToElement(element, 245, 20).click().build().perform();*/
+		driver.switchTo().defaultContent();
+		try {
+			driver.findElement(By.id("navigator-sbmenu"));
+		}catch(NoSuchElementException noSuchElemExcept) {
+			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+			for (WebElement frame : frames) {
+				try {
+					driver.findElement(By.id("navigator-sbmenu"));
+					break;
+				}catch(NoSuchElementException noSuchElemExceptInside) {
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(frame);
+				}
+			}
+		}
 		WebElement dropDown = driver.findElement(By.id("navigator-sbmenu"));
 		List<WebElement> sections = dropDown.findElements(By.className("x-menu-list-item"));
 		for (WebElement section : sections) {
