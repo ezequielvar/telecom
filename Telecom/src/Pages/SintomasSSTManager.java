@@ -172,10 +172,38 @@ public class SintomasSSTManager extends BasePage{
 			}catch(NoSuchElementException noSuchElemExcept) {
 				driver.switchTo().defaultContent();
 			}
-			
 		}
 		description.sendKeys(descripcion);
 		saveBtn.click();
+	}
+	
+	public void fillAndSaveCustomSymptom(String name, String descripcion, boolean activated) {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				nameInput.sendKeys(name); //each element is in the same iframe.
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+			}
+		}
+		description.sendKeys(descripcion);
+		if(activated) {
+			driver.findElements(By.tagName("input")).get(11).click();//To Continue
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}//delete, just to test
+		driver.switchTo().defaultContent();
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				saveBtn.click();
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+			}
+		}
 	}
 	
 }

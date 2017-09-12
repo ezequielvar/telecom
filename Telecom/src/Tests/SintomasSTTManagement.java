@@ -151,6 +151,91 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
+	@Test
+	public void TS11557_Creacion_De_Sintoma_Descripcion_letra(){
+		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 letra.";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "a");//1 letter, should be allowed to create.
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+	}
+	
+	@Test
+	public void TS11556_Creacion_De_Sintoma_Descripcion_numero(){
+		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 numero.";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "9");//1 number, should be allowed to create.
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+	}
+	
+	@Test
+	public void TS11555_Creacion_De_Sintoma_Descripcion_simbolo(){
+		String nombreSintomaNuevo = "TS11555 Sintoma con desc 1 simbolo.";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "®");//1 symbol, should NOT be allowed to create.
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+	}
+
+	@Test
+	public void TS11546_Creacion_De_Sintoma_Ejecucion_activada(){
+		String nombreSintomaNuevo = "TS11546: Sintoma ACTIVADO";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "Se creo activado.", true);//1 symbol, should NOT be allowed to create.
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement newSymptom = sstManagerPage.getSymptomByName(nombreSintomaNuevo);
+		Assert.assertTrue(newSymptom != null); //verifies that the symptom was found.
+		Assert.assertTrue(sstManagerPage.isSymptomActive(newSymptom));
+	}
 }
 
 
