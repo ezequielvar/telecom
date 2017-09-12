@@ -44,12 +44,12 @@ public class TestBase {
 		builder.moveToElement(element, 245, 20).click().build().perform();*/
 		driver.switchTo().defaultContent();
 		try {
-			driver.findElement(By.id("navigator-sbmenu"));
+			driver.findElement(By.className("x-btn-split"));
 		}catch(NoSuchElementException noSuchElemExcept) {
 			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 			for (WebElement frame : frames) {
 				try {
-					driver.findElement(By.id("navigator-sbmenu"));
+					driver.findElement(By.className("x-btn-split"));
 					break;
 				}catch(NoSuchElementException noSuchElemExceptInside) {
 					driver.switchTo().defaultContent();
@@ -57,14 +57,33 @@ public class TestBase {
 				}
 			}
 		}
-		WebElement dropDown = driver.findElement(By.id("navigator-sbmenu"));
+		WebElement dropDown = driver.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(dropDown, 245, 20).click().build().perform();
+		List<WebElement> options = driver.findElements(By.tagName("li"));
+		for(WebElement option : options) {
+			if(option.findElement(By.tagName("span")).getText().equals(selection)) {
+				option.findElement(By.tagName("a")).click();
+				System.out.println("Seleccionado");
+				break;
+			}
+		}
+		/*
+		switch(selection) {
+		case "Cuentas":
+		driver.findElement(By.id("nav-tab-0")).click();
+		break;
+		case "Casos":
+			driver.findElement(By.id("nav-tab-9")).click();
+			break;
+		}
 		List<WebElement> sections = dropDown.findElements(By.className("x-menu-list-item"));
 		for (WebElement section : sections) {
 			if (section.getText().toLowerCase().equals(selection.toLowerCase())) {
 				section.click();
 				break;
 			}
-		}
+		}*/
 	}
 	
 	public void login(WebDriver driver) {
