@@ -34,6 +34,19 @@ public class SintomasSSTManager extends BasePage{
 	@FindBy (how = How.ID, using ="ext-gen10")
 	private WebElement symptomsWrapperForAdmin; //selector.
 	
+	@FindBy (how = How.NAME, using ="new")
+	private WebElement newSymptomBtn; //button New.	
+	
+	//Symptom creation page link: https://cs14.salesforce.com/console?tsid=02uc0000000D6Hd
+	@FindBy (how = How.NAME, using ="save")
+	private WebElement saveBtn; //button
+	
+	@FindBy (how = How.ID, using ="Name")
+	private WebElement nameInput; //input textBox
+	
+	@FindBy (how = How.TAG_NAME, using ="textarea")
+	private WebElement description; //textArea
+	
 	public SintomasSSTManager(WebDriver driver){
 		this.driver = driver;
 		driver.switchTo().defaultContent();//this is in mainPage, so no iframes.
@@ -42,6 +55,32 @@ public class SintomasSSTManager extends BasePage{
 	
 	public void selectToSeeByName(String option) {
 		setSimpleDropdown(toSeeSelect, option);
+	}
+	
+	public String getSymptomName(WebElement symptom) {
+		return symptom.findElements(By.className("x-grid3-col")).get(5).getText();
+	}
+	
+	public WebElement getSymptomByName(String symptomName) {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				List<WebElement> symptoms = symptomsWrapper.findElements(By.className("x-grid3-row-table"));
+				for(WebElement symptom : symptoms) {
+					//index 3
+					System.out.println(getSymptomName(symptom));
+					if(getSymptomName(symptom).equals(symptomName)) {
+						return symptom;
+					}
+				}
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+			}	
+		}
+		return null; //symptom not found.
 	}
 	
 	public List<String> getSymptomsRegisterNumbers(){
@@ -107,6 +146,36 @@ public class SintomasSSTManager extends BasePage{
 		}
 	}
 	
-
+	public void goToCreateNewSymptom() {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				newSymptomBtn.click();
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+			}	
+		}
+	}
+	
+	//New Symptom Page methodS
+	public void fillAndSaveCustomSymptom(String name, String descripcion) {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				nameInput.sendKeys(name); //each element is in the same iframe.
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+			}
+			
+		}
+		description.sendKeys(descripcion);
+		saveBtn.click();
+	}
 	
 }

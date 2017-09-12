@@ -21,6 +21,15 @@ public class SintomasSTTManagement extends TestBase {
 	
 	private WebDriver driver;
 	private String symptomsListURL = "https://cs14.salesforce.com/a44";
+	private String validDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+			+ "Morbi bibendum erat sit amet metus molestie egestas. Phasellus facilisis tortor sapien, quis "
+			+ "consequat orci dapibus vel. Praesent interdum consectetur neque tempor sagittis. "
+			+ "Nulla facilisi volutpat.";
+	
+	private String invalidDescription = "Alorem ipsum dolor sit amet, consectetur adipiscing elit. "
+			+ "Morbi bibendum erat sit amet metus molestie egestas. Phasellus facilisis tortor sapien, quis "
+			+ "consequat orci dapibus vel. Praesent interdum consectetur neque tempor sagittis. "
+			+ "Nulla facilisi volutpat.";
 	
 	@BeforeClass
 	public void init() throws Exception
@@ -98,6 +107,50 @@ public class SintomasSTTManagement extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.isSymptomActive(activeSymptom));
 	}
+
+	@Test
+	public void TS11558_Creacion_De_Sintoma_Descripcion_255(){
+		String nombreSintomaNuevo = "TS11558 Sintoma nuevo.255";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, validDescription);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+	}
+
+	@Test
+	public void TS11559_Creacion_De_Sintoma_Descripcion_256(){
+		//the creation is allowed, it just cuts down what exceeds the 255 limit.
+		String nombreSintomaNuevo = "TS11559 Sintoma nuevo.256";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, invalidDescription);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+	}
+	
 }
 
 
