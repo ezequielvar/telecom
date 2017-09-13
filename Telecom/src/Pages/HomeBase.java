@@ -153,7 +153,7 @@ final WebDriver driver;
 				return;
 			}
 		}
-		System.out.println("Opcion NO encontrada.");
+		System.out.println("Opcion del menu principal NO encontrada.");
 		switchAppsMenu();
 	}
 
@@ -168,7 +168,7 @@ final WebDriver driver;
 				return;
 			}
 		}
-		System.out.println("Opcion NO encontrada.");
+		System.out.println("Tab NO encontrado.");
 	}
 	
 	
