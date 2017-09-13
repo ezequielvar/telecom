@@ -7,7 +7,7 @@
         <methods>
           <include name="setUp"/>
           <include name="tearDown"/>
-          <include name="TS11546_Creacion_De_Sintoma_Ejecucion_activada"/>
+          <include name="TS11547_Creacion_De_Sintoma_Ejecucion_desactivado"/>
           <include name="init"/>
         </methods>
       </class> <!-- Tests.SintomasSTTManagement -->

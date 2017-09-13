@@ -1,8 +1,9 @@
-<<<<<<< HEAD
+
 #added by me
 *.html
 *.xml
-
+Telecom/test-output
+Telecom/test-output/**
 # Created by https://www.gitignore.io/api/java,eclipse,windows
 
 ### Eclipse ###
