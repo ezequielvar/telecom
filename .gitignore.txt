@@ -1,3 +1,6 @@
+#added by me
+*.html
+*.xml
 
 # Created by https://www.gitignore.io/api/java,eclipse,windows
 
