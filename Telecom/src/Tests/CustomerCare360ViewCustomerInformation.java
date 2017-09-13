@@ -52,7 +52,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -85,7 +85,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	driver.switchTo().frame(frame0);
 	waitFor(driver, (By.name("fcf")));	
 	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas las cuentas");
+	field.selectByVisibleText("Todas Las cuentas");
 	
 	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
 

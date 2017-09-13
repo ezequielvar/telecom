@@ -3,12 +3,14 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Tests.Sales.newAccount">
+      <class name="Tests.SintomasSTTManagement">
         <methods>
-          <include name="setup"/>
-          <include name="createNewAccount"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="TS11546_Creacion_De_Sintoma_Ejecucion_activada"/>
+          <include name="init"/>
         </methods>
-      </class> <!-- Tests.Sales.newAccount -->
+      </class> <!-- Tests.SintomasSTTManagement -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
