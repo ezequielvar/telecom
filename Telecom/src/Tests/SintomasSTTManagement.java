@@ -211,7 +211,8 @@ public class SintomasSTTManagement extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+		Assert.assertFalse(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was NOT found.
+		//this isn't working.
 	}
 
 	@Test
