@@ -6,7 +6,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -56,6 +60,8 @@ public class SintomasSSTManager extends BasePage{
         PageFactory.initElements(driver, this);
 	}
 	
+	//User SSTManager Page. NOT 360
+	
 	public void selectToSeeByName(String option) {
 		setSimpleDropdown(toSeeSelect, option);
 	}
@@ -64,7 +70,18 @@ public class SintomasSSTManager extends BasePage{
 		return symptom.findElements(By.className("x-grid3-col")).get(5).getText();
 	}
 	
-	//works for both pages! :D
+	public List<String> getSymptomsRegisterNumbers(){
+		driver.switchTo().defaultContent();
+		List<String> symptomsRegNums = new ArrayList<String>();
+		List<WebElement> symptoms = symptomsWrapper.findElements(By.className("x-grid3-row-table"));
+		for(WebElement symptom : symptoms) {
+			//index 3
+			symptomsRegNums.add(symptom.findElements(By.className("x-grid3-col")).get(3).getText());
+		}
+		return symptomsRegNums;
+	}
+	
+	//Methods that work for both pages! :D
 	public WebElement getSymptomByName(String symptomName) {
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -86,17 +103,6 @@ public class SintomasSSTManager extends BasePage{
 			}	
 		}
 		return null; //symptom not found.
-	}
-	
-	public List<String> getSymptomsRegisterNumbers(){
-		driver.switchTo().defaultContent();
-		List<String> symptomsRegNums = new ArrayList<String>();
-		List<WebElement> symptoms = symptomsWrapper.findElements(By.className("x-grid3-row-table"));
-		for(WebElement symptom : symptoms) {
-			//index 3
-			symptomsRegNums.add(symptom.findElements(By.className("x-grid3-col")).get(3).getText());
-		}
-		return symptomsRegNums;
 	}
 	
 	//ADMIN Manager methods
@@ -222,7 +228,7 @@ public class SintomasSSTManager extends BasePage{
 		if(activated) {
 			activeCheckbox.click();
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}//delete, just to test
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}//delete, just to test
 		driver.switchTo().defaultContent();
 		for(WebElement frame : frames) {
 			try {
@@ -235,6 +241,23 @@ public class SintomasSSTManager extends BasePage{
 		}
 	}
 	
-
+	public Date getSymptomDate(WebElement symptom) { //if dateFormat changes, it can be passed as an argument.
+		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+		Date symptomDate = null;
+		String dateToParse = symptom.findElements(By.className("x-grid3-col")).get(4).getText();
+		//System.out.println(dateToParse); //uncomment to verify given date.
+		try {
+			symptomDate = dateFormat.parse(dateToParse);
+			return symptomDate;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Date getSymptomDateByName(String symptomName) { //if dateFormat changes, it can be passed as an argument.
+		return getSymptomDate(getSymptomByName(symptomName));
+	}
 	
 }

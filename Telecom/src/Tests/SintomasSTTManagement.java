@@ -1,8 +1,15 @@
 package Tests;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -11,6 +18,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.CasePage;
 import Pages.HomeBase;
 import Pages.SintomasSSTManager;
 import Pages.setConexion;
@@ -267,18 +275,43 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertFalse(sstManagerPage.isSymptomActive(newSymptom)); //verifies the symptom isn't active.
 	}
 	
+	@Test(groups ="fase2")
+	public void TS11549_Creacion_De_Sintoma_Fecha_De_Alta_verificacion(){
+		String nombreSintomaNuevo = "TS11549: Fecha de alta verificacion.";
+		String activadoDescripcion = "Se creo con fecha dd/mm/yyyy.";
+		boolean crearActivado = false; //this doesn't check the activeCheckbox.
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, crearActivado);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement newSymptom = sstManagerPage.getSymptomByName(nombreSintomaNuevo);
+		Date newSymptomDateInPage = sstManagerPage.getSymptomDateByName(nombreSintomaNuevo);
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime now = LocalDateTime.now();
+		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+		//System.out.println(dtf.format(now)); //current date as string.
+		Date currentDate = null;
+		try {
+			currentDate = dateFormat.parse(dtf.format(now));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Assert.assertTrue(newSymptom != null); //verifies that the symptom was found.
+		Assert.assertTrue(newSymptomDateInPage.equals(currentDate));//verifies that the dates matches.
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
