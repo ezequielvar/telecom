@@ -60,7 +60,7 @@ public class SintomasSTTManagement extends TestBase {
 		driver.close();
 	}
 	
-	@Test
+	@Test(groups ="fase2")
 	public void TS12605_SST_Sintomas_Consistencia(){
 		
 		HomeBase homePage = new HomeBase(driver);
@@ -89,7 +89,7 @@ public class SintomasSTTManagement extends TestBase {
 		//Assert.assertFalse((new HashSet(symptomsRegInSSTViewForAdmin)).equals((new HashSet(symptomsRegInSSTView))));
 	}
 
-	@Test
+	@Test(groups ="fase2")
 	public void TS11561_Admin_Desactivacion_De_Sintoma(){
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -108,7 +108,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertFalse(sstManagerPage.isSymptomActive(activeSymptom));
 	}
 
-	@Test
+	@Test(groups ="fase2")
 	public void TS11558_Creacion_De_Sintoma_Descripcion_255(){
 		String nombreSintomaNuevo = "TS11558 Sintoma nuevo.255";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -129,7 +129,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 
-	@Test
+	@Test(groups ="fase2")
 	public void TS11559_Creacion_De_Sintoma_Descripcion_256(){
 		//the creation is allowed, it just cuts down what exceeds the 255 limit.
 		String nombreSintomaNuevo = "TS11559 Sintoma nuevo.256";
@@ -151,7 +151,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test
+	@Test(groups ="fase2")
 	public void TS11557_Creacion_De_Sintoma_Descripcion_letra(){
 		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 letra.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -172,7 +172,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test
+	@Test(groups ="fase2")
 	public void TS11556_Creacion_De_Sintoma_Descripcion_numero(){
 		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 numero.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -193,7 +193,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test
+	@Test(groups ="fase2")
 	public void TS11555_Creacion_De_Sintoma_Descripcion_simbolo(){
 		String nombreSintomaNuevo = "TS11555 Sintoma con desc 1 simbolo.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -215,7 +215,7 @@ public class SintomasSTTManagement extends TestBase {
 		//this isn't working.
 	}
 
-	@Test
+	@Test(groups ="fase2")
 	public void TS11546_Creacion_De_Sintoma_Ejecucion_activado(){
 		String nombreSintomaNuevo = "TS11546: Sintoma ACTIVADO";
 		String activadoDescripcion = "Se creo activado.";
@@ -241,7 +241,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.isSymptomActive(newSymptom));
 	}
 	
-	@Test
+	@Test(groups ="fase2")
 	public void TS11547_Creacion_De_Sintoma_Ejecucion_desactivado(){
 		String nombreSintomaNuevo = "TS1157: Sintoma DESACTIVADO";
 		String activadoDescripcion = "Se creo desactivado.";
