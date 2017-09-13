@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #added by me
 *.html
 *.xml
