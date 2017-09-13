@@ -219,6 +219,7 @@ public class SintomasSTTManagement extends TestBase {
 	public void TS11546_Creacion_De_Sintoma_Ejecucion_activado(){
 		String nombreSintomaNuevo = "TS11546: Sintoma ACTIVADO";
 		String activadoDescripcion = "Se creo activado.";
+		boolean crearActivado = true; //this checks the active checkBox.
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
@@ -231,7 +232,7 @@ public class SintomasSTTManagement extends TestBase {
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, true);
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, crearActivado);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -239,6 +240,33 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(newSymptom != null); //verifies that the symptom was found.
 		Assert.assertTrue(sstManagerPage.isSymptomActive(newSymptom));
 	}
+	
+	@Test
+	public void TS11547_Creacion_De_Sintoma_Ejecucion_desactivado(){
+		String nombreSintomaNuevo = "TS1157: Sintoma DESACTIVADO";
+		String activadoDescripcion = "Se creo desactivado.";
+		boolean crearActivado = false; //this doesn't check the activeCheckbox.
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, crearActivado);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement newSymptom = sstManagerPage.getSymptomByName(nombreSintomaNuevo);
+		Assert.assertTrue(newSymptom != null); //verifies that the symptom was found.
+		Assert.assertFalse(sstManagerPage.isSymptomActive(newSymptom)); //verifies the symptom isn't active.
+	}
+	
 }
 
 
