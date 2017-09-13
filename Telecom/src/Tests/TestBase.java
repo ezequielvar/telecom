@@ -62,28 +62,12 @@ public class TestBase {
 		builder.moveToElement(dropDown, 245, 20).click().build().perform();
 		List<WebElement> options = driver.findElements(By.tagName("li"));
 		for(WebElement option : options) {
-			if(option.findElement(By.tagName("span")).getText().equals(selection)) {
+			if(option.findElement(By.tagName("span")).getText().toLowerCase().equals(selection.toLowerCase())) {
 				option.findElement(By.tagName("a")).click();
-				System.out.println("Seleccionado");
+				//System.out.println("Seleccionado"); //13/09/2017 working.
 				break;
 			}
 		}
-		/*
-		switch(selection) {
-		case "Cuentas":
-		driver.findElement(By.id("nav-tab-0")).click();
-		break;
-		case "Casos":
-			driver.findElement(By.id("nav-tab-9")).click();
-			break;
-		}
-		List<WebElement> sections = dropDown.findElements(By.className("x-menu-list-item"));
-		for (WebElement section : sections) {
-			if (section.getText().toLowerCase().equals(selection.toLowerCase())) {
-				section.click();
-				break;
-			}
-		}*/
 	}
 	
 	public void login(WebDriver driver) {
