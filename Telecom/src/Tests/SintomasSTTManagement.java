@@ -314,4 +314,41 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(newSymptomDateInPage.equals(currentDate));//verifies that the dates matches.
 	}
 	
+	@Test(groups ="fase2")
+	public void TS11551_Creacion_De_Sintoma_Fecha_De_Modificacion_verificacion(){
+		//Condition : There must be only one symptom with this name.
+		String nombreSintomaModificar = "TS11551: Fecha de modificacion. Ya creado.";
+		TestUtils testUtils = new TestUtils();
+		String fechaActualConHoras = testUtils.getCurrentDateWithHoursString();
+		String activadoDescripcion = "Se modifico con fecha " + fechaActualConHoras;
+		boolean crearActivado = false; //this doesn't check the activeCheckbox.
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Consola FAN");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.goToModifySymptomByName(nombreSintomaModificar);//selects this symptom to modify
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaModificar, activadoDescripcion, crearActivado);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Date newSymptomDateInPage = sstManagerPage.getSymptomModifiedDateByName(nombreSintomaModificar);
+		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+		Date currentDate = null;
+		String fechaActual = testUtils.getCurrentDateString();
+		try {
+			currentDate = dateFormat.parse(fechaActual);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Assert.assertTrue(currentDate.equals(newSymptomDateInPage)); //verifies that modif and current date are the same.
+	}
+	
+	
+	
 }

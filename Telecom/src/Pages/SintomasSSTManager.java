@@ -167,6 +167,15 @@ public class SintomasSSTManager extends BasePage{
 	    alert.accept();
 	}
 	
+	public void goToModifySymptomByName(String symptomName) {
+		modifySymptom(getSymptomByName(symptomName));
+	}
+	
+	public void modifySymptom(WebElement symptomToModify) {
+		//3th column, 1st "a" is delete.
+		symptomToModify.findElements(By.className("x-grid3-col")).get(2).findElements(By.tagName("a")).get(0).click();
+	}
+	
 	public void setSymptomState(WebElement symptom, boolean active) {
 		WebElement checkBox = symptom.findElements(By.className("x-grid3-col")).get(7);
 		if(isSymptomActive(symptom) == active) {
@@ -195,7 +204,46 @@ public class SintomasSSTManager extends BasePage{
 		}
 	}
 	
-	//Create NEW Symptom Page methods
+	public Date getSymptomDate(WebElement symptom) { //if dateFormat changes, it can be passed as an argument.
+		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+		Date symptomDate = null;
+		String dateToParse = symptom.findElements(By.className("x-grid3-col")).get(4).getText();
+		//System.out.println(dateToParse); //uncomment to verify given date.
+		try {
+			symptomDate = dateFormat.parse(dateToParse);
+			return symptomDate;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+		
+	public Date getSymptomDateByName(String symptomName) { 
+		return getSymptomDate(getSymptomByName(symptomName));
+	}
+	
+	public Date getSymptomModifiedDate(WebElement symptom) { //if dateFormat changes, it can be passed as an argument.
+		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+		Date symptomModifiedDate = null;
+		String dateToParse = symptom.findElements(By.className("x-grid3-col")).get(9).getText();
+		//System.out.println(dateToParse); //uncomment to verify given date.
+		try {
+			symptomModifiedDate = dateFormat.parse(dateToParse);
+			return symptomModifiedDate;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Date getSymptomModifiedDateByName(String nombreSintomaModificar) {
+		return getSymptomModifiedDate(getSymptomByName(nombreSintomaModificar));
+	}
+	
+	//Create NEW Symptom Page & Modify Symptom Page methods
+
 	public void fillAndSaveCustomSymptom(String name, String descripcion) {
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -218,12 +266,14 @@ public class SintomasSSTManager extends BasePage{
 		for(WebElement frame : frames) {
 			try {
 				driver.switchTo().frame(frame);
+				nameInput.clear();
 				nameInput.sendKeys(name); //each element is in the same iframe.
 				break;
 			}catch(NoSuchElementException noSuchElemExcept) {
 				driver.switchTo().defaultContent();
 			}
 		}
+		description.clear();
 		description.sendKeys(descripcion);
 		if(activated) {
 			activeCheckbox.click();
@@ -239,25 +289,6 @@ public class SintomasSSTManager extends BasePage{
 				driver.switchTo().defaultContent();
 			}
 		}
-	}
-	
-	public Date getSymptomDate(WebElement symptom) { //if dateFormat changes, it can be passed as an argument.
-		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
-		Date symptomDate = null;
-		String dateToParse = symptom.findElements(By.className("x-grid3-col")).get(4).getText();
-		//System.out.println(dateToParse); //uncomment to verify given date.
-		try {
-			symptomDate = dateFormat.parse(dateToParse);
-			return symptomDate;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public Date getSymptomDateByName(String symptomName) { //if dateFormat changes, it can be passed as an argument.
-		return getSymptomDate(getSymptomByName(symptomName));
 	}
 	
 }
