@@ -215,8 +215,9 @@ public class SintomasSTTManagement extends TestBase {
 	}
 
 	@Test
-	public void TS11546_Creacion_De_Sintoma_Ejecucion_activada(){
+	public void TS11546_Creacion_De_Sintoma_Ejecucion_activado(){
 		String nombreSintomaNuevo = "TS11546: Sintoma ACTIVADO";
+		String activadoDescripcion = "Se creo activado.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
@@ -226,9 +227,10 @@ public class SintomasSTTManagement extends TestBase {
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "Se creo activado.", true);//1 symbol, should NOT be allowed to create.
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, true);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

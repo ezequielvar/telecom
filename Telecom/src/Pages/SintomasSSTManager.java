@@ -38,14 +38,17 @@ public class SintomasSSTManager extends BasePage{
 	private WebElement newSymptomBtn; //button New.	
 	
 	//Symptom creation page link: https://cs14.salesforce.com/console?tsid=02uc0000000D6Hd
-	@FindBy (how = How.NAME, using ="save")
-	private WebElement saveBtn; //button
-	
 	@FindBy (how = How.ID, using ="Name")
 	private WebElement nameInput; //input textBox
 	
 	@FindBy (how = How.TAG_NAME, using ="textarea")
 	private WebElement description; //textArea
+	
+	@FindBy (how = How.ID, using ="00Nc000000247uu")
+	private WebElement activeCheckbox; //input checkBox //could not be working.
+	
+	@FindBy (how = How.NAME, using ="save")
+	private WebElement saveBtn; //button
 	
 	public SintomasSSTManager(WebDriver driver){
 		this.driver = driver;
@@ -61,6 +64,7 @@ public class SintomasSSTManager extends BasePage{
 		return symptom.findElements(By.className("x-grid3-col")).get(5).getText();
 	}
 	
+	//works for both pages! :D
 	public WebElement getSymptomByName(String symptomName) {
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -70,7 +74,8 @@ public class SintomasSSTManager extends BasePage{
 				List<WebElement> symptoms = symptomsWrapper.findElements(By.className("x-grid3-row-table"));
 				for(WebElement symptom : symptoms) {
 					//index 3
-					System.out.println(getSymptomName(symptom));
+					//System.out.println(getSymptomName(symptom)); uncomment to see if it still works.
+					//Must be the page Sintomas de STT
 					if(getSymptomName(symptom).equals(symptomName)) {
 						return symptom;
 					}
@@ -132,6 +137,30 @@ public class SintomasSSTManager extends BasePage{
 		return null;
 	}
 	
+	//deletes all symptoms in the first page with the given name
+	public void deleteAllSymptomsByName(String symptomName) {
+		//int i = 0; //uncomment* to show how many symptoms were deleted.
+		while(getSymptomByName(symptomName) != null) {
+			deleteSymptomByName(symptomName);
+			//i++; //uncomment*
+			//increase sleep time if needed.
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		//System.out.println(Integer.toString(i) + " sintomas, fueron borrados."); //uncomment*
+	}
+	
+	public void deleteSymptomByName(String symptomName) {
+		deleteSymptom(getSymptomByName(symptomName));
+	}
+	
+	public void deleteSymptom(WebElement symptomToDelete) {
+		//3th column, 2nd "a" is delete.
+		symptomToDelete.findElements(By.className("x-grid3-col")).get(2).findElements(By.tagName("a")).get(1).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Alert alert = driver.switchTo().alert();
+	    alert.accept();
+	}
+	
 	public void setSymptomState(WebElement symptom, boolean active) {
 		WebElement checkBox = symptom.findElements(By.className("x-grid3-col")).get(7);
 		if(isSymptomActive(symptom) == active) {
@@ -160,7 +189,7 @@ public class SintomasSSTManager extends BasePage{
 		}
 	}
 	
-	//New Symptom Page methodS
+	//Create NEW Symptom Page methods
 	public void fillAndSaveCustomSymptom(String name, String descripcion) {
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -191,7 +220,7 @@ public class SintomasSSTManager extends BasePage{
 		}
 		description.sendKeys(descripcion);
 		if(activated) {
-			driver.findElements(By.tagName("input")).get(11).click();//To Continue
+			activeCheckbox.click();
 		}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}//delete, just to test
 		driver.switchTo().defaultContent();
@@ -205,5 +234,7 @@ public class SintomasSSTManager extends BasePage{
 			}
 		}
 	}
+	
+
 	
 }
