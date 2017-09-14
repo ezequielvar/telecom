@@ -1,11 +1,6 @@
 package Pages;
 
 
-import org.openqa.selenium.support.FindBy;
-
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,11 +10,13 @@ import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 
 public class SintomasSSTManager extends BasePage{
 	
@@ -36,7 +33,7 @@ public class SintomasSSTManager extends BasePage{
 	
 	//ADMIN manager elements
 	@FindBy (how = How.ID, using ="ext-gen10")
-	private WebElement symptomsWrapperForAdmin; //selector.
+	private WebElement symptomsWrapperForAdmin; //list of symptoms Wrapper.
 	
 	@FindBy (how = How.NAME, using ="new")
 	private WebElement newSymptomBtn; //button New.	
@@ -53,6 +50,10 @@ public class SintomasSSTManager extends BasePage{
 	
 	@FindBy (how = How.NAME, using ="save")
 	private WebElement saveBtn; //button
+	
+	//already created, opened Symptom Page
+	@FindBy (how = How.ID, using ="CreatedBy_ileinner")
+	private WebElement createdByProperty; //div with a
 	
 	public SintomasSSTManager(WebDriver driver){
 		this.driver = driver;
@@ -172,9 +173,19 @@ public class SintomasSSTManager extends BasePage{
 	}
 	
 	public void modifySymptom(WebElement symptomToModify) {
-		//3th column, 1st "a" is delete.
+		//3th column, 1st "a" is modify.
 		symptomToModify.findElements(By.className("x-grid3-col")).get(2).findElements(By.tagName("a")).get(0).click();
 	}
+	
+	public void openSymptom(WebElement symptomToOpen) {
+		//5th column, only 1 "a", to open.
+		System.out.println(symptomToOpen.findElements(By.className("x-grid3-col")).get(5).getText());
+		symptomToOpen.findElements(By.className("x-grid3-col")).get(5).click();
+	}
+	
+	public void openSymptomByName(String symptomName) {
+		openSymptom(getSymptomByName(symptomName));
+	}	
 	
 	public void setSymptomState(WebElement symptom, boolean active) {
 		WebElement checkBox = symptom.findElements(By.className("x-grid3-col")).get(7);
@@ -278,7 +289,7 @@ public class SintomasSSTManager extends BasePage{
 		if(activated) {
 			activeCheckbox.click();
 		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}//delete, just to test
+		try {Thread.sleep(2500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}//delete, just to test
 		driver.switchTo().defaultContent();
 		for(WebElement frame : frames) {
 			try {
@@ -291,4 +302,21 @@ public class SintomasSSTManager extends BasePage{
 		}
 	}
 	
+	
+	//Created symptom opened Page
+	public String getCreatedByProperty() {
+		//driver.switchTo().frame(getIndexFrame(driver, (By.id("CreatedBy_ileinner"))));//same as createdByProperty
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				String createdByPropertyText = createdByProperty.getText();
+				return createdByPropertyText;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				driver.switchTo().defaultContent();
+			}
+		}
+		return null;
+	}
 }
