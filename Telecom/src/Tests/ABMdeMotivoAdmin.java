@@ -131,7 +131,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	}*/
 	
 	//@Test(priority = 5, groups ="c", dependsOnGroups = "b") //change to this when TS12589-MassiveIncident works.
-	@Test(priority = 4, groups = {"b	", "fase2"}, dependsOnGroups = "a")
+	@Test(priority = 4, groups = {"b", "fase2"}, dependsOnGroups = "a")
 	public void TS12589_ABM_de_Motivo_Quitar_Motivo() {
 		//expected main page for ABM of motives.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
