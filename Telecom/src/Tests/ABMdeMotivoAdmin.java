@@ -49,14 +49,14 @@ public class ABMdeMotivoAdmin extends TestBase {
 	
 	//priority forces the tests order execution, and groupsDependency, guarantees the other ones finished
 	
-	@Test(priority = 1, groups ="a")
+	@Test(priority = 1, groups = {"a", "fase2"})
 	public void TS12584_ABM_de_Motivo_Ingreso(){
 		ContactMotivesManager cMMPage = new ContactMotivesManager(driver);
 		cMMPage.getMotivesWrapper();//This should be enough.
 		cMMPage.getMotiveByName("No me funciona internet");//Could Change, but this has to be a real current MotiveName.
 	}
 	
-	@Test(priority = 2, groups ="a")
+	@Test(priority = 2, groups = {"a", "fase2"})
 	public void TS12587_ABM_de_Motivo_Agregar_Nuevo_Motivo() {
 		driver.findElement(By.name("new")).click();
 		ContactMotiveManager contactMMPage = new ContactMotiveManager(driver);
@@ -80,7 +80,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		//this motive gets deleted in another test.
 	}
 	
-	@Test(priority = 3, groups ="a")
+	@Test(priority = 3, groups = {"a", "fase2"})
 	public void TS12590_ABM_de_Motivo_Modificar_Motivo() {
 		ContactMotivesManager contactsMMPage = new ContactMotivesManager(driver);
 		contactsMMPage.modifyMotiveByName(motiveName);
@@ -131,7 +131,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	}*/
 	
 	//@Test(priority = 5, groups ="c", dependsOnGroups = "b") //change to this when TS12589-MassiveIncident works.
-	@Test(priority = 4, groups ="b", dependsOnGroups = "a")
+	@Test(priority = 4, groups = {"b	", "fase2"}, dependsOnGroups = "a")
 	public void TS12589_ABM_de_Motivo_Quitar_Motivo() {
 		//expected main page for ABM of motives.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
