@@ -58,7 +58,7 @@ public class BasePage {
 		return elements.get(a.get(0));
 	}
 	
-	public int getIndexFrame(WebDriver driver, By byForElement) {
+	public int getIndexFrame(WebDriver driver, By byForElement) { //working correctly
 		//TODO: Do the same for a WebElement instead of a By.
 		int index = 0;
 		driver.switchTo().defaultContent();
@@ -66,22 +66,26 @@ public class BasePage {
 		for(WebElement frame : frames) {
 			try {
 				driver.switchTo().frame(frame);
-				driver.findElement(byForElement); //each element is in the same iframe.
+				driver.findElement(byForElement).getText(); //each element is in the same iframe.
 				System.out.println(index);
+				driver.switchTo().defaultContent();
 				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
 				driver.switchTo().defaultContent();
 			}
 		}
-		return -1;//if this is called, the element wasnt found.
+		return -1; //if this is called, the element wasnt found.
 	}
 	
 	public WebElement getFrameForElement(WebDriver driver, By byForElement) {
+		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		System.out.println(Integer.toString(frames.size()) + " cantidad de frames.");		
+		System.out.println("getFrameForElement thing " + Integer.toString(getIndexFrame(driver, byForElement)));
 		return frames.get(getIndexFrame(driver, byForElement));
 	}
-	
+
 	public int getIndexFrame(WebDriver driver, WebElement webElementToFind) {
 		//TODO: Do the same for a WebElement instead of a By.
 		int index = 0;
@@ -90,10 +94,11 @@ public class BasePage {
 		for(WebElement frame : frames) {
 			try {
 				driver.switchTo().frame(frame);
-				if(webElementToFind != null){ //each element is in the same iframe.
+				webElementToFind.getText();
+				//if(webElementToFind != null){ //each element is in the same iframe.
 					//System.out.println(index);
 					return index;
-				}
+				//}
 			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
 				driver.switchTo().defaultContent();
