@@ -140,6 +140,7 @@ final WebDriver driver;
 	}
 	
 	public void switchAppsMenu() {
+		driver.switchTo().defaultContent();
 		mainMenuButton.click();
 	}
 	
@@ -153,7 +154,8 @@ final WebDriver driver;
 				return;
 			}
 		}
-		System.out.println("Opcion del menu principal NO encontrada.");
+		//Uncomment if something is not working correctly.
+		//System.out.println("Opcion del menu principal " + optionName + " NO encontrada.");
 		switchAppsMenu();
 	}
 

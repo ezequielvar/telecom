@@ -52,7 +52,7 @@ public class diagnosis extends TestBase {
 	@BeforeMethod
 	public void setUp() throws Exception {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().startsWith("https://cs14.salesforce.com/console")){
+		if (!driver.getCurrentUrl().toString().contains("/console")){
 			driver.findElement(By.id("tsidLabel")).click();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
