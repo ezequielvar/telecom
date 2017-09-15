@@ -70,12 +70,42 @@ public class BasePage {
 				System.out.println(index);
 				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
 				driver.switchTo().defaultContent();
 			}
 		}
 		return -1;//if this is called, the element wasnt found.
 	}
-
+	
+	public WebElement getFrameForElement(WebDriver driver, By byForElement) {
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		return frames.get(getIndexFrame(driver, byForElement));
+	}
+	
+	public int getIndexFrame(WebDriver driver, WebElement webElementToFind) {
+		//TODO: Do the same for a WebElement instead of a By.
+		int index = 0;
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				if(webElementToFind != null){ //each element is in the same iframe.
+					//System.out.println(index);
+					return index;
+				}
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().defaultContent();
+			}
+		}
+		return -1;//if this is called, the element wasnt found.
+	}
+	
+	public WebElement getFrameForElement(WebDriver driver, WebElement webElementToFind) {
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		return frames.get(getIndexFrame(driver, webElementToFind));
+	}
 	
 	public void switchAppsMenu() {
 		mainMenuButton.click();
