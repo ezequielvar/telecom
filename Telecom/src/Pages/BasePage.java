@@ -67,7 +67,7 @@ public class BasePage {
 			try {
 				driver.switchTo().frame(frame);
 				driver.findElement(byForElement).getText(); //each element is in the same iframe.
-				System.out.println(index);
+				//System.out.println(index); //prints the used index.
 				driver.switchTo().defaultContent();
 				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
@@ -81,8 +81,6 @@ public class BasePage {
 	public WebElement getFrameForElement(WebDriver driver, By byForElement) {
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		System.out.println(Integer.toString(frames.size()) + " cantidad de frames.");		
-		System.out.println("getFrameForElement thing " + Integer.toString(getIndexFrame(driver, byForElement)));
 		return frames.get(getIndexFrame(driver, byForElement));
 	}
 
@@ -95,10 +93,9 @@ public class BasePage {
 			try {
 				driver.switchTo().frame(frame);
 				webElementToFind.getText();
-				//if(webElementToFind != null){ //each element is in the same iframe.
-					//System.out.println(index);
-					return index;
-				//}
+				//System.out.println(index); //prints the used index.
+				driver.switchTo().defaultContent();
+				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
 				driver.switchTo().defaultContent();
