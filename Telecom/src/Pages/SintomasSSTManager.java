@@ -305,18 +305,22 @@ public class SintomasSSTManager extends BasePage{
 	
 	//Created symptom opened Page
 	public String getCreatedByProperty() {
-		//driver.switchTo().frame(getIndexFrame(driver, (By.id("CreatedBy_ileinner"))));//same as createdByProperty
+		driver.switchTo().frame(getFrameForElement(driver, (By.id("CreatedBy_ileinner"))));//same as createdByProperty
+		return createdByProperty.getText();
+/*
 		driver.switchTo().defaultContent();
+		int i = 0;
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		for(WebElement frame : frames) {
 			try {
 				driver.switchTo().frame(frame);
 				String createdByPropertyText = createdByProperty.getText();
+				System.out.println(i);
 				return createdByPropertyText;
 			}catch(NoSuchElementException noSuchElemExcept) {
 				driver.switchTo().defaultContent();
+				i++;
 			}
-		}
-		return null;
+		}*/
 	}
 }
