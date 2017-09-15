@@ -9,26 +9,27 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.CasePage;
 import Pages.HomeBase;
 import Pages.SintomasSSTManager;
 import Pages.setConexion;
 
 //page link: https://cs14.salesforce.com/a44?fcf=00Bc0000001LRmd
+//consola FAN link : https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd
+
 
 public class SintomasSTTManagement extends TestBase {
 	
 	private WebDriver driver;
-	private String symptomsListURL = "https://cs14.salesforce.com/a44";
+	private String symptomsListURL = "https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd";
 	private String validDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
 			+ "Morbi bibendum erat sit amet metus molestie egestas. Phasellus facilisis tortor sapien, quis "
 			+ "consequat orci dapibus vel. Praesent interdum consectetur neque tempor sagittis. "
@@ -56,26 +57,39 @@ public class SintomasSTTManagement extends TestBase {
 			HomeBase homePage = new HomeBase(driver);
 			homePage.switchAppsMenu();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			homePage.selectAppFromMenuByName("Ventas");
+			homePage.selectAppFromMenuByName("Consola FAN");
 			driver.get(symptomsListURL); //TODO: change to actual path.
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
 	@AfterClass
 	public void tearDown() {
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		homePage.selectAppFromMenuByName("Ventas");
 		driver.close();
 	}
 	
-	@Test(groups ="fase2")
-	public void TS12605_SST_Sintomas_Consistencia(){
-		
+	@AfterMethod
+	public void goToConsolaFAN() {
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();
+		//homePage.selectAppFromMenuByName("Ventas");
+		homePage.selectAppFromMenuByName("Consola FAN");
+	}
+	
+	//Uses both pages (Admin and user SST Symptoms ABM)
+	@Test(groups ="fase2")
+	public void TS12605_SST_Sintomas_Consistencia(){
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+		//driver.findElement(By.id("tsidButton")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		homePage.selectAppFromMenuByName("Ventas");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
 		homePage.selectMainTabByName("Síntomas de STT");
 		
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -96,15 +110,12 @@ public class SintomasSTTManagement extends TestBase {
 		//symptomsRegInSSTView.add("unStringDeMas"); //this proves HashSet.equals() is working correctly.
 		//Assert.assertFalse((new HashSet(symptomsRegInSSTViewForAdmin)).equals((new HashSet(symptomsRegInSSTView))));
 	}
-
+	
+	//Admin Symptoms ABM Page
 	@Test(groups ="fase2")
 	public void TS11561_Admin_Desactivacion_De_Sintoma(){
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -120,11 +131,7 @@ public class SintomasSTTManagement extends TestBase {
 	public void TS11558_Creacion_De_Sintoma_Descripcion_255(){
 		String nombreSintomaNuevo = "TS11558 Sintoma nuevo.255";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -142,11 +149,7 @@ public class SintomasSTTManagement extends TestBase {
 		//the creation is allowed, it just cuts down what exceeds the 255 limit.
 		String nombreSintomaNuevo = "TS11559 Sintoma nuevo.256";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -163,11 +166,7 @@ public class SintomasSTTManagement extends TestBase {
 	public void TS11557_Creacion_De_Sintoma_Descripcion_letra(){
 		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 letra.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -184,11 +183,7 @@ public class SintomasSTTManagement extends TestBase {
 	public void TS11556_Creacion_De_Sintoma_Descripcion_numero(){
 		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 numero.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -205,11 +200,7 @@ public class SintomasSTTManagement extends TestBase {
 	public void TS11555_Creacion_De_Sintoma_Descripcion_simbolo(){
 		String nombreSintomaNuevo = "TS11555 Sintoma con desc 1 simbolo.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -220,7 +211,7 @@ public class SintomasSTTManagement extends TestBase {
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was NOT found.
-		//this isn't working.
+		//this isn't implemented yet.
 	}
 
 	@Test(groups ="fase2")
@@ -229,11 +220,7 @@ public class SintomasSTTManagement extends TestBase {
 		String activadoDescripcion = "Se creo activado.";
 		boolean crearActivado = true; //this checks the active checkBox.
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -255,11 +242,7 @@ public class SintomasSTTManagement extends TestBase {
 		String activadoDescripcion = "Se creo desactivado.";
 		boolean crearActivado = false; //this doesn't check the activeCheckbox.
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -281,11 +264,7 @@ public class SintomasSTTManagement extends TestBase {
 		String activadoDescripcion = "Se creo con fecha dd/mm/yyyy.";
 		boolean crearActivado = false; //this doesn't check the activeCheckbox.
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -323,11 +302,7 @@ public class SintomasSTTManagement extends TestBase {
 		String activadoDescripcion = "Se modifico con fecha " + fechaActualConHoras;
 		boolean crearActivado = false; //this doesn't check the activeCheckbox.
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -355,11 +330,7 @@ public class SintomasSTTManagement extends TestBase {
 		String nombreSintomaNuevo = "s";
 		String descripcionSintomaNuevo = "TS11554: 1 letra.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -378,14 +349,11 @@ public class SintomasSTTManagement extends TestBase {
 		String nombreSintomaNuevo = "8";
 		String descripcionSintomaNuevo = "TS11553: un numero (8).";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, descripcionSintomaNuevo);//1 number, should be allowed to create.
@@ -397,14 +365,10 @@ public class SintomasSTTManagement extends TestBase {
 	
 	@Test(groups ="fase2")
 	public void TS11552_Creacion_De_Sintoma_Nombre_Sintoma_simbolo(){
-		String descripcionSintomaNuevo = "TS11552: un simbolo, no deberia poder crearse.";
+		String descripcionSintomaNuevo = "TS11552: nombre simbolo, no deberia poder crearse.";
 		String nombreSintomaNuevo =  "®";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		homePage.selectAppFromMenuByName("Consola FAN");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -415,8 +379,32 @@ public class SintomasSTTManagement extends TestBase {
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was NOT found.
-		//this isn't working.
+		//this isn't implemented yet.
 	}
 
+	@Test(groups ="fase2")
+	public void TS11550_Creacion_De_Sintoma_Nombre_Usuario_verificacion(){
+		String descripcionSintomaNuevo = "Verificacion usuario. Deber ser USIT.";
+		String nombreSintomaNuevo =  "TS11550: Verificacion usuario.";
+		String nombreDeUsuarioEsperado = "Usuario SIT";
+		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the goToConsolaFAN afterMethod.
+		sstManagerPage.goToCreateNewSymptom();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, descripcionSintomaNuevo);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		goToLeftPanel2(driver, "Síntomas de STT");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
+		sstManagerPage.openSymptomByName(nombreSintomaNuevo);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String nombreEnSintomaAbierto = sstManagerPage.getCreatedByProperty();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(nombreEnSintomaAbierto.startsWith(nombreDeUsuarioEsperado)); //startsWith, because it has the date attached.
+	}
 	
 }
