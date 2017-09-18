@@ -18,6 +18,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.HomeBase;
 import Pages.SintomasSSTManager;
 import Pages.setConexion;
@@ -67,6 +68,7 @@ public class SintomasSTTManagement extends TestBase {
 	@AfterClass
 	public void tearDown() {
 		HomeBase homePage = new HomeBase(driver);
+		homePage.closeAllTabs(driver);
 		homePage.switchAppsMenu();
 		homePage.selectAppFromMenuByName("Ventas");
 		driver.close();
@@ -79,7 +81,7 @@ public class SintomasSTTManagement extends TestBase {
 		//homePage.selectAppFromMenuByName("Ventas");
 		homePage.selectAppFromMenuByName("Consola FAN");
 	}
-	
+		
 	//Uses both pages (Admin and user SST Symptoms ABM)
 	@Test(groups ="fase2")
 	public void TS12605_SST_Sintomas_Consistencia(){
@@ -126,7 +128,7 @@ public class SintomasSTTManagement extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.isSymptomActive(activeSymptom));
 	}
-
+	
 	@Test(groups ="fase2")
 	public void TS11558_Creacion_De_Sintoma_Descripcion_255(){
 		String nombreSintomaNuevo = "TS11558 Sintoma nuevo.255";
