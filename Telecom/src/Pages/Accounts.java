@@ -43,7 +43,21 @@ public class Accounts extends BasePage {
 	private WebElement motiveSelectedContinue; //button	
 	
 	@FindBy (how = How.ID, using = "RemoteActionInternet")
-	private WebElement executeDiagnosisBtn; //button	
+	private WebElement executeDiagnosisBtn; //button
+	
+	//Tab Servicio Tecnico
+	@FindBy (how = How.ID, using = "ImeiInput_nextBtn")
+	private WebElement imeiInputNextBtn; //button
+	
+	@FindBy (how = How.ID, using = "ClientInformation_nextBtn")
+	private WebElement clientInfoNextBtn; //button	
+	
+	@FindBy (how = How.ID, using = "SelectOperationType")
+	private WebElement selectOperationType; //selector
+	
+	@FindBy (how = How.ID, using = "SelectSymptomType")
+	private WebElement selectSymptomType; //selector
+	
 	//Methods
 	
 	public Accounts(WebDriver driver) {
@@ -287,12 +301,36 @@ public class Accounts extends BasePage {
 		}
 	}
 	
-	//Servicio Tecnico
+	//Servicio Tecnico Methods
 	
 	public void fillIMEI(String IMEI) {
 		WebElement imeiId = driver.findElement(By.id("ImeiCode"));
 		driver.switchTo().frame(getFrameForElement(driver, imeiId));
 		imeiId.sendKeys(IMEI);
+	}
+	
+	public void continueFromImeiInput() {
+		driver.switchTo().frame(getFrameForElement(driver, imeiInputNextBtn));
+		imeiInputNextBtn.click();
+	}
+
+	public void continueFromClientInfo() {
+		driver.switchTo().frame(getFrameForElement(driver, clientInfoNextBtn));
+		clientInfoNextBtn.click();
+	}
+	
+	public void selectOperationType(String operationName) {
+		setSimpleDropdown(selectOperationType, operationName);
+	}
+	
+	public void selectSymptomType(String symptomName) {
+		setSimpleDropdown(selectSymptomType, symptomName);
+	}
+	
+	public void attachFile(String filePath) {
+		//TODO: Complete with sendkeys
+		//example in validationByDni
+		//driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Downloads\\0F6.gif");
 	}
 	
 }

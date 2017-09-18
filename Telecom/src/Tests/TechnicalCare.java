@@ -1,8 +1,6 @@
 package Tests;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -52,8 +50,12 @@ public class TechnicalCare extends TestBase  {
 	@Test(groups = "fase2")
 	public void TS11622_SST_Servicio_Indiferente_Adjunto_Formato_invalido() {
 		Accounts accPage = new Accounts(driver);
-
 		accPage.fillIMEI(validIMEI);
-
+		accPage.continueFromImeiInput();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		accPage.continueFromClientInfo();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.selectOperationType("Consulta");
+		accPage.selectSymptomType("Baja señal");
 	}
 }
