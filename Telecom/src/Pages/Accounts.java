@@ -150,7 +150,7 @@ public class Accounts extends BasePage {
 				driver.switchTo().frame(currentFrame);
 				rightActionButtons = driver.findElements(By.className("startActions-item"));
 				for(WebElement actBtn : rightActionButtons) {
-					if (actBtn.getText().equals(buttonName)) {
+					if (actBtn.getText().toLowerCase().equals(buttonName.toLowerCase())) {
 						actBtn.click();
 						break;
 					}
@@ -172,7 +172,7 @@ public class Accounts extends BasePage {
 		}catch(NoSuchElementException noSuchElemExcept0) {
 			driver.switchTo().defaultContent();
 			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-			for (WebElement currentFrame:frames) {
+			for (WebElement currentFrame : frames) {
 				try{
 					driver.switchTo().frame(currentFrame);
 					accountsList = driver.findElements(By.className("x-grid3-row"));
@@ -259,6 +259,40 @@ public class Accounts extends BasePage {
 			}
 		}
 		return false;
+	}
+	
+	public boolean isTabOpened(String tabName) {
+		//account must be opened
+		//2nd x-tab-strip-wrap is the wrapper for : Detalles, Servicios, Facturacion, etc.
+		driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.className("x-tab-strip-wrap"))));
+		WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
+		List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
+		for(WebElement tab : tabsNames){
+			if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void goToTab(String tabName) {
+		driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.className("x-tab-strip-wrap"))));
+		WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
+		List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
+		for(WebElement tab : tabsNames){
+			if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
+				tab.click();
+				break;
+			}
+		}
+	}
+	
+	//Servicio Tecnico
+	
+	public void fillIMEI(String IMEI) {
+		WebElement imeiId = driver.findElement(By.id("ImeiCode"));
+		driver.switchTo().frame(getFrameForElement(driver, imeiId));
+		imeiId.sendKeys(IMEI);
 	}
 	
 }
