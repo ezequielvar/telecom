@@ -2,13 +2,18 @@ package Pages;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.Select;
+
+import javafx.scene.control.Tab;
 
 public class BasePage {
 	
@@ -67,7 +72,7 @@ public class BasePage {
 			try {
 				driver.switchTo().frame(frame);
 				driver.findElement(byForElement).getText(); //each element is in the same iframe.
-				//System.out.println(index); //prints the used index.
+				System.out.println(index); //prints the used index.
 				driver.switchTo().defaultContent();
 				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
@@ -142,6 +147,35 @@ public class BasePage {
 		System.out.println("Tab NO encontrado.");
 	}
 	
+	//this is for Consola FAN, closes all tabs, takes in account Alert messages
+	public void closeAllTabs(WebDriver driver) {
+		driver.switchTo().defaultContent();
+		List<WebElement> tabs = driver.findElement(By.id("ext-gen27")).findElements(By.className("x-tab-strip-closable"));
+		for (WebElement tab : tabs) {
+			//se itera al reves porque el primer elemento puede no estar visible.
+			//closeTab(tab);
+			closeTab(driver, tab);
+		}
+	}
 	
+	public void closeTab(WebDriver driver, WebElement tab) {
+		//Warning: doesn't save when closing.
+		Actions action = new Actions(driver);
+		action.moveToElement(tab);
+		action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
+		try {
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().alert();
+			List<WebElement> buttons = driver.findElements(By.tagName("button"));
+			for(WebElement button : buttons) {
+				if (button.getText().toLowerCase().contains("no guardar")) {
+					button.click();
+					break;
+				}
+			}
+		}catch(NoAlertPresentException noAlertExcept) {
+			//does Nothing.
+		}
+	}
 	
 }
