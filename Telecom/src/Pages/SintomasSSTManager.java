@@ -179,7 +179,6 @@ public class SintomasSSTManager extends BasePage{
 	
 	public void openSymptom(WebElement symptomToOpen) {
 		//5th column, only 1 "a", to open.
-		System.out.println(symptomToOpen.findElements(By.className("x-grid3-col")).get(5).getText());
 		symptomToOpen.findElements(By.className("x-grid3-col")).get(5).click();
 	}
 	
@@ -301,7 +300,6 @@ public class SintomasSSTManager extends BasePage{
 			}
 		}
 	}
-	
 	
 	//Created symptom opened Page
 	public String getCreatedByProperty() {
