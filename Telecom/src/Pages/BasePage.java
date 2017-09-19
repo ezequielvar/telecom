@@ -72,7 +72,7 @@ public class BasePage {
 			try {
 				driver.switchTo().frame(frame);
 				driver.findElement(byForElement).getText(); //each element is in the same iframe.
-				System.out.println(index); //prints the used index.
+				//System.out.println(index); //prints the used index.
 				driver.switchTo().defaultContent();
 				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
@@ -110,6 +110,7 @@ public class BasePage {
 	}
 	
 	public WebElement getFrameForElement(WebDriver driver, WebElement webElementToFind) {
+		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		return frames.get(getIndexFrame(driver, webElementToFind));
 	}

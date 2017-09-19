@@ -3,6 +3,7 @@ package Pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -56,7 +57,19 @@ public class Accounts extends BasePage {
 	private WebElement selectOperationType; //selector
 	
 	@FindBy (how = How.ID, using = "SelectSymptomType")
-	private WebElement selectSymptomType; //selector
+	private WebElement selectSymptom; //selector
+
+	@FindBy (how = How.ID, using = "UploadFile")
+	private WebElement attachDocument; //input
+	
+	@FindBy (how = How.CSS, using = ".message.description")
+	private WebElement messageDescription; //text
+	
+	@FindBy (how = How.CSS, using = ".x-tab-strip-wrap")
+	private List<WebElement> tabsWrappers; //div, contains detalles, servicios, facturacion
+	
+	@FindBy (how = How.ID, using = "ImeiCode")
+	private WebElement imeiCode; //input
 	
 	//Methods
 	
@@ -120,6 +133,7 @@ public class Accounts extends BasePage {
 
 	public void accountSelect(String cuentaBuscar) {
 		//String regexSelector = "\\w+listSelect\\b";
+		driver.switchTo().frame(getFrameForElement(driver, By.tagName("select")));
 		accountSelect = new Select(driver.findElement(By.tagName("select")));
 		accountSelect.selectByVisibleText(cuentaBuscar);
 	}
@@ -136,14 +150,24 @@ public class Accounts extends BasePage {
 	public void clickRightPanelButtonByName(String buttonName) {
 		//abro el panel lateral derecho (si esta cerrado)
 		deployEastPanel();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		driver.switchTo().defaultContent();
-		List<WebElement> frames2 = driver.findElements(By.tagName("iframe"));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		//driver.switchTo().defaultContent();
+		//List<WebElement> frames2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(getFrameForElement(driver, By.className("startActions-item")));
+		rightActionButtons = driver.findElements(By.className("startActions-item"));
+		System.out.println(rightActionButtons.get(1).getText());
+		for(WebElement actBtn : rightActionButtons) {
+			if (actBtn.getText().toLowerCase().equals(buttonName.toLowerCase())) {
+				System.out.println(actBtn.getText());
+				actBtn.click();
+				break;
+			}
+		}/*
 		for (int i=0; i < frames2.size();i++) {
 			driver.switchTo().defaultContent();
 			driver.switchTo().frame(frames2.get(i));
 			try {
-				driver.findElement(By.className("startActions-item")).getText();//checks this is the panel's tab.
+				driver.findElement().getText();//checks this is the panel's tab.
 				break;
 			}catch(NoSuchElementException noElemExcept) {
 				//System.out.println("Buttons Not Found");
@@ -162,16 +186,11 @@ public class Accounts extends BasePage {
 			for (WebElement currentFrame : frames) {
 				driver.switchTo().defaultContent();
 				driver.switchTo().frame(currentFrame);
-				rightActionButtons = driver.findElements(By.className("startActions-item"));
-				for(WebElement actBtn : rightActionButtons) {
-					if (actBtn.getText().toLowerCase().equals(buttonName.toLowerCase())) {
-						actBtn.click();
-						break;
-					}
-				}
+
 			}
 		}
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	*/
 	}
 	
 	public void selectAccountByIndex(int accountIndex) {
@@ -278,9 +297,10 @@ public class Accounts extends BasePage {
 	public boolean isTabOpened(String tabName) {
 		//account must be opened
 		//2nd x-tab-strip-wrap is the wrapper for : Detalles, Servicios, Facturacion, etc.
-		driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.className("x-tab-strip-wrap"))));
-		WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
-		List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
+		//driver.switchTo().frame(getFrameForElement(driver, tabsWrappers.get(1)));
+		driver.switchTo().defaultContent();//tabs are in defContent
+		WebElement accountTabWrapper = tabsWrappers.get(1);
+		List<WebElement> tabsNames = accountTabWrapper.findElements(By.id("ext-comp-1009__"));
 		for(WebElement tab : tabsNames){
 			if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
 				return true;
@@ -304,9 +324,8 @@ public class Accounts extends BasePage {
 	//Servicio Tecnico Methods
 	
 	public void fillIMEI(String IMEI) {
-		WebElement imeiId = driver.findElement(By.id("ImeiCode"));
-		driver.switchTo().frame(getFrameForElement(driver, imeiId));
-		imeiId.sendKeys(IMEI);
+		driver.switchTo().frame(getFrameForElement(driver, imeiCode));
+		imeiCode.sendKeys(IMEI);
 	}
 	
 	public void continueFromImeiInput() {
@@ -323,14 +342,25 @@ public class Accounts extends BasePage {
 		setSimpleDropdown(selectOperationType, operationName);
 	}
 	
-	public void selectSymptomType(String symptomName) {
-		setSimpleDropdown(selectSymptomType, symptomName);
+	public void selectSymptomByIndex(int symptomIndex) {
+		selectSymptom.click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String executePrefix = "document.getElementsByClassName('slds-list__item')[";
+	    String executeSufix = "].click()";
+		js.executeScript(executePrefix + Integer.toString(symptomIndex) + executeSufix);
 	}
 	
 	public void attachFile(String filePath) {
 		//TODO: Complete with sendkeys
 		//example in validationByDni
-		//driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Downloads\\0F6.gif");
+		driver.switchTo().frame(getFrameForElement(driver, attachDocument));
+		attachDocument.sendKeys(filePath);
+	}
+	
+	public String getMessageDescription() {
+		//at least, for invalid attached document format
+		return messageDescription.getText();
 	}
 	
 }

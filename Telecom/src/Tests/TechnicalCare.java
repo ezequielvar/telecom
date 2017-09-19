@@ -1,6 +1,9 @@
 package Tests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -34,28 +37,47 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		goToLeftPanel2(driver, "Cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Accounts accPage = new Accounts(driver);
-		accPage.clickRightPanelButtonByName("Servicio Técnico");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		Accounts accountPage = new Accounts(driver);
+		//Selecciono Vista Tech
+		driver.switchTo().defaultContent();
+		accountPage.accountSelect("Vista Tech");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//select accountName "Robo Tech", currently has index 10.
+		accountPage.selectAccountByName("Robo Tech");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		if(accountPage.isTabOpened("Servicio Técnico")) {
+			System.out.println("Tab Opened.");
+			accountPage.goToTab("Servicio Técnico");
+		}else {
+			accountPage.clickRightPanelButtonByName("Servicio Técnico");
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass
+	@AfterClass
 	public void tearDown() {
-		BasePage basePage = new BasePage();
-		basePage.switchAppsMenu();
-		basePage.selectAppFromMenuByName("Ventas");
+		//BasePage basePage = new BasePage();
+		//basePage.switchAppsMenu();
+		//basePage.selectAppFromMenuByName("Ventas");
 		driver.close();
 	}
 	
 	@Test(groups = "fase2")
 	public void TS11622_SST_Servicio_Indiferente_Adjunto_Formato_invalido() {
 		Accounts accPage = new Accounts(driver);
+		String invalidFilePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unZip.zip";
+		String mensajeParcialErrorEnPagina = "Solo se pueden adjuntar archivos de tipo .doc";
+		//Literal en pagina: " Solo se pueden adjuntar archivos de tipo .doc, .docx, .xls, .xlsx, .pdf, .jpg, .jpeg "
 		accPage.fillIMEI(validIMEI);
 		accPage.continueFromImeiInput();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		accPage.continueFromClientInfo();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.selectOperationType("Consulta");
-		accPage.selectSymptomType("Baja señal");
+		accPage.selectSymptomByIndex(2);
+		accPage.attachFile(invalidFilePath);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String errMessage = accPage.getMessageDescription();
+		Assert.assertTrue(errMessage.trim().contains(mensajeParcialErrorEnPagina));
 	}
 }
