@@ -52,7 +52,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -87,7 +87,13 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	Select field = new Select(driver.findElement(By.name("fcf")));
 	field.selectByVisibleText("Todas Las cuentas");
+<<<<<<< HEAD
 	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));
+=======
+	
+	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
+
+>>>>>>> 47e6a6ed8d9cfb69968e32f4430e3e315dc33bc5
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

@@ -35,7 +35,7 @@ final WebDriver driver;
 	private WebElement helpAndInformation;
 	
 	@FindBy (how = How.ID, using = "tsidButton")
-	private WebElement sales;
+	private WebElement mainMenuButton;
 	
 	@FindBy (how = How.ID, using = "tsid-menuItems")
 	private WebElement menuOptionsWrapper;
@@ -139,31 +139,38 @@ final WebDriver driver;
 		ordersTab.click();
 	}
 	
-	public void openAppsMenu() {
-		sales.click();
+	public void switchAppsMenu() {
+		driver.switchTo().defaultContent();
+		mainMenuButton.click();
 	}
 	
 	public void selectAppFromMenuByName(String optionName) {
 		//each option is a menuButtonMenuLink class
-		List<WebElement> options = menuOptionsWrapper.findElements(By.className("menuButtonMenuLink"));
+//		List<WebElement> options = menuOptionsWrapper.findElements(By.className("menuButtonMenuLink"));
+		List<WebElement> options = menuOptionsWrapper.findElements(By.tagName("a"));
 		for (WebElement option : options) {
-			if(option.getText().equals(optionName)){
+			if(option.getText().toLowerCase().equals(optionName.toLowerCase())){
 				option.click();
 				return;
 			}
 		}
-		System.out.println("Opcion NO encontrada.");
+		//Uncomment if something is not working correctly.
+		//System.out.println("Opcion del menu principal " + optionName + " NO encontrada.");
+		switchAppsMenu();
 	}
 
 	public void selectMainTabByName(String tabName) {
-		List<WebElement> tabs = tabsWrapperBar.findElements(By.className("menuButtonMenuLink"));
-		for(WebElement tab : tabs) {
-			if(tab.getText().equals(tabName)){
-				tab.findElement(By.tagName("a")).click();
+//		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("li"));
+		driver.switchTo().defaultContent();
+		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("a"));
+
+		for(WebElement tab : tabs) {//tabs LINKS
+			if(tab.getText().toLowerCase().equals(tabName.toLowerCase())){
+				tab.click();
 				return;
 			}
 		}
-		System.out.println("Opcion NO encontrada.");
+		System.out.println("Tab NO encontrado.");
 	}
 	
 	

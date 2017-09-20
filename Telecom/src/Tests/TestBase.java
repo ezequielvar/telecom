@@ -3,6 +3,7 @@ package Tests;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -38,14 +39,32 @@ public class TestBase {
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
-		WebElement element = driver.findElement(By.className("x-btn-split"));
+		/*WebElement element = driver.findElement(By.className("x-btn-split"));
 		Actions builder = new Actions(driver);   
-		builder.moveToElement(element, 245, 20).click().build().perform();
-		WebElement dropDown = driver.findElement(By.id("navigator-sbmenu"));
-		List<WebElement> sections = dropDown.findElements(By.className("x-menu-list-item"));
-		for (WebElement section : sections) {
-			if (section.getText().equals(selection)) {
-				section.click();
+		builder.moveToElement(element, 245, 20).click().build().perform();*/
+		driver.switchTo().defaultContent();
+		try {
+			driver.findElement(By.className("x-btn-split"));
+		}catch(NoSuchElementException noSuchElemExcept) {
+			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+			for (WebElement frame : frames) {
+				try {
+					driver.findElement(By.className("x-btn-split"));
+					break;
+				}catch(NoSuchElementException noSuchElemExceptInside) {
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(frame);
+				}
+			}
+		}
+		WebElement dropDown = driver.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(dropDown, 245, 20).click().build().perform();
+		List<WebElement> options = driver.findElements(By.tagName("li"));
+		for(WebElement option : options) {
+			if(option.findElement(By.tagName("span")).getText().toLowerCase().equals(selection.toLowerCase())) {
+				option.findElement(By.tagName("a")).click();
+				//System.out.println("Seleccionado"); //13/09/2017 working.
 				break;
 			}
 		}
