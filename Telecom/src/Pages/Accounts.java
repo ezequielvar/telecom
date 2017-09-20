@@ -8,6 +8,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -70,6 +71,9 @@ public class Accounts extends BasePage {
 	
 	@FindBy (how = How.ID, using = "ImeiCode")
 	private WebElement imeiCode; //input
+
+	@FindBy (how = How.CSS, using = ".slds-list__item.slds-input-has-icon.slds-input-has-icon--right.ng-scope")
+	private WebElement attachedFile; //input
 	
 	//Methods
 	
@@ -150,47 +154,16 @@ public class Accounts extends BasePage {
 	public void clickRightPanelButtonByName(String buttonName) {
 		//abro el panel lateral derecho (si esta cerrado)
 		deployEastPanel();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		//driver.switchTo().defaultContent();
-		//List<WebElement> frames2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(getFrameForElement(driver, By.className("startActions-item")));
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		driver.switchTo().frame(getFrameForElement(driver, By.className("actions-content")));
 		rightActionButtons = driver.findElements(By.className("startActions-item"));
-		System.out.println(rightActionButtons.get(1).getText());
 		for(WebElement actBtn : rightActionButtons) {
 			if (actBtn.getText().toLowerCase().equals(buttonName.toLowerCase())) {
-				System.out.println(actBtn.getText());
-				actBtn.click();
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+actBtn.getLocation().y+")");
+				actBtn.findElement(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate")).click();
 				break;
 			}
-		}/*
-		for (int i=0; i < frames2.size();i++) {
-			driver.switchTo().defaultContent();
-			driver.switchTo().frame(frames2.get(i));
-			try {
-				driver.findElement().getText();//checks this is the panel's tab.
-				break;
-			}catch(NoSuchElementException noElemExcept) {
-				//System.out.println("Buttons Not Found");
-			}
 		}
-		try {
-			rightActionButtons = driver.findElements(By.className("startActions-item"));
-			//System.out.println(rightActionButtons.size());
-			for(WebElement actBtn : rightActionButtons) {
-				if (actBtn.getText().equals(buttonName)) {
-					actBtn.findElement(By.tagName("button")).click();
-				}
-			}
-		}catch(NoSuchElementException noSuchElemExcept) {
-			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-			for (WebElement currentFrame : frames) {
-				driver.switchTo().defaultContent();
-				driver.switchTo().frame(currentFrame);
-
-			}
-		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	*/
 	}
 	
 	public void selectAccountByIndex(int accountIndex) {
@@ -321,6 +294,22 @@ public class Accounts extends BasePage {
 		}
 	}
 	
+	public void closeTab(String tabName) {
+		if(isTabOpened(tabName)) {
+			driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.className("x-tab-strip-wrap"))));
+			WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
+			List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
+			for(WebElement tab : tabsNames){
+				if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
+					Actions action = new Actions(driver);
+					action.moveToElement(tab);
+					action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
+					break;
+				}
+			}
+		}
+	}
+	
 	//Servicio Tecnico Methods
 	
 	public void fillIMEI(String IMEI) {
@@ -361,6 +350,10 @@ public class Accounts extends BasePage {
 	public String getMessageDescription() {
 		//at least, for invalid attached document format
 		return messageDescription.getText();
+	}
+	
+	public String getAttachedFileTxt() {
+		return attachedFile.findElement(By.tagName("span")).getText();
 	}
 	
 }
