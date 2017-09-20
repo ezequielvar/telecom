@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import Pages.HomeBase;
 import Pages.SintomasSSTManager;
@@ -19,7 +20,7 @@ public class SintomasSTTManagement extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -42,9 +43,10 @@ public class SintomasSTTManagement extends TestBase {
 
 	@AfterClass
 	public void tearDown() {
-		driver.close();
+		//driver.close();
 	}
 	
+	@Test
 	public void TS12605_SST_Sintomas_Consistencia(){
 		SintomasSSTManager sstManagePage = new SintomasSSTManager(driver);
 		//this is How the page handles the selection

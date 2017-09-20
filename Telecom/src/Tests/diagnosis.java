@@ -31,13 +31,13 @@ public class diagnosis extends TestBase {
 
 	@AfterClass
 	public void tearDown2() {
-//		driver.close();
+		driver.close();
 	}
 	
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -45,7 +45,7 @@ public class diagnosis extends TestBase {
 
 	@AfterMethod
 	public void tearDown() {
-	//	driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
+		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
 
 	@BeforeMethod
@@ -221,14 +221,12 @@ public class diagnosis extends TestBase {
 		driver.findElement(By.id("LookupSelectofService")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-<<<<<<< HEAD
 		js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[1].click()");
 		/*WebElement serviceSelector = (accountPage.getServiceSelector());
 		System.out.println(serviceSelector.getAttribute("aria-hidden"));
 		serviceSelector.click();
 		serviceSelector.sendKeys("Internet");*/
 		//accountSelect;
-=======
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
 		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accountPage.continueFromService(); //next page.
@@ -246,7 +244,6 @@ public class diagnosis extends TestBase {
 		//checks togglers Text
 		Assert.assertTrue(accountPage.isTextInTogglersPresent("Estado del Servicio"));
 		Assert.assertTrue(accountPage.isTextInTogglersPresent("Asistencia"));
->>>>>>> 16b9d0913538d391fa26ac831d83f591676832e4
 	}
 
 

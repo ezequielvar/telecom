@@ -39,7 +39,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	public void tearDown() {
 			driver.close();
 	}
-
+	
 	@AfterMethod
 	public void alert (){
 		driver.get("https://cs14.salesforce.com/home/home.jsp");
@@ -83,12 +83,11 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	goToLeftPanel(driver, "Cuentas");
 	WebElement frame0 = driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(frame0);
-	waitFor(driver, (By.name("fcf")));	
+	waitFor(driver, (By.name("fcf")));
+	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas las cuentas");
-	
-	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-
+	field.selectByVisibleText("Todas Las cuentas");
+	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
