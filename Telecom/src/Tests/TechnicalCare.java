@@ -28,9 +28,8 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod
+	@BeforeClass
 	public void setUp() throws Exception {
-		//TODO: add how to get to ABM de Motivo
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -48,33 +47,41 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		if(accountPage.isTabOpened("Servicio Técnico")) {
 			System.out.println("Tab Opened.");
-			accountPage.goToTab("Servicio Técnico");
+			accountPage.closeAccountServiceTabByName("Servicio Técnico");
+			accountPage.clickRightPanelButtonByName("Servicio Técnico");
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}else {
 			accountPage.clickRightPanelButtonByName("Servicio Técnico");
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			accountPage.goToTab("Servicio Técnico");
+			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@AfterClass
 	public void tearDown() {
-		BasePage basePage = new BasePage();
-		basePage.switchAppsMenu();
+		driver.switchTo().defaultContent();
+		BasePage basePage = new BasePage(driver);
+		basePage.switchAppsMenu(driver);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		basePage.selectAppFromMenuByName("Ventas");
 		driver.close();
 	}
 
 	@AfterMethod
-	public void goToTechCare() {
+	public void closeTechCareTab() {
+		System.out.println("AfterMethod executed.");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Accounts accountPage = new Accounts(driver);
 		if(accountPage.isTabOpened("Servicio Técnico")) {
-			accountPage.closeTab("Servicio Técnico");	
+			accountPage.closeAccountServiceTabByName("Servicio Técnico");	
 		}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.goToTab("Servicio Técnico");
+		accountPage.clickRightPanelButtonByName("Servicio Técnico");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	
-	@Test(groups = "fase2")
+
+	@Test(groups = "Fase2")
 	public void TS11622_SST_Servicio_Indiferente_Adjunto_Formato_invalido() {
 		Accounts accPage = new Accounts(driver);
 		String invalidFilePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unZip.zip";
@@ -93,8 +100,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(errMessage.trim().contains(mensajeParcialErrorEnPagina));
 	}
 	
-	
-	@Test(groups = "fase2")
+	@Test(groups = "Fase2")
 	public void TS11620_SST_Servicio_Indiferente_Adjunto_Valido_doc() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unDoc.doc";
@@ -113,7 +119,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".doc"));
 	}
 	
-	@Test(groups = "fase2")
+	@Test(groups = "Fase2")
 	public void TS11631_SST_Servicio_Indiferente_Adjunto_Valido_docx() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unDocx.docx";
@@ -132,7 +138,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".docx"));
 	}
 	
-	@Test(groups = "fase2")
+	@Test(groups = "Fase2")
 	public void TS11635_SST_Servicio_Indiferente_Adjunto_Valido_jpeg() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unJpeg.jpeg";
@@ -151,7 +157,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpeg"));
 	}
 	
-	@Test(groups = "fase2")
+	@Test(groups = "Fase2")
 	public void TS11634_SST_Servicio_Indiferente_Adjunto_Valido_jpg() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unJpg.jpg";
@@ -170,7 +176,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpg"));
 	}
 	
-	@Test(groups = "fase2")
+	@Test(groups = "Fase2")
 	public void TS11636_SST_Servicio_Indiferente_Adjunto_Valido_pdf() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unPdf.pdf";
