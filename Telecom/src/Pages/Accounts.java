@@ -3,10 +3,13 @@ package Pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -43,7 +46,36 @@ public class Accounts extends BasePage {
 	private WebElement motiveSelectedContinue; //button	
 	
 	@FindBy (how = How.ID, using = "RemoteActionInternet")
-	private WebElement executeDiagnosisBtn; //button	
+	private WebElement executeDiagnosisBtn; //button
+	
+	//Tab Servicio Tecnico
+	@FindBy (how = How.ID, using = "ImeiInput_nextBtn")
+	private WebElement imeiInputNextBtn; //button
+	
+	@FindBy (how = How.ID, using = "ClientInformation_nextBtn")
+	private WebElement clientInfoNextBtn; //button	
+	
+	@FindBy (how = How.ID, using = "SelectOperationType")
+	private WebElement selectOperationType; //selector
+	
+	@FindBy (how = How.ID, using = "SelectSymptomType")
+	private WebElement selectSymptom; //selector
+
+	@FindBy (how = How.ID, using = "UploadFile")
+	private WebElement attachDocument; //input
+	
+	@FindBy (how = How.CSS, using = ".message.description")
+	private WebElement messageDescription; //text
+	
+	//@FindBy (how = How.CSS, using = ".x-tab-strip.x-tab-strip-top")
+	//private List<WebElement> accountTabsWrappers; //div, contains detalles, servicios, facturacion
+	
+	@FindBy (how = How.ID, using = "ImeiCode")
+	private WebElement imeiCode; //input
+
+	@FindBy (how = How.CSS, using = ".slds-list__item.slds-input-has-icon.slds-input-has-icon--right.ng-scope")
+	private WebElement attachedFile; //input
+	
 	//Methods
 	
 	public Accounts(WebDriver driver) {
@@ -106,6 +138,7 @@ public class Accounts extends BasePage {
 
 	public void accountSelect(String cuentaBuscar) {
 		//String regexSelector = "\\w+listSelect\\b";
+		driver.switchTo().frame(getFrameForElement(driver, By.tagName("select")));
 		accountSelect = new Select(driver.findElement(By.tagName("select")));
 		accountSelect.selectByVisibleText(cuentaBuscar);
 	}
@@ -116,6 +149,8 @@ public class Accounts extends BasePage {
 			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		}catch(NoSuchElementException noSuchElemExcept){
+		}catch(ElementNotVisibleException elementExcept) {
+			
 		}
 	}
 	
@@ -123,41 +158,15 @@ public class Accounts extends BasePage {
 		//abro el panel lateral derecho (si esta cerrado)
 		deployEastPanel();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		driver.switchTo().defaultContent();
-		List<WebElement> frames2 = driver.findElements(By.tagName("iframe"));
-		for (int i=0; i < frames2.size();i++) {
-			driver.switchTo().defaultContent();
-			driver.switchTo().frame(frames2.get(i));
-			try {
-				driver.findElement(By.className("startActions-item")).getText();//checks this is the panel's tab.
+		driver.switchTo().frame(getFrameForElement(driver, By.className("actions-content")));
+		rightActionButtons = driver.findElements(By.className("startActions-item"));
+		for(WebElement actBtn : rightActionButtons) {
+			if (actBtn.getText().toLowerCase().equals(buttonName.toLowerCase())) {
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+actBtn.getLocation().y+")");
+				actBtn.findElement(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate")).click();
 				break;
-			}catch(NoSuchElementException noElemExcept) {
-				//System.out.println("Buttons Not Found");
 			}
 		}
-		try {
-			rightActionButtons = driver.findElements(By.className("startActions-item"));
-			//System.out.println(rightActionButtons.size());
-			for(WebElement actBtn : rightActionButtons) {
-				if (actBtn.getText().equals(buttonName)) {
-					actBtn.findElement(By.tagName("button")).click();
-				}
-			}
-		}catch(NoSuchElementException noSuchElemExcept) {
-			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-			for (WebElement currentFrame : frames) {
-				driver.switchTo().defaultContent();
-				driver.switchTo().frame(currentFrame);
-				rightActionButtons = driver.findElements(By.className("startActions-item"));
-				for(WebElement actBtn : rightActionButtons) {
-					if (actBtn.getText().toLowerCase().equals(buttonName.toLowerCase())) {
-						actBtn.click();
-						break;
-					}
-				}
-			}
-		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	public void selectAccountByIndex(int accountIndex) {
@@ -261,38 +270,175 @@ public class Accounts extends BasePage {
 		return false;
 	}
 	
+	public WebElement getAccountTab(String tabName) {
+		driver.switchTo().defaultContent();
+		List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
+		List<WebElement> tabsNames = null;
+		System.out.println(accountTabsWrappers.size());
+		boolean found = false;
+		for(WebElement tabList : accountTabsWrappers) {
+			tabsNames = tabList.findElements(By.tagName("li"));
+			for(WebElement tab : tabsNames) {
+				if (tab.getText().toLowerCase().equals("detalles")) {
+					found = true;
+					break;
+				}
+			}
+			if (found) {
+				break;
+			}
+		}
+		//List<WebElement> tabsNames = accountTabsWrapper.findElements(By.tagName("li"));
+		for(WebElement tab : tabsNames){
+			try {
+				System.out.println("isTabOpened: " + tab.findElement(By.className("tabText")).getText());
+				if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
+					System.out.println("Tab is opened. 279.");
+					return tab;
+				}
+			}catch(NoSuchElementException exceptionElementNoSuch) {
+				
+			}
+		}
+		return null;		
+	}
+	
 	public boolean isTabOpened(String tabName) {
 		//account must be opened
 		//2nd x-tab-strip-wrap is the wrapper for : Detalles, Servicios, Facturacion, etc.
-		driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.className("x-tab-strip-wrap"))));
-		WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
-		List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
+		//driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".x-tab-strip.x-tab-strip-top")));
+		driver.switchTo().defaultContent();
+		List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
+		List<WebElement> tabsNames = null;
+		//System.out.println(accountTabsWrappers.size());
+		boolean found = false;
+		for(WebElement tabList : accountTabsWrappers) {
+			tabsNames = tabList.findElements(By.tagName("li"));
+			for(WebElement tab : tabsNames) {
+				if (tab.getText().toLowerCase().equals("detalles")) {
+					found = true;
+					break;
+				}
+			}
+			if (found) {
+				break;
+			}
+		}
+		//List<WebElement> tabsNames = accountTabsWrapper.findElements(By.tagName("li"));
 		for(WebElement tab : tabsNames){
-			if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
-				return true;
+			try {
+				//System.out.println("isTabOpened: " + tab.findElement(By.className("tabText")).getText());
+				if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
+					//System.out.println("Tab is opened. 279.");
+					return true;
+				}
+			}catch(NoSuchElementException exceptionElementNoSuch) {
+				
 			}
 		}
 		return false;
 	}
 	
 	public void goToTab(String tabName) {
-		driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.className("x-tab-strip-wrap"))));
-		WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
-		List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
-		for(WebElement tab : tabsNames){
+		//driver.switchTo().frame(getFrameForElement(driver, By.className("x-tab-strip-wrap")));
+		//WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
+		//List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
+		//driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".x-tab-strip.x-tab-strip-top")));
+		driver.switchTo().defaultContent();
+		List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
+		//System.out.println(accountTabsWrappers.size());
+		
+		//List<WebElement> tabsNames = accountTabsWrappers.get(1).findElements(By.tagName("li"));
+		if(isTabOpened(tabName)) {
+			getAccountTab(tabName).click();
+		}
+		/*for(WebElement tab : tabsNames){
+			System.out.println("goToTab: " + tab.findElement(By.className("tabText")).getText());
 			if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
 				tab.click();
 				break;
 			}
+		}*/
+	}
+	
+	public void closeAccountServiceTabByName(String tabName) {
+		if(isTabOpened(tabName)) {
+			//driver.switchTo().frame(getFrameForElement(driver, accountTabsWrapper));
+			//driver.switchTo().defaultContent(); //accountTabsWrapper ISNT in a frame.
+			//driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".x-tab-strip.x-tab-strip-top")));
+			driver.switchTo().defaultContent();
+			List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
+			//System.out.println(accountTabsWrappers.size());
+			//List<WebElement> tabsNames = accountTabsWrappers.get(1).findElements(By.tagName("li"));
+			WebElement tab = getAccountTab(tabName);
+			Actions action = new Actions(driver);
+			System.out.println("CERRANDO");
+			action.moveToElement(tab);
+			action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
+			/*
+			for(WebElement tab : tabsNames){
+				System.out.println("closeTabService: " + tab.findElement(By.className("tabText")).getText());
+				if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
+					Actions action = new Actions(driver);
+					System.out.println("CERRANDO");
+					action.moveToElement(tab);
+					action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
+					break;
+				}
+			}*/
 		}
 	}
 	
-	//Servicio Tecnico
+	//Servicio Tecnico Methods
 	
 	public void fillIMEI(String IMEI) {
-		WebElement imeiId = driver.findElement(By.id("ImeiCode"));
-		driver.switchTo().frame(getFrameForElement(driver, imeiId));
-		imeiId.sendKeys(IMEI);
+		By findImeiCode = (By.id("ImeiCode"));
+		try {
+			driver.switchTo().defaultContent();
+			driver.findElement(findImeiCode).sendKeys(IMEI);
+		}catch(NoSuchElementException noSuchElemExcept) {
+			driver.switchTo().frame(getFrameForElement(driver, findImeiCode));
+			imeiCode.sendKeys(IMEI);
+		}
+	}
+	
+	public void continueFromImeiInput() {
+		driver.switchTo().frame(getFrameForElement(driver, imeiInputNextBtn));
+		imeiInputNextBtn.click();
+	}
+
+	public void continueFromClientInfo() {
+		driver.switchTo().frame(getFrameForElement(driver, clientInfoNextBtn));
+		clientInfoNextBtn.click();
+	}
+	
+	public void selectOperationType(String operationName) {
+		setSimpleDropdown(selectOperationType, operationName);
+	}
+	
+	public void selectSymptomByIndex(int symptomIndex) {
+		selectSymptom.click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		String executePrefix = "document.getElementsByClassName('slds-list__item')[";
+	    String executeSufix = "].click()";
+		js.executeScript(executePrefix + Integer.toString(symptomIndex) + executeSufix);
+	}
+	
+	public void attachFile(String filePath) {
+		//TODO: Complete with sendkeys
+		//example in validationByDni
+		driver.switchTo().frame(getFrameForElement(driver, attachDocument));
+		attachDocument.sendKeys(filePath);
+	}
+	
+	public String getMessageDescription() {
+		//at least, for invalid attached document format
+		return messageDescription.getText();
+	}
+	
+	public String getAttachedFileTxt() {
+		return attachedFile.findElement(By.tagName("span")).getText();
 	}
 	
 }
