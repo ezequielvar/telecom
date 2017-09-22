@@ -421,6 +421,80 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(accPage.areAllElementsInWEList(listaEsperada));
 	}
+	
+
+@Test(groups = "Fase2") 
+  public void TS16196_STT_Telefono_Alternativo_Vista() {
+    Accounts accPage = new Accounts(driver);
+    accPage.fillIMEI(validIMEI);
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromImeiInput();
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("a1zc0000003IdKkAAK-6")));
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    Assert.assertTrue(driver.findElement(By.id("AlternativePhone")).isDisplayed());
+  }
+  
+  @Test(groups = "Fase2") 
+  public void TS16189_STT_Mail_Alternativo_Vista() {
+    Accounts accPage = new Accounts(driver);
+    accPage.fillIMEI(validIMEI);
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromImeiInput();
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("a1zc0000003IdKkAAK-6")));
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    Assert.assertTrue(driver.findElement(By.id("AlternativeEmail")).isDisplayed());
+  }
+  
+  @Test(groups = "Fase2") 
+  public void TS16190_STT_Mail_Valido() {
+    Accounts accPage = new Accounts(driver);
+    accPage.fillIMEI(validIMEI);
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromImeiInput();
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("a1zc0000003IdKkAAK-6")));
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.findElement(By.id("AlternativeEmail")).sendKeys("roboAlt@algo.com");
+    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-required.ng-dirty.ng-valid.ng-valid-email"));
+  }
+  
+  @Test(groups = "Fase2") 
+  public void TS16191_STT_Mail_Invalido_Sin_Dominio() {
+    Accounts accPage = new Accounts(driver);
+    accPage.fillIMEI(validIMEI);
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromImeiInput();
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.findElement(By.id("AlternativeEmail")).sendKeys("roboAlt");
+    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromClientInfo();
+    Assert.assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
+  }
+  
+  @Test(groups = "Fase2") 
+  public void TS16192_STT_Mail_Invalido_Con_Dominio() {
+    Accounts accPage = new Accounts(driver);
+    accPage.fillIMEI(validIMEI);
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromImeiInput();
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    driver.findElement(By.id("AlternativeEmail")).sendKeys("*@gmail.com");
+try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    accPage.continueFromClientInfo();
+    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    Assert.assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
+  }
+	
 }
 
 
