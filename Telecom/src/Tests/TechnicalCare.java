@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -475,7 +477,7 @@ public class TechnicalCare extends TestBase  {
     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
     accPage.continueFromClientInfo();
-    Assert.assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
+    assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
   }
   
   @Test(groups = "Fase2") 
