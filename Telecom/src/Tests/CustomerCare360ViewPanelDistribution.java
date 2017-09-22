@@ -32,7 +32,7 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 public void tearDown() {
 		driver.close();
 }
-//@AfterMethod
+@AfterMethod
 public void alert (){
 	driver.get("https://cs14.salesforce.com/console");
 	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -45,7 +45,11 @@ public void alert (){
 @BeforeClass
 public void init() throws Exception
 {
+<<<<<<< HEAD
+	this.driver = setConexion.setupEze();
+=======
 	this.driver = setConexion.setupLeo();
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	login(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

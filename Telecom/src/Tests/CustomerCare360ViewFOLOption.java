@@ -38,12 +38,15 @@ private WebDriver driver;
 public void tearDown() {
 		driver.close();
 	}
+<<<<<<< HEAD
+=======
 	
 //@BeforeTest
 public void mainSeteup() {
 	this.driver = setConexion.setupLeo();	
 
 }
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 
 @AfterMethod
 public void alert (){
@@ -87,7 +90,7 @@ public void setUpTest() {
 	driver.switchTo().frame(frame0);
 	waitFor(driver, (By.name("fcf")));	
 	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas las cuentas");
+	field.selectByVisibleText("Todas Las cuentas");
 	
 	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -99,7 +102,7 @@ public void setUpTest() {
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String billingTabName = "Facturaciï¿½n";
+		String billingTabName = "Facturación";
 		boolean billingTabExist = false;
 		List<WebElement> availableTabs = driver.findElements(By.className("tabText"));
 		//Checks all tabs, and finds if some one matches billingTabName

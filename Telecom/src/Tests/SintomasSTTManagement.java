@@ -44,7 +44,7 @@ public class SintomasSTTManagement extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -92,11 +92,11 @@ public class SintomasSTTManagement extends TestBase {
 		homePage.selectAppFromMenuByName("Ventas");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		homePage.selectMainTabByName("Síntomas de STT");
+		homePage.selectMainTabByName("SÃ­ntomas de STT");
 		
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		//this is How the page handles the selection
-		sstManagerPage.selectToSeeByName("ABM de Síntomas STT");
+		sstManagerPage.selectToSeeByName("ABM de SÃ­ntomas STT");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.selectToSeeByName("All");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -105,7 +105,7 @@ public class SintomasSTTManagement extends TestBase {
 		homePage.selectAppFromMenuByName("Consola FAN");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<String> symptomsRegInSSTViewForAdmin = sstManagerPage.getSymptomsRegisterNumbersForAdmin();
 		Assert.assertTrue((new HashSet(symptomsRegInSSTViewForAdmin)).equals((new HashSet(symptomsRegInSSTView))));
@@ -119,7 +119,7 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement activeSymptom = sstManagerPage.getFirstActiveSymptom();
 		boolean isActive = sstManagerPage.isSymptomActive(activeSymptom);
@@ -135,13 +135,13 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, validDescription);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
@@ -153,13 +153,13 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, invalidDescription);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
@@ -170,13 +170,13 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "a");//1 letter, should be allowed to create.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
@@ -187,13 +187,13 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "9");//1 number, should be allowed to create.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
@@ -204,13 +204,13 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "®");//1 symbol, should NOT be allowed to create.
+		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, "Â®");//1 symbol, should NOT be allowed to create.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was NOT found.
 		//this isn't implemented yet.
@@ -224,14 +224,14 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, crearActivado);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement newSymptom = sstManagerPage.getSymptomByName(nombreSintomaNuevo);
 		Assert.assertTrue(newSymptom != null); //verifies that the symptom was found.
@@ -246,14 +246,14 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, crearActivado);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement newSymptom = sstManagerPage.getSymptomByName(nombreSintomaNuevo);
 		Assert.assertTrue(newSymptom != null); //verifies that the symptom was found.
@@ -268,14 +268,14 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, activadoDescripcion, crearActivado);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement newSymptom = sstManagerPage.getSymptomByName(nombreSintomaNuevo);
 		Date newSymptomDateInPage = sstManagerPage.getSymptomDateByName(nombreSintomaNuevo);
@@ -306,13 +306,13 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToModifySymptomByName(nombreSintomaModificar);//selects this symptom to modify
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaModificar, activadoDescripcion, crearActivado);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Date newSymptomDateInPage = sstManagerPage.getSymptomModifiedDateByName(nombreSintomaModificar);
 		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
@@ -334,14 +334,14 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, descripcionSintomaNuevo);//1 letter name, should be allowed to create.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
@@ -353,14 +353,14 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the tearDown method. afterClass.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, descripcionSintomaNuevo);//1 number, should be allowed to create.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
@@ -368,17 +368,17 @@ public class SintomasSTTManagement extends TestBase {
 	@Test(groups ="Fase2")
 	public void TS11552_Creacion_De_Sintoma_Nombre_Sintoma_simbolo(){
 		String descripcionSintomaNuevo = "TS11552: nombre simbolo, no deberia poder crearse.";
-		String nombreSintomaNuevo =  "®";
+		String nombreSintomaNuevo =  "Â®";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, descripcionSintomaNuevo);//1 symbol, should NOT be allowed to create.
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was NOT found.
 		//this isn't implemented yet.
@@ -392,14 +392,14 @@ public class SintomasSTTManagement extends TestBase {
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.deleteAllSymptomsByName(nombreSintomaNuevo); //this should be done in the goToConsolaFAN afterMethod.
 		sstManagerPage.goToCreateNewSymptom();
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sstManagerPage.fillAndSaveCustomSymptom(nombreSintomaNuevo, descripcionSintomaNuevo);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Síntomas de STT");
+		goToLeftPanel2(driver, "SÃ­ntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 		sstManagerPage.openSymptomByName(nombreSintomaNuevo);

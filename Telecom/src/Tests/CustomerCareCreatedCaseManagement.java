@@ -31,6 +31,12 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 <<<<<<< HEAD
 	@BeforeTest
 	public void mainSteup() {
+		this.driver = setConexion.setupEze();
+	}
+=======
+<<<<<<< HEAD
+	@BeforeTest
+	public void mainSteup() {
 		this.driver = setConexion.setupLeo();	
 	}
 =======
@@ -38,6 +44,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	public void mainSteup() {
 		this.driver = setConexion.setupEze();	
 >>>>>>> cdaf0f4bf4a99ac0526033539863b1b75abf5232
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 	@BeforeClass
 	public void init() throws Exception
 	{
@@ -53,7 +60,11 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 <<<<<<< HEAD
 
 =======
+<<<<<<< HEAD
+
+=======
 >>>>>>> cdaf0f4bf4a99ac0526033539863b1b75abf5232
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
