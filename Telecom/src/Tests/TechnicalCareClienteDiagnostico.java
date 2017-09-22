@@ -1,35 +1,11 @@
 package Tests;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.sql.Driver;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import Pages.Login;
 import Pages.TechCareDiagnostic;
-import Pages.customerInformation;
 import Pages.setConexion;
 
 
@@ -66,7 +42,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 	driver.close();
 	}
 	
-	@Test
+	@Test(groups = "fase1")
 	public void TS6755_DiagnosticsFixedBroadbandUPUP() {
 		value = "UP/UP";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
@@ -81,7 +57,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		page.validvalue2(value);
 }
 	
-	@Test
+	@Test(groups = "fase1")
 	public void TS6756_DiagnosticsFixedBroadbandUPDOWN() {
 		value = "UP/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
@@ -109,7 +85,7 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		page.selectvalues(value);
 		page.validvalue2(value);
 }
-	@Test
+	@Test(groups = "fase1")
 	public void TS6759_DiagnosticsFixedBroadbandNOTSESION() {
 		value = "Sin Sesión";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
@@ -123,12 +99,12 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		page.selectvalues(value);
 		page.validvalue2(value);
 }
-	@Test
+	@Test(groups = "fase1")
 	public void TS6410_DiagnosticsServiceIndifferentEnteringTechCarefrom360view() {
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectpage("2");
 }
-	@Test
+	@Test(groups = "fase1")
 	//no terminado
 	public void TS6411_DiagnosticsMobileTelephonyMobileServiceEnterDomicile() {
 		gestion = "Asistencia Técnica";
