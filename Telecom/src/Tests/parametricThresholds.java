@@ -37,7 +37,7 @@ public class parametricThresholds extends TestBase {
 	@BeforeClass
 	public void Init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -87,7 +87,7 @@ public class parametricThresholds extends TestBase {
 		Assert.assertTrue((a-b == 1));
 	}
 	
-	@Test
+	@Test(groups="fase1")
 	public void TS6370_modifyThreshold() {
 		ParametrizationThresholds page0 = new ParametrizationThresholds(driver);
 		page0.clickOnNewThreshold();
