@@ -83,7 +83,7 @@ public class SintomasSTTManagement extends TestBase {
 	}
 		
 	//Uses both pages (Admin and user SST Symptoms ABM)
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS12605_SST_Sintomas_Consistencia(){
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();
@@ -114,7 +114,7 @@ public class SintomasSTTManagement extends TestBase {
 	}
 	
 	//Admin Symptoms ABM Page
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11561_Admin_Desactivacion_De_Sintoma(){
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -129,7 +129,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertFalse(sstManagerPage.isSymptomActive(activeSymptom));
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11558_Creacion_De_Sintoma_Descripcion_255(){
 		String nombreSintomaNuevo = "TS11558 Sintoma nuevo.255";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -146,7 +146,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11559_Creacion_De_Sintoma_Descripcion_256(){
 		//the creation is allowed, it just cuts down what exceeds the 255 limit.
 		String nombreSintomaNuevo = "TS11559 Sintoma nuevo.256";
@@ -164,7 +164,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11557_Creacion_De_Sintoma_Descripcion_letra(){
 		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 letra.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -181,7 +181,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11556_Creacion_De_Sintoma_Descripcion_numero(){
 		String nombreSintomaNuevo = "TS11557 Sintoma con desc 1 numero.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -198,7 +198,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11555_Creacion_De_Sintoma_Descripcion_simbolo(){
 		String nombreSintomaNuevo = "TS11555 Sintoma con desc 1 simbolo.";
 		SintomasSSTManager sstManagerPage = new SintomasSSTManager(driver);
@@ -216,7 +216,7 @@ public class SintomasSTTManagement extends TestBase {
 		//this isn't implemented yet.
 	}
 
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11546_Creacion_De_Sintoma_Ejecucion_activado(){
 		String nombreSintomaNuevo = "TS11546: Sintoma ACTIVADO";
 		String activadoDescripcion = "Se creo activado.";
@@ -238,7 +238,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.isSymptomActive(newSymptom));
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11547_Creacion_De_Sintoma_Ejecucion_desactivado(){
 		String nombreSintomaNuevo = "TS1157: Sintoma DESACTIVADO";
 		String activadoDescripcion = "Se creo desactivado.";
@@ -260,7 +260,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertFalse(sstManagerPage.isSymptomActive(newSymptom)); //verifies the symptom isn't active.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11549_Creacion_De_Sintoma_Fecha_De_Alta_verificacion(){
 		String nombreSintomaNuevo = "TS11549: Fecha de alta verificacion.";
 		String activadoDescripcion = "Se creo con fecha dd/mm/yyyy.";
@@ -295,7 +295,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(newSymptomDateInPage.equals(currentDate));//verifies that the dates matches.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11551_Creacion_De_Sintoma_Fecha_De_Modificacion_verificacion(){
 		//Condition : There must be only one symptom with this name.
 		String nombreSintomaModificar = "TS11551: Fecha de modificacion. Ya creado.";
@@ -327,7 +327,7 @@ public class SintomasSTTManagement extends TestBase {
 	}
 	
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11554_Creacion_De_Sintoma_Nombre_Sintoma_letra(){
 		String nombreSintomaNuevo = "s";
 		String descripcionSintomaNuevo = "TS11554: 1 letra.";
@@ -346,7 +346,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11553_Creacion_De_Sintoma_Nombre_Sintoma_numero(){
 		String nombreSintomaNuevo = "8";
 		String descripcionSintomaNuevo = "TS11553: un numero (8).";
@@ -365,7 +365,7 @@ public class SintomasSTTManagement extends TestBase {
 		Assert.assertTrue(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was found.
 	}
 	
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11552_Creacion_De_Sintoma_Nombre_Sintoma_simbolo(){
 		String descripcionSintomaNuevo = "TS11552: nombre simbolo, no deberia poder crearse.";
 		String nombreSintomaNuevo =  "®";
@@ -384,7 +384,7 @@ public class SintomasSTTManagement extends TestBase {
 		//this isn't implemented yet.
 	}
 
-	@Test(groups ="fase2")
+	@Test(groups ="Fase2")
 	public void TS11550_Creacion_De_Sintoma_Nombre_Usuario_verificacion(){
 		String descripcionSintomaNuevo = "Verificacion usuario. Deber ser USIT.";
 		String nombreSintomaNuevo =  "TS11550: Verificacion usuario.";
