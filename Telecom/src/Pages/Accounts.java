@@ -1,5 +1,7 @@
 package Pages;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -14,6 +16,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class Accounts extends BasePage {
 	final WebDriver driver;
@@ -54,6 +57,9 @@ public class Accounts extends BasePage {
 	
 	@FindBy (how = How.ID, using = "ClientInformation_nextBtn")
 	private WebElement clientInfoNextBtn; //button	
+	
+	@FindBy (how = How.ID, using = "SymptomExplanation_nextBtn")
+	private WebElement symptomExplainNextButton; //button	
 	
 	@FindBy (how = How.ID, using = "SelectOperationType")
 	private WebElement selectOperationType; //selector
@@ -281,7 +287,7 @@ public class Accounts extends BasePage {
 		driver.switchTo().defaultContent();
 		List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
 		List<WebElement> tabsNames = null;
-		System.out.println(accountTabsWrappers.size());
+		//System.out.println(accountTabsWrappers.size());
 		boolean found = false;
 		for(WebElement tabList : accountTabsWrappers) {
 			tabsNames = tabList.findElements(By.tagName("li"));
@@ -295,12 +301,11 @@ public class Accounts extends BasePage {
 				break;
 			}
 		}
-		//List<WebElement> tabsNames = accountTabsWrapper.findElements(By.tagName("li"));
 		for(WebElement tab : tabsNames){
 			try {
-				System.out.println("isTabOpened: " + tab.findElement(By.className("tabText")).getText());
+				//System.out.println("isTabOpened: " + tab.findElement(By.className("tabText")).getText());
 				if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
-					System.out.println("Tab is opened. 279.");
+					//System.out.println("Tab is opened. 279.");
 					return tab;
 				}
 			}catch(NoSuchElementException exceptionElementNoSuch) {
@@ -311,9 +316,6 @@ public class Accounts extends BasePage {
 	}
 	
 	public boolean isTabOpened(String tabName) {
-		//account must be opened
-		//2nd x-tab-strip-wrap is the wrapper for : Detalles, Servicios, Facturacion, etc.
-		//driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".x-tab-strip.x-tab-strip-top")));
 		driver.switchTo().defaultContent();
 		List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
 		List<WebElement> tabsNames = null;
@@ -331,7 +333,6 @@ public class Accounts extends BasePage {
 				break;
 			}
 		}
-		//List<WebElement> tabsNames = accountTabsWrapper.findElements(By.tagName("li"));
 		for(WebElement tab : tabsNames){
 			try {
 				//System.out.println("isTabOpened: " + tab.findElement(By.className("tabText")).getText());
@@ -360,7 +361,7 @@ public class Accounts extends BasePage {
 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			WebElement tab = getAccountTab(tabName);
 			Actions action = new Actions(driver);
-			System.out.println("CERRANDO");
+			//System.out.println("CERRANDO");
 			action.moveToElement(tab);
 			action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
 		}
@@ -389,8 +390,28 @@ public class Accounts extends BasePage {
 		clientInfoNextBtn.click();
 	}
 	
+	public void continueFromSymptomExplanation() {
+		driver.switchTo().frame(getFrameForElement(driver, By.id("SymptomExplanation_nextBtn")));
+		symptomExplainNextButton.click();
+	}
+	
 	public void selectOperationType(String operationName) {
 		setSimpleDropdown(selectOperationType, operationName);
+	}
+	
+	public List<WebElement> getOperationTypeDropDownElements() {
+		Select selectOType = new Select(selectOperationType);
+		List<WebElement> selectOTypeElements = selectOType.getOptions();
+		return selectOTypeElements;
+	}
+	
+	public boolean areAllElementsInWEList(List<String> elementsList) {
+		List<String> elements = new ArrayList<String>();
+		for (WebElement element : getOperationTypeDropDownElements()) {
+			//System.out.println(element.getText().trim());
+			elements.add(element.getText().trim());
+		}
+		return ((new HashSet(elements)).equals((new HashSet(elementsList))));		
 	}
 	
 	public void selectSymptomByIndex(int symptomIndex) {
@@ -402,9 +423,12 @@ public class Accounts extends BasePage {
 		js.executeScript(executePrefix + Integer.toString(symptomIndex) + executeSufix);
 	}
 	
+	public void fillComments(String comment) {
+		driver.switchTo().frame(getFrameForElement(driver, By.id("TextAreaNotes")));
+		driver.findElement(By.id("TextAreaNotes")).sendKeys(comment);
+	}
+	
 	public void attachFile(String filePath) {
-		//TODO: Complete with sendkeys
-		//example in validationByDni
 		driver.switchTo().frame(getFrameForElement(driver, attachDocument));
 		attachDocument.sendKeys(filePath);
 	}
