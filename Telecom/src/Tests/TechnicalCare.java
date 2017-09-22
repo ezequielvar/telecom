@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
@@ -69,16 +68,21 @@ public class TechnicalCare extends TestBase  {
 	}
 
 	@AfterMethod
-	public void closeTechCareTab() {
+	public void closeTechCare() {
 		System.out.println("AfterMethod executed.");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Accounts accountPage = new Accounts(driver);
-		if(accountPage.isTabOpened("Servicio Técnico")) {
+		By closeButtonBy = By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope");
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, closeButtonBy));
+		driver.findElement(closeButtonBy).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("alert-ok-button")).click();
+		/*if(accountPage.isTabOpened("Servicio Técnico")) {
 			accountPage.closeAccountServiceTabByName("Servicio Técnico");	
-		}
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}*/
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accountPage.clickRightPanelButtonByName("Servicio Técnico");
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
 	@Test(groups = "Fase2")
@@ -95,7 +99,7 @@ public class TechnicalCare extends TestBase  {
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.attachFile(invalidFilePath);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String errMessage = accPage.getMessageDescription();
 		Assert.assertTrue(errMessage.trim().contains(mensajeParcialErrorEnPagina));
 	}
@@ -113,7 +117,7 @@ public class TechnicalCare extends TestBase  {
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.attachFile(filePath);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".doc"));
@@ -132,7 +136,7 @@ public class TechnicalCare extends TestBase  {
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.attachFile(filePath);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".docx"));
@@ -151,7 +155,7 @@ public class TechnicalCare extends TestBase  {
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.attachFile(filePath);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpeg"));
@@ -170,7 +174,7 @@ public class TechnicalCare extends TestBase  {
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.attachFile(filePath);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpg"));
@@ -189,9 +193,52 @@ public class TechnicalCare extends TestBase  {
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.attachFile(filePath);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".pdf"));
 	}
+	
+	@Test(groups = "Fase2")
+	public void TS11632_SST_Servicio_Indiferente_Adjunto_Valido_xls() {
+		Accounts accPage = new Accounts(driver);
+		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unXls.xls";
+		//Literal en pagina: " Solo se pueden adjuntar archivos de tipo .doc, .docx, .xls, .xlsx, .pdf, .jpg, .jpeg "
+		accPage.fillIMEI(validIMEI);
+		accPage.continueFromImeiInput();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		accPage.continueFromClientInfo();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.selectOperationType("Consulta");
+		accPage.selectSymptomByIndex(2);
+		accPage.attachFile(filePath);
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
+		System.out.println(textoArchivoAdjunto);
+		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".xls"));
+	}
+	
+	@Test(groups = "Fase2")
+	public void TS11633_SST_Servicio_Indiferente_Adjunto_Valido_xlsx() {
+		Accounts accPage = new Accounts(driver);
+		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unXlsx.xlsx";
+		//Literal en pagina: " Solo se pueden adjuntar archivos de tipo .doc, .docx, .xls, .xlsx, .pdf, .jpg, .jpeg "
+		accPage.fillIMEI(validIMEI);
+		accPage.continueFromImeiInput();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		accPage.continueFromClientInfo();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.selectOperationType("Consulta");
+		accPage.selectSymptomByIndex(2);
+		accPage.attachFile(filePath);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
+		System.out.println(textoArchivoAdjunto);
+		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".xlsx"));
+	}
+
+	
+	
+	
+	
 }

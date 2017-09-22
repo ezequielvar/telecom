@@ -145,13 +145,20 @@ public class Accounts extends BasePage {
 	
 	public void deployEastPanel() {
 		driver.switchTo().defaultContent();
+		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
+			try {
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
+			}catch(ElementNotVisibleException except) {
+				System.out.println(except.getMessage());
+			}
+		}/*
 		try {
 			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		}catch(NoSuchElementException noSuchElemExcept){
 		}catch(ElementNotVisibleException elementExcept) {
 			
-		}
+		}*/
 	}
 	
 	public void clickRightPanelButtonByName(String buttonName) {
@@ -340,52 +347,22 @@ public class Accounts extends BasePage {
 	}
 	
 	public void goToTab(String tabName) {
-		//driver.switchTo().frame(getFrameForElement(driver, By.className("x-tab-strip-wrap")));
-		//WebElement tabWrapper = driver.findElements(By.className("x-tab-strip-wrap")).get(1);
-		//List<WebElement> tabsNames = tabWrapper.findElements(By.id("ext-comp-1009__"));
-		//driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".x-tab-strip.x-tab-strip-top")));
 		driver.switchTo().defaultContent();
-		List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
-		//System.out.println(accountTabsWrappers.size());
-		
-		//List<WebElement> tabsNames = accountTabsWrappers.get(1).findElements(By.tagName("li"));
 		if(isTabOpened(tabName)) {
 			getAccountTab(tabName).click();
 		}
-		/*for(WebElement tab : tabsNames){
-			System.out.println("goToTab: " + tab.findElement(By.className("tabText")).getText());
-			if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
-				tab.click();
-				break;
-			}
-		}*/
 	}
 	
 	public void closeAccountServiceTabByName(String tabName) {
 		if(isTabOpened(tabName)) {
-			//driver.switchTo().frame(getFrameForElement(driver, accountTabsWrapper));
-			//driver.switchTo().defaultContent(); //accountTabsWrapper ISNT in a frame.
-			//driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".x-tab-strip.x-tab-strip-top")));
 			driver.switchTo().defaultContent();
-			List<WebElement> accountTabsWrappers = driver.findElements(By.cssSelector(".x-tab-strip.x-tab-strip-top"));
-			//System.out.println(accountTabsWrappers.size());
-			//List<WebElement> tabsNames = accountTabsWrappers.get(1).findElements(By.tagName("li"));
+			goToTab(tabName);
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			WebElement tab = getAccountTab(tabName);
 			Actions action = new Actions(driver);
 			System.out.println("CERRANDO");
 			action.moveToElement(tab);
 			action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
-			/*
-			for(WebElement tab : tabsNames){
-				System.out.println("closeTabService: " + tab.findElement(By.className("tabText")).getText());
-				if(tab.findElement(By.className("tabText")).getText().equals(tabName)) {
-					Actions action = new Actions(driver);
-					System.out.println("CERRANDO");
-					action.moveToElement(tab);
-					action.moveToElement(tab.findElement(By.className("x-tab-strip-close"))).click().build().perform();
-					break;
-				}
-			}*/
 		}
 	}
 	
