@@ -468,80 +468,12 @@ break;
 		
 	}
 	public void ValidarBtnsGestion(String gestion) {
-	
-			driver.switchTo().defaultContent();
-			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-			driver.switchTo().frame(frame1.get(4));
-			
-			List <WebElement> btns = driver.findElements(By.cssSelector(".slds-text-body_regular.ta-button-font"));
-			switch (gestion){
-			case "Actualizar Pago":
-				btns.get(0).isEnabled();
-				break;
-			case "Pague su Factura":
-				btns.get(1).isEnabled();
-				break;
-			case "Cambie su Dirección de Facturación":
-				btns.get(2).isEnabled();
-				break;
-			case "Reporte Falla de Servicio":
-				btns.get(3).isEnabled();
-				break;
-			case "Reporte Problema con Packs":
-				btns.get(4).isEnabled();
-				break;
-			case "Añadir Familiar":
-				btns.get(5).isEnabled();
-				break;
-			case "Ver Uso":
-				btns.get(6).isEnabled();
-				break;
-			case "Actualización del servicio":
-				btns.get(7).isEnabled();
-				break;
-			case "Asistencia Técnica":
-				btns.get(8).isEnabled();
-				break;
-			case "Ver Prefactibilidad":
-				btns.get(9).isEnabled();
-				break;
-			case "Nueva Venta":
-				btns.get(10).isEnabled();
-				break;
-			case "Sugerencias":
-				btns.get(11).isEnabled();
-				break;
-			case "Movimientos de cuenta de facturación":
-				btns.get(12).isEnabled();
-				break;
-			case "Servicio Técnico":
-				btns.get(13).isEnabled();
-				break;
-			case "Eventos Masivos":
-				btns.get(14).isEnabled();
-				break;
-			case "Gestionar Muleto":
-				btns.get(15).isEnabled();
-				break;
-			case	"Detalle de Consumos":
-				btns.get(16).isEnabled();
-				break;
-			case	"Cambios de condición impositiva":
-				btns.get(17).isEnabled();
-				break;
-			case	"Cambio de ciclo":
-				btns.get(18).isEnabled();
-				break;
-			case	"Knowledge":
-				btns.get(19).isEnabled();
-				break;
-			case "Armado pedido":
-				btns.get(20).isEnabled();
-				break;
-			case "Entrega de pedidos":
-				btns.get(21).isEnabled();
-				break;
-			}driver.switchTo().defaultContent();}
+		openrightpanel();	
+		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(gestion);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
+		Assert.assertTrue(btns.get(0).getText().equals(gestion));
+	}
 	
 	
 	public void usarbuscadorsalesforce(String busqueda) {
@@ -762,10 +694,12 @@ try {
 		setSimpleDropdown(driver.findElement(By.id("Category")), categoria);
 		setSimpleDropdown(driver.findElement(By.id("Subcategory")), subcategoria);
 		driver.findElement(By.id("Comment")).sendKeys("Esto es un comentario");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 		
 		switch(gestion) {
 		case "crear":
-			driver.findElement(By.id("ManagementType_nextBtn")).click();
+			obligarclick(driver.findElement(By.id("ManagementType_nextBtn")));
 			break;
 		case "cancel":
 			driver.findElement(By.className("vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
