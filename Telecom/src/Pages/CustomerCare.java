@@ -698,15 +698,14 @@ try {
 		driver.findElement(By.id("Comment")).sendKeys("Esto es un comentario");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-List <WebElement> asl = driver.findElements(By.id("ManagementType_nextBtn"));
-System.out.println(asl.size());
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
+((JavascriptExecutor)driver).executeScript("document.getElementById('ManagementType_nextBtn').click()");
 
 		switch(gestion) {
 		case "crear":
 			//(656, 565)
-			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
-			driver.findElement(By.id("ManagementType_nextBtn")).click();
-			
+			//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
+			//driver.findElement(By.id("ManagementType_nextBtn")).click();
 			break;
 		case "cancel":
 			driver.findElement(By.className("vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
