@@ -87,17 +87,10 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	Select field = new Select(driver.findElement(By.name("fcf")));
 	field.selectByVisibleText("Todas Las cuentas");
-<<<<<<< HEAD
-	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));
-=======
-	
-	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-
->>>>>>> 47e6a6ed8d9cfb69968e32f4430e3e315dc33bc5
+	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));	
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
 	driver.switchTo().defaultContent();
 	if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
 		driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
