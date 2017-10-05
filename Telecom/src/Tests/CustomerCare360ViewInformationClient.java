@@ -76,7 +76,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 	}
 	
-	@Test
+	/*@Test
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
@@ -268,7 +268,6 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.elegircaso();
 		page1.validarcasocerrado("", "");
 		
-		
 		}
 		@Test(groups="Fase2")
 		public void TS12302_Positive_Feedback_Suggestions_Generic_Interaction_No_Follow_up_Required_Detalle_de_Atributos_Feedback_Positivo_Generar_Gestion_Subcategoria_Atencion_Ejecutivos() {
@@ -276,13 +275,21 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		CasePage page1 = new CasePage(driver);
 		page.elegircuenta("Fernando Care");
 		page.SelectGestion("sugerencia");
-		page.crearsugerencia("Sugerencias", "Atención Ejecutivos", "crear");
+		page.crearsugerencia("Sugerencias","Atención Ejecutivos","crear");
 		page.detectarframe();
 		page.cerrarultimapestaña();
 		page.elegircaso();
 		page1.validarcasocerrado("Sugerencias", "Atención Ejecutivos");
 		
-		}
+		}*/
 		
+		@Test(groups="Fase2")
+		public void TS14571_Case_Management_Sesion_Guiada_Ver_Casos_User_Asignado_Visualizar_Pantalla_Mis_Casos_Abiertos() {
+			CustomerCare page = new CustomerCare(driver);
+			CasePage page1 = new CasePage(driver);
+			page.elegircaso();
+			
+		}
+
 		
 }
