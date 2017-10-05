@@ -447,7 +447,7 @@ for (WebElement frame2: frame1){
 	try {
 		driver.switchTo().frame(frame2);
 		/////////////////
-		driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_CASE_NUMBER"));
+		driver.findElement(By.id("ManagementType_nextBtn"));
 //////////////////////////
  b =	Integer.toString(i);
 	System.out.println("frame1 : "+ b);
@@ -688,18 +688,25 @@ try {
 	
 	public void crearsugerencia(String categoria, String subcategoria, String gestion) {
 		driver.switchTo().defaultContent();
+		Accounts accpage= new Accounts(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(3));
+		driver.switchTo().frame(accpage.getFrameForElement(driver, By.id("ManagementType_nextBtn")));
+		//driver.switchTo().frame(frame1.get(5));
 		setSimpleDropdown(driver.findElement(By.id("Category")), categoria);
 		setSimpleDropdown(driver.findElement(By.id("Subcategory")), subcategoria);
 		driver.findElement(By.id("Comment")).sendKeys("Esto es un comentario");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
 		
+List <WebElement> asl = driver.findElements(By.id("ManagementType_nextBtn"));
+System.out.println(asl.size());
+
 		switch(gestion) {
 		case "crear":
-			obligarclick(driver.findElement(By.id("ManagementType_nextBtn")));
+			//(656, 565)
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
+			driver.findElement(By.id("ManagementType_nextBtn")).click();
+			
 			break;
 		case "cancel":
 			driver.findElement(By.className("vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
