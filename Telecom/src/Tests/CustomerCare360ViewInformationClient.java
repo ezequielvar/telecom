@@ -26,11 +26,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.CasePage;
 import Pages.CustomerCare;
 import Pages.Login;
 import Pages.customerInformation;
 import Pages.setConexion;
+
 public class CustomerCare360ViewInformationClient extends TestBase {
 
 
@@ -284,4 +286,118 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		}
 		
 		
+		@Test (groups="Fase2")
+		public void TS15962_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Boton_de_sesion_guiada() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.ValidarBtnsGestion("Cambios de condi");
+			page.cerrarultimapestaña();
+			driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups= "Fase2")
+		public void TS15966_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_1_Escenario_1() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    page.validarCheckBox();
+		    page.validarDniACuit();
+		    driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS15976_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Seleccion_DNI_a_CUIT(){
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    WebElement checkBox = driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
+		    checkBox.click();
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    List<WebElement> siguiente = driver.findElements(By.cssSelector(".ng-binding"));
+		    System.out.println("Cantidad de ng-bingind:" + siguiente.size());		    
+		    WebElement siguienteBoton = driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn"));
+		    siguienteBoton.click();
+		    List<WebElement> listaNuevoCheckBox = driver.findElements(By.cssSelector(".slds-checkbox--faux"));
+		    listaNuevoCheckBox.get(0).click();
+		    listaNuevoCheckBox.get(1).click();
+		    List<WebElement> nuevoSiguiente = driver.findElements(By.cssSelector(".ng-binding"));
+		    System.out.println("Cantidad de ng-binding:" + listaNuevoCheckBox.size());
+		    WebElement otroNuevoSiguiente = driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn"));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.obligarclick(otroNuevoSiguiente);
+		    driver.switchTo().defaultContent();		    
+		}
+		
+		@Test
+		public void TS15977_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Sin_seleccion_DNI_a_CUIT() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    WebElement checkBox = driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
+		    checkBox.click();
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    List<WebElement> siguiente = driver.findElements(By.cssSelector(".ng-binding"));
+		    System.out.println("Cantidad de ng-bingind:" + siguiente.size());		    
+		    WebElement siguienteBoton = driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn"));
+		    siguienteBoton.click();
+		    WebElement otroNuevoSiguiente = driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn"));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.obligarclick(otroNuevoSiguiente);
+		    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.validarError();
+		    driver.switchTo().defaultContent();    
+		}		
+		
+		@Test
+		public void TS15974_CRMFase_2_Customer_Care_Tax_Condition_ChangesSesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Visualizar_DNI_a_CUIT() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    WebElement checkBox = driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
+		    checkBox.click();
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    List<WebElement> siguiente = driver.findElements(By.cssSelector(".ng-binding"));
+		    System.out.println("Cantidad de ng-bingind:" + siguiente.size());		    
+		    WebElement siguienteBoton = driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn"));
+		    siguienteBoton.click();
+		    WebElement billings = driver.findElement(By.cssSelector(".slds-form-element__label.tax-condition-billing-accounts-name.ng-binding"));
+		    boolean a = false;
+		    if (billings.isDisplayed()) {
+		    	a = true;
+		    	assertTrue(a);		    	
+		    }
+		    driver.switchTo().defaultContent();		    
+		}
 }
