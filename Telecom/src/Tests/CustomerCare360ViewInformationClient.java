@@ -277,6 +277,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.elegircuenta("Fernando Care");
 		page.SelectGestion("sugerencia");
 		page.crearsugerencia("Sugerencias", "Atención Ejecutivos", "crear");
+		page.detectarframe();
 		page.cerrarultimapestaña();
 		page.elegircaso();
 		page1.validarcasocerrado("Sugerencias", "Atención Ejecutivos");
