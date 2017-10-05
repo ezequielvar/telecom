@@ -38,16 +38,12 @@ private WebDriver driver;
 public void tearDown() {
 		driver.close();
 	}
-<<<<<<< HEAD
-=======
 	
 //@BeforeTest
 public void mainSeteup() {
 	this.driver = setConexion.setupLeo();	
 
 }
->>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
-
 @AfterMethod
 public void alert (){
 	driver.get("https://cs14.salesforce.com/home/home.jsp");
