@@ -706,8 +706,40 @@ try {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("alert-ok-button")).click();
 			break;
+		}				
+	}
+	
+	
+	public void clickContinueError() {
+		List <WebElement> emergente= driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		emergente.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	
+	public void validarCheckBox() {
+		WebElement opb= driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
+		boolean a=false;
+		if(opb.isDisplayed())
+			a=true;
+		assertTrue(a);
+	}
+	
+	public void validarDniACuit() {
+		WebElement dni= driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		boolean a=false;
+		if(dni.isDisplayed())
+			a=true;
+		assertTrue(a);
+	}
+	
+	public void validarError() {
+		WebElement error = driver.findElement(By.id("prompt-heading-id"));
+		boolean a = false;
+		if (error.isDisplayed()) {
+			a = true;
+			assertTrue(a);
 		}
-		
 		
 	}
 }
