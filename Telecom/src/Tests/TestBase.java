@@ -39,9 +39,6 @@ public class TestBase {
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
-		/*WebElement element = driver.findElement(By.className("x-btn-split"));
-		Actions builder = new Actions(driver);   
-		builder.moveToElement(element, 245, 20).click().build().perform();*/
 		driver.switchTo().defaultContent();
 		try {
 			driver.findElement(By.className("x-btn-split"));
@@ -73,13 +70,11 @@ public class TestBase {
 	public void login(WebDriver driver) {
 		driver.get("https://test.salesforce.com/");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//if(driver.findElement(By.id("idcard")).isDisplayed())
-		//{
-	    Login page0 = new Login(driver);
-	    page0.ingresar();
-		//}else{
-			//driver.findElement(By.id("chooser")).click();
-	//	}
+	    Login loginPage = new Login(driver);
+		try {
+			loginPage.ingresar();
+		}catch(NoSuchElementException noSuchElemExcept) {
+		}
 	}
 	
 	public void login1(WebDriver driver) {
@@ -110,6 +105,8 @@ public class TestBase {
 			}
 		}
 	}
+	
+	
 	
 		//}else{
 		//	driver.findElement(By.id("chooser")).click();

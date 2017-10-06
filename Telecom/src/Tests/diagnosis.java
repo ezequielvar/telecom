@@ -215,7 +215,7 @@ public class diagnosis extends TestBase {
 	}
 	*/
 	
-	@Test
+	@Test(groups = "fase1")
 	public void TS0000_diagnosticInternetCheck() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -269,7 +269,7 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}
 
-	@Test(groups="a")
+	@Test(groups = {"a", "fase1"})
 	public void TS6256_Boton_Ejecutar_Grisado_Chequeo() {
 		//actually checks if not visible, it ist greyed out.
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -306,7 +306,7 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}
 	
-	@Test
+	@Test(groups = "fase1")
 	public void TS6269_Habilitado_Al_Seleccionar_Motivo_Y_Sintoma() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -366,7 +366,7 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}
 
-	@Test
+	@Test(groups = "fase1")
 	public void TS6320_Visualizar_Motivo_de_Contacto_Y_Sintoma() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -409,7 +409,7 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}
 
-	@Test
+	@Test(groups = "fase1")
 	public void TS6410_Ingreso_A_Tech_Care_Desde_La_Vista_360() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
