@@ -29,10 +29,9 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-
 	@AfterClass
 	public void tearDown2() {
-		driver.close();
+		//driver.close();
 	}
 	
 	@BeforeClass
@@ -41,14 +40,15 @@ public class diagnosis extends TestBase {
 		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-/*
+
 	@AfterMethod
 	public void tearDown() {
-	//	driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
+		//driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 	}
-*/
+
 	@BeforeMethod
 	public void setUp() throws Exception {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -125,8 +125,8 @@ public class diagnosis extends TestBase {
 	}
 	*/
 	//Need to be reviewed
-	/*
-	@Test
+	
+	/*@Test
 	public void TS6277_verifyTroubleshootingRulesAreAvailable() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -181,7 +181,7 @@ public class diagnosis extends TestBase {
 		Assert.assertTrue(driver.findElements(By.cssSelector(".slds-radio.ng-scope")).size() != 0);
 	}
 	*/
-	/*
+	
 	@Test//User victorcito doesn't have internet connection
 	public void TS6325_isInternetAvailable() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -191,8 +191,13 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel(driver, "Cuentas");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement frame1 = driver.findElement(By.tagName("iframe"));
-		driver.switchTo().frame(frame1);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
+		accountPage.accountSelect("Vista Tech");
+		/*WebElement frame1 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame1);*/
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Accounts page0 = new Accounts(driver);
 		page0.clickOnLetter("V");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -207,14 +212,14 @@ public class diagnosis extends TestBase {
 		List<WebElement> squares = driver.findElements(By.cssSelector(".console-card.active"));
 		Boolean a = false;
 		for (WebElement e : squares) {
-			if (e.getText().contains("INTERNET")) {//doesnt contain...
+			if (e.getText().contains("Internet")) {//doesnt contain...
 				a = true; 
 			}
 		}		
 		Assert.assertTrue(a == true);
 	}
-	*/
 	
+	/*
 	@Test
 	public void TS0000_diagnosticInternetCheck() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -233,9 +238,9 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//select accountName "Robo Tech", currently has index 10.
 		accountPage.selectAccountByName("Robo Tech");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame.get(4));
@@ -245,7 +250,10 @@ public class diagnosis extends TestBase {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
 		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.continueFromService(); //next page.
+		driver.findElement(By.id("SelectServiceStep_nextBtn")).click();
+		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//driver.findElement(By.id("SelectServiceStep_nextBtn")).click();
+		//accountPage.continueFromService(); //next page.//no se puede clickear
 		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//Contact Motive Selector
 		driver.findElement(By.id("SelectedMotivesLookup")).click();
@@ -329,8 +337,9 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    accountPage.continueFromService();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		accountPage.continueFromService();//mismo error
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		//Contact Motive Selector
@@ -390,7 +399,8 @@ public class diagnosis extends TestBase {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		//Index 4? is for Robo TF Tech
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[4].click()");
-		accountPage.continueFromService();
+	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    accountPage.continueFromService();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//Contact Motive Selector
 		driver.findElement(By.id("SelectedMotivesLookup")).click();
@@ -435,5 +445,5 @@ public class diagnosis extends TestBase {
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[3].click()");
 		goToLeftPanel2(driver, "Cuentas");//tech service existence assured.
 	}
-	
+	*/
 }

@@ -28,12 +28,12 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	private WebDriver driver;
 
 
-<<<<<<< HEAD
+
 	@BeforeTest
 	public void mainSteup() {
 		this.driver = setConexion.setupLeo();	
 	}
-=======
+
 	/*@BeforeTest
 	public void mainSteup() {
 		this.driver = setConexion.setupEze();	
@@ -50,10 +50,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	@BeforeMethod
 	public void mainSetup() {
 		this.driver = setConexion.setupPablo();	
-<<<<<<< HEAD
 
-=======
->>>>>>> cdaf0f4bf4a99ac0526033539863b1b75abf5232
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
