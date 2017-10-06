@@ -373,7 +373,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		}		
 		
 		@Test
-		public void TS15974_CRMFase_2_Customer_Care_Tax_Condition_ChangesSesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Visualizar_DNI_a_CUIT() {
+		public void TS15974_Tax_Condition_ChangesSesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Visualizar_DNI_a_CUIT() {
 			CustomerCare page = new CustomerCare (driver);
 			page.elegircuenta("Fernando Care");
 			page.SelectGestion("cambios de condi");
@@ -400,4 +400,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		    }
 		    driver.switchTo().defaultContent();		    
 		}
+		
+		//@Test
+		//public void TS_15993_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en Condicion Impositiva - Paso 4 Valores IVA No ejecutivo
 }
