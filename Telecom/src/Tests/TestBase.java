@@ -89,8 +89,16 @@ public class TestBase {
 		//{
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-	}	    	
+	}	
+	public void IngresarCred(WebDriver driver) {
+		
+	    Login page0 = new Login(driver);
+	    page0.ingresar();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+	}	
 	    
 	public void waitFor2(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))

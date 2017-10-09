@@ -23,10 +23,10 @@ public ValidationMethodSelection(WebDriver driver){
 public void setValidationType(String type) {
 	switch(type) {
 	case "document":
-		validations.get(0).click();
+		validations.get(2).click();
 		break;
 	case "questions":
-		validations.get(1).click();
+		validations.get(3).click();
 		break;
 	}
 }

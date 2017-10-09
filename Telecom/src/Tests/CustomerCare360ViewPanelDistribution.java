@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.text.ParseException;
 import java.util.List;
 
@@ -55,7 +57,7 @@ public void init() throws Exception
 public void setUpTest() {
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	if (!driver.getCurrentUrl().toString().contains("https://cs14.salesforce.com/console")){
+	if (!driver.getCurrentUrl().toString().contains("https://crm--sit.cs14.my.salesforce.com/console")){
 		driver.findElement(By.id("tsidLabel")).click();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
@@ -322,13 +324,37 @@ public void setUpTest2() {
 		page.openleftpanel();
 		page.panelizq("perfil");
 		page.validarbtnsperfil("Preocupaciones");
+		driver.switchTo().defaultContent();
 }
 	@Test
 	public void TS7082() throws ParseException {
 		CustomerCare page = new CustomerCare(driver);
 		page.openleftpanel();
 		page.comparaciondefechas();
+		driver.switchTo().defaultContent();
+	}
+	@Test
+	public void TS7120_Key_Metrics_Panel_Perfil_Visualizar_Scroll(){
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+	((JavascriptExecutor)driver).executeScript("scroll(0,400)");
+	JavascriptExecutor javascript = (JavascriptExecutor) driver;
+	Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
+	assertTrue(VertscrollStatus);
+	driver.switchTo().defaultContent();
 	}
 	
+	@Test
+	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_Activo_Usuario_Externo() {
+		CustomerCare page = new CustomerCare(driver);
+		page.usarpanelcentral("Detalles");
+		page.validarstatus("Active");
+		}
 	
+	@Test
+	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_inactivo_Usuario_Externo() {
+		CustomerCare page = new CustomerCare(driver);
+		page.usarpanelcentral("Detalles");
+		page.validarstatus("Active");
+		}
 }

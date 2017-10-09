@@ -44,7 +44,7 @@ public class SintomasSTTManagement extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -67,6 +67,9 @@ public class SintomasSTTManagement extends TestBase {
 
 	@AfterClass
 	public void tearDown() {
+
+		
+
 		HomeBase homePage = new HomeBase(driver);
 		homePage.closeAllTabs(driver);
 		homePage.switchAppsMenu();
@@ -84,6 +87,7 @@ public class SintomasSTTManagement extends TestBase {
 		
 	//Uses both pages (Admin and user SST Symptoms ABM)
 	@Test(groups ="fase2")
+
 	public void TS12605_SST_Sintomas_Consistencia(){
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();
@@ -213,7 +217,11 @@ public class SintomasSTTManagement extends TestBase {
 		goToLeftPanel2(driver, "Síntomas de STT");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(sstManagerPage.getSymptomByName(nombreSintomaNuevo) != null); //verifies that the symptom was NOT found.
+
+		//this isn't working.
+
 		//this isn't implemented yet.
+
 	}
 
 	@Test(groups ="fase2")
