@@ -71,7 +71,7 @@ public class TestBase {
 	}
 	
 	public void login(WebDriver driver) {
-		driver.get("https://test.salesforce.com/");
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//if(driver.findElement(By.id("idcard")).isDisplayed())
 		//{
