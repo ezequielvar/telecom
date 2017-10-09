@@ -30,12 +30,12 @@ public class customerInformationUpdates extends TestBase {
 
 
 
-	@AfterClass
+	//@AfterClass
 	public void tearDown2() {
 		driver.close();	
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("navigatortab__scc-pt-0")).click();
@@ -55,10 +55,10 @@ public class customerInformationUpdates extends TestBase {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			this.driver = setConexion.setupEze();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			login(driver);
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod
@@ -80,7 +80,8 @@ public class customerInformationUpdates extends TestBase {
 			driver.switchTo().frame(frame0);
 			waitFor(driver, (By.name("fcf")));	
 			Select field = new Select(driver.findElement(By.name("fcf")));
-			field.selectByVisibleText("Todas las cuentas");
+			field.selectByVisibleText("Todas Las cuentas");
+			/*
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.name("new")).click();
 			driver.switchTo().defaultContent();
@@ -92,7 +93,8 @@ public class customerInformationUpdates extends TestBase {
 			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame2.get(1));
 			NewAccount account = new NewAccount(driver);
-			account.createNewAcc(accountName);
+				account.createNewAcc(accountName);
+				
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.switchTo().defaultContent();
 			goToLeftPanel(driver, "Cuentas");
@@ -100,31 +102,35 @@ public class customerInformationUpdates extends TestBase {
 			WebElement frame3 = driver.findElement(By.tagName("iframe"));
 			driver.switchTo().frame(frame3);
 			Select field1 = new Select(driver.findElement(By.name("fcf")));
-			field1.selectByVisibleText("Todas las cuentas");
+			field1.selectByVisibleText("Todas Las cuentas");
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.navigate().refresh();
+			*/
 			WebElement frame4 = driver.findElement(By.tagName("iframe"));
 			driver.switchTo().frame(frame4);
-			waitFor(driver, (By.xpath("//*[text() = 'Aaa Aaa']")));		
-			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = 'Aaa Aaa']"));
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			waitFor(driver, (By.xpath("//*[text() = 'Aaa Aaa']")));
+			driver.findElement(By.xpath("//*[text() ='Aaa Aaa']")).click();;
+			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Aaa Aaa']"));
 			accounts.get(0).click();
 			driver.switchTo().defaultContent();
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
 			   driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
 			}
+			/*
 			List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame5.get(5));
 			waitFor(driver, (By.className("profile-edit")));		
 			List<WebElement> profileEdit = driver.findElements(By.className("profile-edit"));
 			profileEdit.get(0).click();
-			driver.switchTo().defaultContent();
-	
+			
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 			driver.switchTo().frame(frame6.get(4));
-			waitFor(driver, (By.id("FirstName")));
+		waitFor(driver, (By.id("FirstName")));
 			customerInformation page = new customerInformation(driver);
+		
 			page.setDefaultValues();//pincha acá porque hay un bug en el campo DNI de actualizar datos, los tests no se pueden correr
 			waitFor(driver, (By.className("panel-heading")));		
 			List<WebElement> text = driver.findElements(By.className("panel-heading"));
@@ -140,7 +146,7 @@ public class customerInformationUpdates extends TestBase {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> frame8 = driver.findElements(By.tagName("iframe"));		
 			driver.switchTo().frame(frame8.get(4));
-			waitFor(driver, (By.id("FirstName")));
+			waitFor(driver, (By.id("FirstName")));*/
 	}
 
 	@Test	
@@ -482,4 +488,65 @@ public class customerInformationUpdates extends TestBase {
 		Assert.assertTrue(page.notchansgetopname());
 		
 	}
+	
+	@Test
+	public void TS7205_Cambios_en_la_Informacion_del_Cliente_Validar_Caracteres_Campo_Apellido() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
+		driver.switchTo().frame(frame6.get(4));
+		waitFor(driver, (By.id("FirstName")));
+		customerInformation page = new customerInformation(driver);
+		Assert.assertTrue(page.validarlimitecaracterapellido());
+	}
+	
+	@Test
+	public void TS7210_Cambios_en_la_Informacion_del_Cliente_Telefono_Alternativo_No_permite_letras() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
+		driver.switchTo().frame(frame6.get(4));
+		waitFor(driver, (By.id("FirstName")));
+		customerInformation page = new customerInformation(driver);
+		Assert.assertTrue(page.validarcaractertelefonoalternativo());
+
+	}
+	@Test(groups= "fase2")
+	public void TS7209_Cambios_en_la_Informacion_del_Cliente_Telefono_Movil_No_permite_letras() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
+		driver.switchTo().frame(frame6.get(4));
+		waitFor(driver, (By.id("FirstName")));
+		customerInformation page = new customerInformation(driver);
+		Assert.assertTrue(page.validarcaractermovilalternativo());
+
+	}
+	
+	@Test(groups= "fase2")
+	public void TS7151_Cambios_en_la_Informacion_del_Cliente_Validar_Nombre_Apellido_Que_tengan_caracteres_especiales() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
+		driver.switchTo().frame(frame6.get(4));
+		waitFor(driver, (By.id("FirstName")));
+		customerInformation page = new customerInformation(driver);
+		Assert.assertTrue(page.validarcaracterespecialesNyA());
+
+	}
+	@Test(groups= "fase2")
+	public void TS12282_Reseteo_de_Claves_Manejo_de_la_Clave_Visualizar_Boton_Reseteo_Clave() {
+		driver.switchTo().defaultContent();
+		customerInformation page = new customerInformation(driver);
+		page.validacionbtnreseteodeclave();
+	}
+	
+	@Test (groups= "fase2")//noterminado
+	public void TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area() {
+		driver.switchTo().defaultContent();
+		customerInformation page = new customerInformation(driver);
+		page.EntrarEditarPerfil();
+		page.ValidarDigitosDelMovil();	
+	}
+	
 }

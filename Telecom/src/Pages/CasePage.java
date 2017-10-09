@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -186,16 +187,25 @@ public class CasePage extends BasePage {
 			
 		}
 		
-	public void CreateCase() {
+	public void CreateCase(String guardar) {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(0));
 		driver.findElement(By.name("newCase")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
+		SelectCaseRegisterType selectCaseRegTypePage = new SelectCaseRegisterType(driver);
+		selectCaseRegTypePage.continueToCreate();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		driver.findElement(By.id("cas3")).sendKeys("Fernando Caree");
+		casename.sendKeys("Fernando Care");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("cas4_lkwgt")).click();
+		driver.findElement(By.id("cas4_lkwgt")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String parentWindow = driver.getWindowHandle();
 		Set<String> handles =  driver.getWindowHandles();
 			for(String windowHandle  : handles)
@@ -204,12 +214,37 @@ public class CasePage extends BasePage {
 		          {
 		    	   driver.switchTo().window(windowHandle);
 		    	   driver.manage().window().maximize();
-						try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-					driver.findElement(By.xpath("//*[@id=\'lksrch\']")).sendKeys("Fernando Caree");
+						try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+						List<WebElement> frame3 = driver.findElements(By.tagName("frame"));
+						driver.switchTo().frame(frame3.get(0));
+					driver.findElement(By.id("lksrch")).sendKeys("Fernando Care");
 					driver.findElement(By.name("go")).click();
+					try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					driver.switchTo().defaultContent();
+					List<WebElement> frame4 = driver.findElements(By.tagName("frame"));
+					driver.switchTo().frame(frame4.get(1));
+				driver.findElement(By.xpath("//*[@id=\"new\"]/div/div[3]/div/div[2]/table/tbody/tr[2]/th/a")).click();
 					}
 		         driver.switchTo().window(parentWindow); 
 		          }
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			List<WebElement> frame3 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame3.get(1));
+			switch(guardar) {
+			case "guardar":
+			driver.findElement(By.xpath("//*[@id=\'topButtonRow\']/input[1]")).click();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			break;
+			case "Cancel":
+				driver.findElement(By.xpath("//*[@id=\'topButtonRow\']/input[4]")).click();
+				try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				break;
+			}
+
+			
+			
+
 
 		}
 
@@ -264,6 +299,27 @@ public class CasePage extends BasePage {
 		
 		}
 	
+	public void FieldsValuesinicio(){
+		//Lista de Canales cerrados
+		ArrayList<String> Channel = new ArrayList<String>();
+		Channel.add("App");
+		Channel.add("Chat");
+		Channel.add("Email");
+		Channel.add("IVR");
+		Channel.add("Personalizado");
+		Channel.add("Redes Sociales");
+		Channel.add("Sat Push");
+		Channel.add("SMS");
+		Channel.add("Telefónico");
+		Channel.add("USSD");
+		Channel.add("Web");
+		
+		Select dateDropDown=new Select(driver.findElement(By.id("cas11")));
+		for(int i=0; i<Channel.size(); i++){
+			String ChannelClose = Channel.get(i);
+			dateDropDown.selectByVisibleText(ChannelClose);
+		}
+	}
 	public void setCaseDueDate(String dueDate) {
 		caseduedate.sendKeys(dueDate);
 	}
@@ -285,4 +341,45 @@ public class CasePage extends BasePage {
 		save.click();
 	}
 	
+	public void	validpicklistestado() {
+		ArrayList<String> Channel = new ArrayList<String>();
+		Channel.add("Nuevo");		
+		Select dateDropDown=new Select(driver.findElement(By.id("cas7")));
+		for(int i=0; i<Channel.size(); i++){
+			String ChannelClose = Channel.get(i);
+			dateDropDown.selectByVisibleText(ChannelClose);
+		}
+	}
+	
+	public void validarcampodescrip() {
+		Assert.assertTrue(casedescription.isEnabled());
+	}
+	
+	public void validarcasocerrado(String categoria, String subcategoria) {
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		WebElement frame0 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame0);
+		Select field = new Select(driver.findElement(By.name("fcf")));
+		field.selectByVisibleText("Todos los casos");		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame1.get(0));
+			System.out.println(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_SUBJECT")).getText());
+			Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_SUBJECT")).getText().equals(categoria));
+			Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-NAME")).getText().equals("Care, Fernandooooasdasd"));
+			driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_CASE_NUMBER")).findElement(By.tagName("a")).click();
+	
+
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(1));
+		Assert.assertTrue(driver.findElement(By.id("cas3_ileinner")).getText().equals("Care, Fernandooooasdasd"));
+	Assert.assertTrue(driver.findElement(By.id("cas7_ileinner")).getText().equals("Cerrado"));
+	Assert.assertTrue(driver.findElement(By.id("00Nc000000247ud_ileinner")).getText().equals(categoria));
+	Assert.assertTrue(driver.findElement(By.id("00Nc000000247ui_ileinner")).getText().equals(subcategoria));
+	}
 }

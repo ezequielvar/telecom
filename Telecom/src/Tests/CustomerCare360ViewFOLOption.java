@@ -44,6 +44,10 @@ public void mainSeteup() {
 	this.driver = setConexion.setupLeo();	
 
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc9ea4225d8454e4ccd72329304641255e37e4c6
 @AfterMethod
 public void alert (){
 	driver.get("https://cs14.salesforce.com/home/home.jsp");
@@ -86,7 +90,7 @@ public void setUpTest() {
 	driver.switchTo().frame(frame0);
 	waitFor(driver, (By.name("fcf")));	
 	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas Las cuentas");
+	field.selectByVisibleText("Todas las cuentas");
 	
 	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -98,7 +102,7 @@ public void setUpTest() {
 	 @Test
 	public void TS7120_ValidationTabBillingInformation () {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String billingTabName = "Facturación";
+		String billingTabName = "Facturaciï¿½n";
 		boolean billingTabExist = false;
 		List<WebElement> availableTabs = driver.findElements(By.className("tabText"));
 		//Checks all tabs, and finds if some one matches billingTabName
