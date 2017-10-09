@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <testng-results skipped="0" failed="0" ignored="7" total="8" passed="1">
   <reporter-output>
   </reporter-output>
@@ -20,6 +21,29 @@
           </reporter-output>
         </test-method> <!-- TS11546_Creacion_De_Sintoma_Ejecucion_activada -->
         <test-method status="PASS" signature="tearDown()[pri:0, instance:Tests.SintomasSTTManagement@1e88b3c]" name="tearDown" is-config="true" duration-ms="2375" started-at="2017-09-13T10:19:46Z" finished-at="2017-09-13T10:19:49Z">
+=======
+<testng-results skipped="0" failed="0" ignored="8" total="9" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="163660" started-at="2017-09-13T14:30:48Z" finished-at="2017-09-13T14:33:32Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="163660" started-at="2017-09-13T14:30:48Z" finished-at="2017-09-13T14:33:32Z">
+      <class name="Tests.SintomasSTTManagement">
+        <test-method status="PASS" signature="init()[pri:0, instance:Tests.SintomasSTTManagement@1e88b3c]" name="init" is-config="true" duration-ms="65383" started-at="2017-09-13T11:30:48Z" finished-at="2017-09-13T11:31:54Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="setUp()[pri:0, instance:Tests.SintomasSTTManagement@1e88b3c]" name="setUp" is-config="true" duration-ms="15606" started-at="2017-09-13T11:31:54Z" finished-at="2017-09-13T11:32:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="TS11547_Creacion_De_Sintoma_Ejecucion_desactivado()[pri:0, instance:Tests.SintomasSTTManagement@1e88b3c]" name="TS11547_Creacion_De_Sintoma_Ejecucion_desactivado" duration-ms="80279" started-at="2017-09-13T11:32:09Z" finished-at="2017-09-13T11:33:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TS11547_Creacion_De_Sintoma_Ejecucion_desactivado -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:Tests.SintomasSTTManagement@1e88b3c]" name="tearDown" is-config="true" duration-ms="2373" started-at="2017-09-13T11:33:30Z" finished-at="2017-09-13T11:33:32Z">
+>>>>>>> 67ce28ca366e4e8267f0516148032460b994b8b1
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

@@ -399,6 +399,36 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	}
 	
+	@Test(groups = "Fase2") 
+	public void TS16199_STT_No_Agrega_Mail_Alternativo() {
+		Accounts accPage = new Accounts(driver);
+		accPage.fillIMEI(sinTniE);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continueFromImeiInput();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("RemoteActionDeviceWarranty")));
+		driver.findElement(By.id("RemoteActionDeviceWarranty")).findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("AlternativeEmail")).sendKeys("unoAlternativo@alternativo.com");
+		driver.findElement(By.id("AlternativePhone")).sendKeys("1125116113");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continueFromClientInfo();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.selectOperationType("Consulta");
+		accPage.selectSymptomByIndex(2);
+		accPage.continueFromSymptoms();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("TicketCreation_nextBtn")).click();
+	}
+	
 	/*@Test(groups = "Fase2")
 	public void TS11618_SST_Servicio_Indiferente_Comentario_Error() {
 		Accounts accPage = new Accounts(driver);
