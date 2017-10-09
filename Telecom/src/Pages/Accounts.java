@@ -146,7 +146,7 @@ public class Accounts extends BasePage {
 	public void deployEastPanel() {
 		driver.switchTo().defaultContent();
 		try {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
+			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east.x-layout-collapsed-over")).click();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		}catch(NoSuchElementException noSuchElemExcept){
 		}catch(ElementNotVisibleException elementExcept) {

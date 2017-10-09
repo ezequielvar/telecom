@@ -1,7 +1,4 @@
-		package Pages;
-
-
-import static org.testng.Assert.assertEquals;
+package Pages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
-
-public class CasePage extends BasePage {
+public class CustomerCareManager extends BasePage{
 
 	final WebDriver driver;
 	
@@ -63,15 +57,9 @@ public class CasePage extends BasePage {
 		
 		@FindBy (how = How.ID, using = "cas11")
 		private WebElement caseorigin;
-				
+		
 		@FindBy (how = How.ID, using = "00Nc0000001pWcs")
 		private WebElement caseduedate;
-		
-		@FindBy (how = How.ID, using = "00Nc0000001pWcs_ileinner")
-		private WebElement rawcaseduedate;
-		
-		@FindBy (how = How.ID, using = "CreatedDate_ileinner")
-		private WebElement caseDate;
 		
 		@FindBy (how = How.ID, using = "cas8")
 		private WebElement casepriority;
@@ -134,11 +122,14 @@ public class CasePage extends BasePage {
 		@FindBy (how = How.ID, using = "ext-gen221")
 		private WebElement deleteregist;
 		
+		@FindBy (how = How.ID, using = "x-btn-split")
+		private WebElement sectionsDropDown;		
 		
-		public CasePage(WebDriver driver){
+		
+		public CustomerCareManager(WebDriver driver){
 			this.driver = driver;
 	        PageFactory.initElements(driver, this);
-	}
+		}
 		//Methods
 		public void newcase(String namecase, String cid, String caseteam, String casedate,
 				String comments, String subject, String description,
@@ -185,7 +176,6 @@ public class CasePage extends BasePage {
 
 			
 		}
-		
 	public void CreateCase() {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(0));
@@ -210,11 +200,9 @@ public class CasePage extends BasePage {
 					}
 		         driver.switchTo().window(parentWindow); 
 		          }
-
 		}
 
 		public void ValidChannelClosing() {
-		
 			//Lista de Canales cerrados
 			ArrayList<String> Channel = new ArrayList<String>();
 			Channel.add("App");
@@ -264,25 +252,5 @@ public class CasePage extends BasePage {
 		
 		}
 	
-	public void setCaseDueDate(String dueDate) {
-		caseduedate.sendKeys(dueDate);
-	}
-	
-	public void setContactName(String contactName) {//*Robo Tech
-		casename.sendKeys(contactName);
-	}
-	
-	
-	public String getCaseDate(){
-		return caseDate.getText();
-	}
-	
-	public String getCaseDueDate(){
-		return rawcaseduedate.getText();
-	}	
-	
-	public void save() {
-		save.click();
-	}
 	
 }

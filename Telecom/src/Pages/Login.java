@@ -34,8 +34,8 @@ public class Login extends BasePage {
 	//Methods
 	
 	public void ingresar() {
-//		username.sendKeys("usit@telecom.sit");
-//		password.sendKeys("pruebas07");
+    	username.sendKeys("usit@telecom.sit");
+		password.sendKeys("pruebas08");
 //		rememberMe.click();
 		login.click();
 	}
