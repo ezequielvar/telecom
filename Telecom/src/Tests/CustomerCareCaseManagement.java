@@ -19,7 +19,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.CasePage;
@@ -31,15 +30,16 @@ public class CustomerCareCaseManagement extends TestBase {
 	private WebDriver driver;
 	
 	
-	@BeforeTest
+	@BeforeClass
 	public void init() throws Exception
-	{this.driver = setConexion.setupEze();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	login(driver);
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeClass
+	@BeforeMethod
 	public void mainSteup() {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().contains("https://cs14.salesforce.com/console")){
@@ -60,7 +60,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame0);
 		waitFor(driver, (By.name("fcf")));	
 		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Mis Casos");
+		field.selectByVisibleText("Mis casos");
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -76,19 +76,19 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame1.get(0));
 	}
 	
-//	@AfterClass
+	@AfterClass
 	public void tearDown() {
-		driver.switchTo().defaultContent();
+		/*driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		waitFor(driver, (By.className("x-toolbar-cell")));
 		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));*/
 		driver.close();	
 	}
 	
-@AfterMethod
+	@AfterMethod
 	public void alert (){
 		driver.get("https://cs14.salesforce.com/console");
 		try{
@@ -106,7 +106,6 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.ValidChannelClosing();
-		driver.switchTo().defaultContent();
 	}
 
 	@Test
@@ -118,8 +117,6 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesSubArea();
-		driver.switchTo().defaultContent();
-
 	}
 
 	@Test
@@ -130,21 +127,8 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
-		driver.switchTo().defaultContent();
-
 	}
 
-	@Test
-	public void TS7092_Case_Related_Field_Valores_del_Canal_de_inicio(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.FieldsValuesinicio();
-		driver.switchTo().defaultContent();
-	}
-	
 	@Test
 	public void TS7195_CaseRelatedCreateValuesCheck(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -199,23 +183,4 @@ public class CustomerCareCaseManagement extends TestBase {
 
 	}
 	
-	@Test
-	public void TS7198_Estados_de_la_Entidad_Caso_Visualizar_picklist_Estado(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.validpicklistestado();
-		driver.switchTo().defaultContent();
-	}
-	
-	@Test
-	public void TS7212_Case_Management_Detalles_del_caso_Descripcion() {
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.validarcampodescrip();
-	}
 }

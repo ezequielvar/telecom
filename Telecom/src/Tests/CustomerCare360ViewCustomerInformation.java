@@ -34,13 +34,13 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 
 	private WebDriver driver;
  	
-	//@AfterClass
+	@AfterClass
 
 	public void tearDown() {
 			driver.close();
 	}
-
-//	@AfterMethod
+	
+	@AfterMethod
 	public void alert (){
 		driver.get("https://cs14.salesforce.com/home/home.jsp");
 		try{
@@ -52,7 +52,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -80,26 +80,20 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	}
 	List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.switchTo().defaultContent();
 	goToLeftPanel(driver, "Cuentas");
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement frame3 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame3);
-	Select field1 = new Select(driver.findElement(By.name("fcf")));
-	field1.selectByVisibleText("Todas Las cuentas");
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.navigate().refresh();
-	
-	WebElement frame4 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame4);
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));
-	driver.findElement(By.xpath("//*[text() ='Andres Care']")).click();;
+	WebElement frame0 = driver.findElement(By.tagName("iframe"));
+	driver.switchTo().frame(frame0);
+	waitFor(driver, (By.name("fcf")));
+	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	Select field = new Select(driver.findElement(By.name("fcf")));
+	field.selectByVisibleText("Todas Las cuentas");
+	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));	
+	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 	driver.switchTo().defaultContent();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
 		driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
 		}

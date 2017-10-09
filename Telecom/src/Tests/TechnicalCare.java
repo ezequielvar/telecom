@@ -2,6 +2,7 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -43,7 +44,7 @@ public class TechnicalCare extends TestBase  {
 		accountPage.accountSelect("Vista Tech");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");
+		accountPage.selectAccountByName("Adrian Tech");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		if(accountPage.isTabOpened("Servicio Técnico")) {
 			System.out.println("Tab Opened.");
@@ -58,7 +59,7 @@ public class TechnicalCare extends TestBase  {
 		}
 	}
 	
-	@AfterClass
+	//@AfterClass
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		BasePage basePage = new BasePage(driver);
@@ -68,7 +69,7 @@ public class TechnicalCare extends TestBase  {
 		driver.close();
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void closeTechCareTab() {
 		System.out.println("AfterMethod executed.");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -193,5 +194,19 @@ public class TechnicalCare extends TestBase  {
 		String textoArchivoAdjunto = accPage.getAttachedFileTxt();
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".pdf"));
+	}
+	
+	
+	@Test(groups = "Fase2")
+	public void TS11600_CRM_Fase_2_Technical_Care_CSR_Diagnostico_Servicio_Indiferente_Boton_ejecutar_no_disponible(){
+		BasePage page =new BasePage();
+		Accounts accountPage = new Accounts(driver);
+		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
+		WebElement element=driver.findElement(By.id("LookupSelectofService"));
+		page.getFrameForElement(this.driver, element);
+		System.out.println(element.toString());
+		element.click();
+		
+		
 	}
 }

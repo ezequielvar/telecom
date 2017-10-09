@@ -41,14 +41,7 @@ public class newClient extends TestBase {
 		driver.close();
 	}
 	
-	@BeforeClass
-	public void init() throws Exception
-	{
-		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login1(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
+	
 	
 	
 	@BeforeMethod

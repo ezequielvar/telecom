@@ -67,18 +67,18 @@ public class SintomasSTTManagement extends TestBase {
 
 	@AfterClass
 	public void tearDown() {
-<<<<<<< HEAD
+
 		//driver.close();
 	}
 	
-	@Test
-=======
+	/*@Test
+
 		HomeBase homePage = new HomeBase(driver);
 		homePage.closeAllTabs(driver);
 		homePage.switchAppsMenu();
 		homePage.selectAppFromMenuByName("Ventas");
 		driver.close();
-	}
+	}*/
 	
 	@AfterMethod
 	public void goToConsolaFAN() {
@@ -90,7 +90,6 @@ public class SintomasSTTManagement extends TestBase {
 		
 	//Uses both pages (Admin and user SST Symptoms ABM)
 	@Test(groups ="fase2")
->>>>>>> 47e6a6ed8d9cfb69968e32f4430e3e315dc33bc5
 	public void TS12605_SST_Sintomas_Consistencia(){
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();

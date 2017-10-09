@@ -76,7 +76,7 @@ public class testRegistroEventoMasico extends TestBase{
 		WebElement tcmc = driver.findElement(By.id("omni-home-group-44-toggle-button"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+tcmc.getLocation().y+")");
 		tcmc.click();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				
 		//click version 8
 		//WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 8)\"]"));
