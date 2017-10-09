@@ -100,7 +100,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		}
 	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16173_STT_Vista0_Invalido_Caracteres_Especiales() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI("120*+3%-");
@@ -117,9 +117,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		Accounts accPage = new Accounts(driver);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ImeiCode")));
 		assertTrue(driver.findElement(By.id("ImeiCode")).isDisplayed());
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16178_STT_Vista_3_Opcion_1_verificacion_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -140,9 +140,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	    driver.findElement(By.id("TicketCreation_nextBtn")).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16181_STT_Vista_3_Opcion_2_NO_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -164,9 +164,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn")));
 		assertTrue(driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).isDisplayed());
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16184_STT_Vista_3_Opcion_3_NO_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -188,9 +188,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("DerivatedTicketText")));
 		assertTrue(driver.findElement(By.id("DerivatedTicketText")).getText().contains("ha sido derivada al servicio técnico."));
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16350_Vista1_Garantia() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -221,7 +221,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		}
 			
 		
-	}*/
+	}
 	
 	/*@Test(groups = "Fase2") 
 	public void TS16169_STT_Terminal() {
@@ -297,7 +297,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(!campos.get(3).getText().isEmpty());
 	}*/
 		
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16196_STT_Telefono_Alternativo_Vista() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -307,9 +307,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("AlternativePhone")).isDisplayed());
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16189_STT_Mail_Alternativo_Vista() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -319,9 +319,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("AlternativeEmail")).isDisplayed());
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16190_STT_Mail_Valido() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -334,9 +334,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-required.ng-dirty.ng-valid.ng-valid-email"));
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16191_STT_Mail_Invalido_Sin_Dominio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -350,9 +350,9 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.continueFromClientInfo();
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
-	}*/
+	}
 	
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16192_STT_Mail_Invalido_Con_Dominio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -367,7 +367,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.continueFromClientInfo();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
-	}*/
+	}
 	
 	@Test(groups = "Fase2") 
 	public void TS16200_STT_No_Agrega_Telefono_Alternativo() {
@@ -387,6 +387,8 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.continueFromClientInfo();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(driver.findElement(By.id("SymptomExplanation_nextBtn")).isDisplayed());
+		//Continuar cuando se repare
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();
@@ -397,6 +399,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 		driver.findElement(By.id("TicketCreation_nextBtn")).click();
+		
 	}
 	
 	@Test(groups = "Fase2") 
@@ -417,6 +420,8 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.continueFromClientInfo();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(driver.findElement(By.id("SymptomExplanation_nextBtn")).isDisplayed());
+		//Continuar cuando se repare
 		accPage.selectOperationType("Consulta");
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();

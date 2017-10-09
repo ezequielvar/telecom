@@ -35,7 +35,7 @@ public class Login extends BasePage {
 	
 	public void ingresar() {
 		username.sendKeys("usit@telecom.sit");
-		password.sendKeys("pruebas07");
+		password.sendKeys("pruebas08");
     	//rememberMe.click();
 		login.click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
