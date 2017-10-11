@@ -26,6 +26,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.CasePage;
 import Pages.CustomerCare;
 import Pages.Login;
@@ -33,9 +34,7 @@ import Pages.customerInformation;
 import Pages.setConexion;
 public class CustomerCare360ViewInformationClient extends TestBase {
 
-
-
-		
+	
 	private WebDriver driver;
 	 	
 	//@AfterClass
@@ -73,6 +72,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.cerrarultimapestaña();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
+		
 		
 	}
 	
@@ -283,13 +283,49 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 		}*/
 		
-		@Test(groups="Fase2")
+		/*@Test(groups="Fase2")
 		public void TS14571_Case_Management_Sesion_Guiada_Ver_Casos_User_Asignado_Visualizar_Pantalla_Mis_Casos_Abiertos() {
 			CustomerCare page = new CustomerCare(driver);
 			CasePage page1 = new CasePage(driver);
 			page.elegircaso();
 			
+		}*/
+		
+		@Test(groups="Fase1")
+		public void TS7152_Profile_Changes_Cambios_En_La_Informacion_Del_Cliente_Validar_Nombre_Y_Apellido_Primer_Letra_Mayúscula() {
+			CustomerCare page = new CustomerCare(driver);
+			BasePage Bp = new BasePage();
+			goToLeftPanel(driver, "Cuentas");
+			page.elegircuenta("Andres Care");
+			page.openleftpanel();
+			driver.switchTo().defaultContent();
+			driver.switchTo().frame(Bp.getFrameForElement(driver, By.className("profile-box")));
+			String NC = driver.findElement(By.className("profile-box")).findElement(By.cssSelector(".slds-text-heading_large.title-card")).getText();
+			String[] ND = NC.split(" ");
+			String mayu = new String();
+			for (String uno : ND) {
+				mayu= uno.toUpperCase();
+				System.out.println("uno"+uno.charAt(0));
+				System.out.println("mayu"+mayu.charAt(0));
+				assertTrue(uno.charAt(0) == mayu.charAt(0));
+			}
+			
 		}
+		
+		/*@Test(groups="Fase2")
+		public void TS12286_Reseteo_de_Claves_Manejo_De_La_Clave_Gestion_Caso_Reseteo_Clave() {
+			CustomerCare page = new CustomerCare(driver);
+			BasePage Bp = new BasePage();
+			goToLeftPanel(driver, "Cuentas");
+			page.elegircuenta("Andres Care");
+			page.openleftpanel();
+			driver.switchTo().defaultContent();
+			driver.switchTo().frame(Bp.getFrameForElement(driver, By.className("profile-box")));
+			driver.findElement(By.className("profile-box-details")).findElements(By.tagName("a")).get(1).click();
+			
+			
+		}*/
+		
 
 		
 }

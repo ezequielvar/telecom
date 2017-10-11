@@ -16,8 +16,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
-import Pages.BasePage;
-import Pages.HomeBase;
 import Pages.RegistroEventoMasivo;
 import Pages.setConexion;
 
@@ -71,8 +69,6 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	    tcmc.click();
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
-	    //click version 8
-	    //WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 8)\"]"));
 	    //click version 9
 	    WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 9)\"]"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cv8.getLocation().y+")");
@@ -108,19 +104,29 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		}
 	
 	@Test(groups = "Fase2") 
-	public void TS16336_Fecha_Estimada_De_Cierre_No_Obligatorio() {
-		 RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
+	public void TS16246_Canal_Formato() {
 		Accounts accPage = new Accounts(driver);
-		REM.llenarListas(By.id("EndDate"));
+		boolean estan = true;
+		String[] todos = {"web","ivr","sms","sistema de gestion","ussd","todos los medios","redes sociales"};
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		REM.llenarTextos(By.id("EndDate"));
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("TextIncidentTitle")).sendKeys("Algo mas");
-		REM.ClickOnSave();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ConfirmationText")));
-		assertTrue(driver.findElement(By.id("ConfirmationText")).getText().contains("correctamente el incidente masivo"));
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
+		driver.findElement(By.id("SelectChannel")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> optns = driver.findElement(By.id("SelectChannel")).findElements(By.tagName("option"));
+		List<String> textos = new ArrayList<String>();
+		for (WebElement optn : optns)
+		{
+			textos.add(optn.getText().toLowerCase());
+		}
+		for (String uno : todos) {
+			if (!textos.contains(uno)) {
+				estan = false;
+			}
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(estan);
 	}
+	
 	
 	@Test(groups = "Fase2") 
 	public void TS16318_Fecha_De_Inicio_Formato() {
@@ -152,30 +158,17 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	}
 	
 	@Test(groups = "Fase2") 
-	public void TS16246_Canal_Formato() {
-		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
+	public void TS16336_Fecha_Estimada_De_Cierre_No_Obligatorio() {
+		 RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
-		boolean estan = true;
-		String[] todos = {"web","ivr","sms","sistema de gestion","ussd","todos los medios","redes sociales"};
+		REM.llenarListas(By.id("EndDate"));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
-		driver.findElement(By.id("SelectChannel")).click();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> optns = driver.findElement(By.id("SelectChannel")).findElements(By.tagName("option"));
-		List<String> textos = new ArrayList<String>();
-		for (WebElement optn : optns)
-		{
-			textos.add(optn.getText().toLowerCase());
-			System.out.println("optn: "+optn.getText());
-		}
-		for (String uno : todos) {
-			if (!textos.contains(uno)) {
-				System.out.println("uno: "+uno);
-				estan = false;
-			}
-		}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(estan);
+		REM.llenarTextos(By.id("EndDate"));
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("TextIncidentTitle")).sendKeys("Algo mas");
+		REM.ClickOnSave();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ConfirmationText")));
+		assertTrue(driver.findElement(By.id("ConfirmationText")).getText().contains("correctamente el incidente masivo"));
 	}
-	
 }
