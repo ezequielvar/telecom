@@ -77,7 +77,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
-		/*@AfterMethod
+		@AfterMethod
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -109,7 +109,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			}
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.quit();
-		}*/
+		}
 		
 		@Test(groups = "Fase2") 
 		public void TS16138_CRM_Fase2_TechnicalCare_CSR_STT2_Vista5_Comentario_Error() {
@@ -197,13 +197,10 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.findElement(By.id("SolutionList_nextBtn")).click();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			campos = driver.findElement(By.id("PriceListSelectionSummary")).findElements(By.className("techCare-PriceList-tbody"));
-			System.out.println("size:"+campos.size());
+			//rompe porque hay error en el listado de reparaciones 
 			for (WebElement camp : campos) {
-				System.out.println("pos 0: "+camp.findElements(By.className("ng-binding")).get(0).getText()+"f");
 				assertTrue(!camp.findElements(By.className("ng-binding")).get(0).getText().isEmpty());
-				System.out.println("pos 0: "+camp.findElements(By.className("ng-binding")).get(1).getText()+"f");
 				assertTrue(!camp.findElements(By.className("ng-binding")).get(1).getText().isEmpty());
-				System.out.println("pos 0: "+camp.findElements(By.className("ng-binding")).get(1).getText()+"f");
 				assertTrue(!camp.findElements(By.className("ng-binding")).get(2).getText().isEmpty());
 			}
 		}

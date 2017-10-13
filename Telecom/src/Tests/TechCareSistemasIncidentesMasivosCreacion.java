@@ -35,19 +35,19 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	  public void setUp() throws Exception {
 	    
 	    //Entrar en Velocity Telecomunication servics
-	    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    String a = driver.findElement(By.id("tsidLabel")).getText();
 	    if (a.contains("Vlocity Telecommunication...")){}
 	    else {
 	      driver.findElement(By.id("tsidButton")).click();
-	      try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	      driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02uc0000000D663\"]")).click();
 	    }
 	    
 	    //click +
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
-	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
 	    //click velociti omniscript designer
 	    //WebElement BenBoton = driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[59]/td[2]/a"));
@@ -61,19 +61,19 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 				break;
 			}
 		}
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
 	    //click techcare massive create
 	    WebElement tcmc = driver.findElement(By.id("omni-home-group-44-toggle-button"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+tcmc.getLocation().y+")");
 	    tcmc.click();
-	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
 	    //click version 9
 	    WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 9)\"]"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cv8.getLocation().y+")");
 	    cv8.click();
-	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	          
 	    //click preview
 	    WebElement cpw = driver.findElement(By.xpath("//*[@id=\"bodyTable\"]/tbody/tr/td/div[2]/div[4]/div/div/div[3]/div[1]/ul/li[2]/a"));
@@ -154,7 +154,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("datepickers-container")).findElements(By.cssSelector(".datepicker--cell.datepicker--cell-day.-current-")).get(1).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd/mm/yyyy HH:mm") || REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd-mm-yyyy HH:mm"));
+		assertTrue(REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd/mm/yyyy HH:mm"));
 	}
 	
 	@Test(groups = "Fase2") 

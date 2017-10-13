@@ -44,7 +44,10 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 	
 //	@AfterMethod
 	public void alert (){
-		driver.get("https://cs14.salesforce.com/console");
+		
+		//driver.get("https://cs14.salesforce.com/console");
+		CustomerCare page = new CustomerCare(driver);
+		page.cerrarultimapestaña();
 		try{
 			Alert alert = driver.switchTo().alert();
 			System.out.println(alert.getText());
@@ -295,7 +298,8 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		public void TS7152_Profile_Changes_Cambios_En_La_Informacion_Del_Cliente_Validar_Nombre_Y_Apellido_Primer_Letra_Mayúscula() {
 			CustomerCare page = new CustomerCare(driver);
 			BasePage Bp = new BasePage();
-			goToLeftPanel(driver, "Cuentas");
+			//goToLeftPanel(driver, "Cuentas");
+			
 			page.elegircuenta("Andres Care");
 			page.openleftpanel();
 			driver.switchTo().defaultContent();
@@ -305,27 +309,71 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			String mayu = new String();
 			for (String uno : ND) {
 				mayu= uno.toUpperCase();
-				System.out.println("uno"+uno.charAt(0));
-				System.out.println("mayu"+mayu.charAt(0));
 				assertTrue(uno.charAt(0) == mayu.charAt(0));
 			}
 			
 		}
 		
-		/*@Test(groups="Fase2")
+		@Test(groups="Fase2")
 		public void TS12286_Reseteo_de_Claves_Manejo_De_La_Clave_Gestion_Caso_Reseteo_Clave() {
 			CustomerCare page = new CustomerCare(driver);
+			CasePage Cp = new CasePage(driver);
 			BasePage Bp = new BasePage();
-			goToLeftPanel(driver, "Cuentas");
+			//goToLeftPanel(driver, "Cuentas");
 			page.elegircuenta("Andres Care");
 			page.openleftpanel();
 			driver.switchTo().defaultContent();
 			driver.switchTo().frame(Bp.getFrameForElement(driver, By.className("profile-box")));
-			driver.findElement(By.className("profile-box-details")).findElements(By.tagName("a")).get(1).click();
-			
-			
-		}*/
+			driver.findElement(By.className("profile-box-details")).findElement(By.className("profile-links-wrapper")).findElements(By.tagName("a")).get(1).click();
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("Step 1_nextBtn")));
+			driver.findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("Step 1_nextBtn")).getLocation().y+")");
+			driver.findElement(By.id("Step 1_nextBtn")).click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			String todo = driver.findElement(By.className("panel-body")).findElement(By.className("ng-binding")).getText();
+			todo = todo.substring(todo.length()-9, todo.length()-1);
+			page.elegircaso();
+			Cp.validarcasocerrado(" ", " ", "Ciente solicita resetear su clave de acceso", "nico");
+		}
 		
-
+		@Test(groups="Fase2")
+		public void TS16080_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_Inicio_Ciclo_Facturacion_Paso3_Visualizar_Datos_Antiguos_Resumen() {
+			CustomerCare page = new CustomerCare(driver);
+			CasePage Cp = new CasePage(driver);
+			BasePage Bp = new BasePage();
+			page.elegircuenta("Fernando Care");
+			   page.SelectGestion("ciclo");
+			   page.clickContinueError();
+			   page.clickContinueError();
+			 driver.switchTo().defaultContent();
+			 driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("BillingCycle_nextBtn")));
+			 String parcial = driver.findElement(By.id("tree0-node1")).findElements(By.cssSelector(".slds-form-element__label.slds-truncate.ng-binding")).get(1).getText();
+			 parcial = parcial.substring(parcial.length()-2, parcial.length());
+			 if (parcial.contains(" ")) {
+				 parcial.substring(1);
+			 }
+			 System.out.println("parcial"+parcial);
+			 page.ciclodefacturacionpaso2();
+			 try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			 if (parcial.equals("1")) {
+				 Bp.setSimpleDropdown(driver.findElement(By.id("BillingCycleSelect")), "7");
+			 }else {Bp.setSimpleDropdown(driver.findElement(By.id("BillingCycleSelect")), "1");}
+			 try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("NewBillingCycle_nextBtn")).getLocation().y+")");
+				driver.findElement(By.id("NewBillingCycle_nextBtn")).click();
+				try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				String actual = driver.findElement(By.id("SelectableItems2")).findElements(By.cssSelector("slds-text-align--left.slds-m-around--x-small.ng-binding.ng-scope")).get(1).getText();
+				actual = actual.substring(actual.length()-2, actual.length());
+				 if (actual.contains(" ")) {
+					 actual.substring(1);
+				 }
+				 System.out.println("actual"+actual);
+				 assertTrue(actual.equals(parcial));
+				 //error, se deben esperar 2 dias para relaizar la prueba
+		}
+		
 		
 }

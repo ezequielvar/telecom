@@ -125,6 +125,7 @@ public class CustomerCare extends BasePage {
 	
 	public void elegircaso() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
 		goToLeftPanel(driver, "Casos");
 		driver.switchTo().defaultContent();
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
@@ -434,6 +435,25 @@ public class CustomerCare extends BasePage {
 			btns.get(0).click();
 			driver.switchTo().defaultContent();}
 	
+	
+	public void clickContinueError() {
+	       try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+	  BasePage cambioFrameByID=new BasePage();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+	        try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    List <WebElement> emergente= driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+	    emergente.get(1).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 }
+	
+	public void ciclodefacturacionpaso2() {
+		 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.findElement(By.className("slds-checkbox--faux")).click();
+		 //Assert.assertTrue(driver.findElement(By.className("slds-checkbox--faux")).isSelected());
+		 obligarclick(driver.findElement(By.id("BillingCycle_nextBtn")));
+
+		}
 	
 	public void detectarframe() {
 		driver.switchTo().defaultContent();

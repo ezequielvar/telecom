@@ -87,7 +87,6 @@ public class SintomasSTTManagement extends TestBase {
 		
 	//Uses both pages (Admin and user SST Symptoms ABM)
 	@Test(groups ="fase2")
-
 	public void TS12605_SST_Sintomas_Consistencia(){
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();
