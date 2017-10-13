@@ -355,20 +355,20 @@ public class CasePage extends BasePage {
 		Assert.assertTrue(casedescription.isEnabled());
 	}
 	
-	public void validarcasocerrado(String categoria, String subcategoria) {
+	public void validarcasocerrado(String categoria, String subcategoria, String asunto, String caso) {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		field.selectByVisibleText("Todos los casos");		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame1.get(0));
-			System.out.println(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_SUBJECT")).getText());
-			Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_SUBJECT")).getText().equals(categoria));
-			Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-NAME")).getText().equals("Care, Fernandooooasdasd"));
+		//	System.out.println(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_SUBJECT")).getText());
+		//	Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_SUBJECT")).getText().equals(categoria));
+		//	Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-NAME")).getText().equals("Care, Fernandooooasdasd"));
 			driver.findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_CASE_NUMBER")).findElement(By.tagName("a")).click();
 	
 
@@ -377,9 +377,18 @@ public class CasePage extends BasePage {
 
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(1));
-		Assert.assertTrue(driver.findElement(By.id("cas3_ileinner")).getText().equals("Care, Fernandooooasdasd"));
-	Assert.assertTrue(driver.findElement(By.id("cas7_ileinner")).getText().equals("Cerrado"));
-	Assert.assertTrue(driver.findElement(By.id("00Nc000000247ud_ileinner")).getText().equals(categoria));
-	Assert.assertTrue(driver.findElement(By.id("00Nc000000247ui_ileinner")).getText().equals(subcategoria));
+		Assert.assertTrue(driver.findElement(By.id("cas7_ileinner")).getText().equals("Cerrado"));
+		
+	
+		switch (caso) {
+			case "nico":
+				Assert.assertTrue(driver.findElement(By.id("cas14_ileinner")).getText().equals(asunto));
+				break;
+
+			case "leo":
+				Assert.assertTrue(driver.findElement(By.id("cas3_ileinner")).getText().equals("Care, Fernandooooasdasd"));
+				Assert.assertTrue(driver.findElement(By.id("00Nc000000247ud_ileinner")).getText().equals(categoria));
+				Assert.assertTrue(driver.findElement(By.id("00Nc000000247ui_ileinner")).getText().equals(subcategoria));
+		}
 	}
 }

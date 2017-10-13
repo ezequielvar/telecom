@@ -32,7 +32,7 @@ import Pages.CustomerCare;
 import Pages.Login;
 import Pages.customerInformation;
 import Pages.setConexion;
-
+import org.openqa.selenium.support.ui.Select;
 public class CustomerCare360ViewInformationClient extends TestBase {
 
 
@@ -40,29 +40,34 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 	private WebDriver driver;
 	 	
-	//@AfterClass
+	//@AfterClass(groups= "Fase2")
 	public void tearDown() {
 			driver.close();
 	}
 	
-//	@AfterMethod
-	public void alert (){
-		driver.get("https://cs14.salesforce.com/console");
-		try{
-			Alert alert = driver.switchTo().alert();
-			System.out.println(alert.getText());
-		}catch(org.openqa.selenium.NoAlertPresentException e){}
-	}
+	@AfterMethod(groups= "Fase2")
+	 public void alert (){
+	  CustomerCare page = new CustomerCare(driver);
+	  page.cerrarultimapestaña();
+	  //driver.get("https://cs14.salesforce.com/console");
+	  //login(driver);
 
-	@BeforeClass
+	  try{
+	   Alert alert = driver.switchTo().alert();
+	   System.out.println(alert.getText());
+	  }catch(org.openqa.selenium.NoAlertPresentException e){}
+	 }
+
+	@BeforeClass(groups= "Fase2")
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		System.out.println("entrando a login");
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}	
-	@BeforeClass
+	@BeforeMethod(groups= "Fase2")
 	public void setUpTest() {
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -77,7 +82,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		driver.switchTo().defaultContent();
 		
 	}
-	
+/*	
 	@Test
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
@@ -255,7 +260,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.crearsugerencia("Sugerencias", "Publicidad", "crear");
 		page.cerrarultimapestaña();
 		page.elegircaso();
-		page1.validarcasocerrado("Sugerencias", "Publicidad");
+		page1.validarcasocerrado("Sugerencias", "Publicidad", " ", " ");
 		
 		}
 		
@@ -268,7 +273,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.crearsugerencia("Sugerencias", "Productos/Servicios", "cancel");
 		page.cerrarultimapestaña();
 		page.elegircaso();
-		page1.validarcasocerrado("", "");
+		page1.validarcasocerrado("", "", " ", " ");
 		
 		
 		}
@@ -281,7 +286,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.crearsugerencia("Sugerencias", "Atención Ejecutivos", "crear");
 		page.cerrarultimapestaña();
 		page.elegircaso();
-		page1.validarcasocerrado("Sugerencias", "Atención Ejecutivos");
+		page1.validarcasocerrado("Sugerencias", "Atención Ejecutivos", " ", " ");
 		
 		}
 		
@@ -294,7 +299,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			page.cerrarultimapestaña();
 			driver.switchTo().defaultContent();
 		}
-		
+	*/	
 		@Test (groups= "Fase2")
 		public void TS15966_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_1_Escenario_1() {
 			CustomerCare page = new CustomerCare (driver);
@@ -326,25 +331,16 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    page.clickContinueError();
 		    page.clickContinueError();
-		    WebElement checkBox = driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
-		    checkBox.click();
+		    driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	    
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
 		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    List<WebElement> siguiente = driver.findElements(By.cssSelector(".ng-binding"));
-		    System.out.println("Cantidad de ng-bingind:" + siguiente.size());		    
-		    WebElement siguienteBoton = driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn"));
-		    siguienteBoton.click();
-		    List<WebElement> listaNuevoCheckBox = driver.findElements(By.cssSelector(".slds-checkbox--faux"));
-		    listaNuevoCheckBox.get(0).click();
-		    listaNuevoCheckBox.get(1).click();
-		    List<WebElement> nuevoSiguiente = driver.findElements(By.cssSelector(".ng-binding"));
-		    System.out.println("Cantidad de ng-binding:" + listaNuevoCheckBox.size());
-		    WebElement otroNuevoSiguiente = driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn"));
-		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    page.obligarclick(otroNuevoSiguiente);
 		    driver.switchTo().defaultContent();		    
 		}
 		
-		@Test
+		@Test (groups = "Fase2")
 		public void TS15977_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Sin_seleccion_DNI_a_CUIT() {
 			CustomerCare page = new CustomerCare (driver);
 			page.elegircuenta("Fernando Care");
@@ -357,22 +353,17 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    page.clickContinueError();
 		    page.clickContinueError();
-		    WebElement checkBox = driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
-		    checkBox.click();
+		    driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
 		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    List<WebElement> siguiente = driver.findElements(By.cssSelector(".ng-binding"));
-		    System.out.println("Cantidad de ng-bingind:" + siguiente.size());		    
-		    WebElement siguienteBoton = driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn"));
-		    siguienteBoton.click();
-		    WebElement otroNuevoSiguiente = driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn"));
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
 		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    page.obligarclick(otroNuevoSiguiente);
-		    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    page.validarError();
 		    driver.switchTo().defaultContent();    
 		}		
 		
-		@Test
+		@Test (groups = "Fase2")
 		public void TS15974_Tax_Condition_ChangesSesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Visualizar_DNI_a_CUIT() {
 			CustomerCare page = new CustomerCare (driver);
 			page.elegircuenta("Fernando Care");
@@ -385,22 +376,425 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    page.clickContinueError();
 		    page.clickContinueError();
-		    WebElement checkBox = driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope"));
-		    checkBox.click();
+		    driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
 		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    List<WebElement> siguiente = driver.findElements(By.cssSelector(".ng-binding"));
-		    System.out.println("Cantidad de ng-bingind:" + siguiente.size());		    
-		    WebElement siguienteBoton = driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn"));
-		    siguienteBoton.click();
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    WebElement billings = driver.findElement(By.cssSelector(".slds-form-element__label.tax-condition-billing-accounts-name.ng-binding"));
 		    boolean a = false;
 		    if (billings.isDisplayed()) {
 		    	a = true;
-		    	assertTrue(a);		    	
+		    	assertTrue(a);    	
 		    }
 		    driver.switchTo().defaultContent();		    
 		}
 		
-		//@Test
-		//public void TS_15993_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en Condicion Impositiva - Paso 4 Valores IVA No ejecutivo
-}
+		@Test (groups = "Fase2")
+		public void TS15993_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Valores_IVA_No_ejecutivo() {
+			CustomerCare page = new CustomerCare (driver);
+			BasePage pagina = new BasePage(driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCUITType"))), "20");
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCheckDigit"))), "1");
+		    page.clickSiguiente(driver.findElement(By.id("Step_5_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    driver.findElement(By.id("IVACondition")).click();;
+		    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Select ivaSelect = new Select (driver.findElement(By.id("IVACondition")));
+		    Assert.assertTrue(pagina.getSelectOptions(ivaSelect).contains("IVA Exento / No Alcanzado"));
+		    Assert.assertTrue(pagina.getSelectOptions(ivaSelect).contains("IVA Responsable Inscripto"));
+		    Assert.assertTrue(pagina.getSelectOptions(ivaSelect).contains("IVA Sujeto No Categorizado"));
+		    Assert.assertTrue(pagina.getSelectOptions(ivaSelect).contains("IVA Monotributista"));
+		    driver.switchTo().defaultContent();
+		    }
+		    
+		@Test (groups = "Fase2")
+		public void TS15999_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Visualizar_Exencion_IVA() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCUITType"))), "20");
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCheckDigit"))), "1");
+		    page.clickSiguiente(driver.findElement(By.id("Step_5_DNI_To_CUIT_nextBtn")));
+		    page.ElementPresent(driver.findElement(By.cssSelector(".taxConditionChanges")));
+		    driver.switchTo().defaultContent();
+		}
+				
+		@Test (groups = "Fase2")
+		public void TS16015_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Visualizar_Percepcion_IIBB() {
+		    CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCUITType"))), "20");
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCheckDigit"))), "1");
+		    page.clickSiguiente(driver.findElement(By.id("Step_5_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.ElementPresent(driver.findElement(By.id("IIBBCondition")));
+		    driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS16017_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Visualizar_Picklist_Jurisdicciones_Percepcion_IIBB() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCUITType"))), "20");
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCheckDigit"))), "1");
+		    page.clickSiguiente(driver.findElement(By.id("Step_5_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.ElementPresent(driver.findElement(By.id("IIBBExemptionJurisdiction")));
+		    driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS15965_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Validaciones_negativas() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));;
+		    page.validarError();
+		    driver.switchTo().defaultContent();		    
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS16052_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_6_Confirmacion() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCUITType"))), "20");
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCheckDigit"))), "1");
+		    page.clickSiguiente(driver.findElement(By.id("Step_5_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown(driver.findElement(By.id("IVACondition")), "IVA Monotributista");		    
+		    driver.findElement(By.id("IVAExemptionDateTo")).sendKeys("24/10/2017");;
+		    driver.findElement(By.id("IVAExemptionPercentage")).sendKeys("10");;
+		    page.setSimpleDropdown(driver.findElement(By.id("IIBBCondition")), "IIBB Inscripto Local");
+		    page.setSimpleDropdown(driver.findElement(By.id("IIBBExemptionJurisdiction")), "CABA");
+		    driver.findElement(By.id("IIBBExemptionDateTo")).sendKeys("25/10/2017");;
+		    driver.findElement(By.id("IIBBExemptionPercentage")).sendKeys("10");;		    
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("RespaldatoryDocumentationFile")).sendKeys("C:\\descarga.jpg");
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_6_Select_New_Tax_Condition_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_8_Summary_nextBtn")));
+		    try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ng-binding")));
+		    List <WebElement> nombre = driver.findElements(By.className("ng-binding"));
+		    Assert.assertTrue(nombre.get(0).getText().contains("Los datos se actualizaron correctamente. Su número de gestión es:"));
+		    driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS16054_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_6_Caso_creado() {
+			CustomerCare page = new CustomerCare (driver);
+			CasePage pagina = new CasePage(driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();;
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_2_Select_Tax_Condition_To_Modify_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    page.clickSiguiente(driver.findElement(By.id("Step_3_Select_Billing_Accounts_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCUITType"))), "20");
+		    page.setSimpleDropdown((driver.findElement(By.id("NewCheckDigit"))), "1");
+		    page.clickSiguiente(driver.findElement(By.id("Step_5_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.setSimpleDropdown(driver.findElement(By.id("IVACondition")), "IVA Monotributista");		    
+		    driver.findElement(By.id("IVAExemptionDateTo")).sendKeys("24/10/2017");;
+		    driver.findElement(By.id("IVAExemptionPercentage")).sendKeys("10");;
+		    page.setSimpleDropdown(driver.findElement(By.id("IIBBCondition")), "IIBB Inscripto Local");
+		    page.setSimpleDropdown(driver.findElement(By.id("IIBBExemptionJurisdiction")), "CABA");
+		    driver.findElement(By.id("IIBBExemptionDateTo")).sendKeys("25/10/2017");;
+		    driver.findElement(By.id("IIBBExemptionPercentage")).sendKeys("10");;		    
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("RespaldatoryDocumentationFile")).sendKeys("C:\\descarga.jpg");
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_6_Select_New_Tax_Condition_DNI_To_CUIT_nextBtn")));
+		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.clickSiguiente(driver.findElement(By.id("Step_8_Summary_nextBtn")));
+		    try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ng-binding")));
+		    List <WebElement> nombre = driver.findElements(By.className("ng-binding"));
+		    Assert.assertTrue(nombre.get(0).getText().contains("Los datos se actualizaron correctamente."));
+		    page.cerrarultimapestaña();
+		    page.elegircaso();
+		    pagina.validarcasocerrado(" ", " ", "Cambio de condición impositiva", "nico");
+		    driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS15905_Consumption_Details_Definicion_de_Filtros_Filtro_Lista_de_Servicios_Servicio_que_lo_tiene_el_cliente(){
+			CustomerCare page = new CustomerCare(driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("detalle de consumo");
+			BasePage cambioFrameByID=new BasePage();
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-01")));
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("text-input-01")).click();
+		    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    List<WebElement> servicios = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown--left")).get(0).findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label"));
+		    //for (WebElement x : servicios) {
+		    //	System.out.println(x.getText());
+		    //}
+			Assert.assertTrue(servicios.size() > 0);
+			driver.switchTo().defaultContent();			
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS15906_Consumption_Details_Definicion_de_Filtros_Filtro_Lista_de_Servicios_Servicio_que_no_tiene_el_cliente() {
+			CustomerCare page = new CustomerCare(driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("detalle de consumo");
+			BasePage cambioFrameByID=new BasePage();
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-01")));
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("text-input-01")).click();
+		    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    List<WebElement> servicios = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown--left")).get(0).findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label"));
+			Assert.assertTrue(servicios.size() != 0);
+			driver.switchTo().defaultContent();			
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS15964_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Guardar_para_Despues_Sesion_Guiada() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambios de condi");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("vlc-slds--tertiary-container")));
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			List <WebElement> guardar = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));	
+			guardar.get(1).click();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("alert-ok-button")).click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-box.vlc-slds-save_for_later")));
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.ElementPresent(driver.findElement(By.cssSelector(".slds-grid.slds-box.vlc-slds-save_for_later")));
+			driver.switchTo().defaultContent();			
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS15954_360_View_Ver_Equipo_Creador_en_Case_Visualizar_campo_Equipo_del_Creador() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.elegircaso();
+			page.ElementPresent(driver.findElement(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001iLah")));
+			driver.switchTo().defaultContent();
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS16069_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Seleccion_Billing_accounts() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambio de ciclo");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-checkbox--faux")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+			Assert.assertTrue(page.ElementPresent(driver.findElement(By.id("BillingCycle_nextBtn"))));
+			driver.switchTo().defaultContent();			
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS16062_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Visualizar_Billing_accounts() {
+			CustomerCare page = new CustomerCare (driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambio de ciclo");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			List <WebElement> cuenta = driver.findElements(By.id("tree0-node1__label"));
+			Assert.assertTrue(cuenta.get(0).isDisplayed());
+			Assert.assertTrue(cuenta.get(2).isDisplayed());
+			driver.switchTo().defaultContent();			
+		}
+		
+		@Test (groups = "Fase2")
+		public void TS16077_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_2_Valores_Picklist_Ciclo_de_facturacion() {
+			CustomerCare page = new CustomerCare (driver);
+			BasePage pagina = new BasePage(driver);
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("cambio de ciclo");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.clickContinueError();
+			page.clickContinueError();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-checkbox--faux")));
+		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+			driver.findElement(By.id("BillingCycle_nextBtn")).click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("BillingCycleSelect")).click();
+			Select dias = new Select (driver.findElement(By.id("BillingCycleSelect")));
+			Assert.assertTrue(pagina.getSelectOptions(dias).contains("1"));
+			Assert.assertTrue(pagina.getSelectOptions(dias).contains("7"));
+			Assert.assertTrue(pagina.getSelectOptions(dias).contains("14"));
+			Assert.assertTrue(pagina.getSelectOptions(dias).contains("21"));
+			driver.switchTo().defaultContent();		
+		}
+		
+		// No se puede hacer @Test (groups = "Fase2")
+		public void TS16081_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_3_Visualizar_Datos_Nuevos_Resumen() {		
+			CustomerCare page = new CustomerCare(driver);
+		    CasePage Cp = new CasePage(driver);
+		    BasePage Bp = new BasePage();
+		    page.elegircuenta("Fernando Care");
+		    page.SelectGestion("ciclo");
+		    page.clickContinueError();
+		    page.clickContinueError();
+		    driver.switchTo().defaultContent();
+		    driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("BillingCycle_nextBtn")));
+		    page.billings(driver.findElements(By.className("slds-checkbox--faux")));;
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    String parcial = driver.findElement(By.id("tree0-node1")).findElements(By.cssSelector(".slds-form-element__label.slds-truncate.ng-binding")).get(1).getText();
+		    parcial = parcial.substring(parcial.length()-2, parcial.length());
+		    if (parcial.contains(" ")) {
+		    	parcial.substring(1);
+		    }
+		    System.out.println("parcial"+parcial);
+		    page.ciclodefacturacionpaso2();
+		    if (parcial.equals("1")) {
+		    	Bp.setSimpleDropdown(driver.findElement(By.id("BillingCycleSelect")), "7");
+		    }else {Bp.setSimpleDropdown(driver.findElement(By.id("BillingCycleSelect")), "1");}
+		    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("BillingCycle_nextBtn")).getLocation().y+")");
+		    driver.findElement(By.id("BillingCycle_nextBtn")).click();
+		    
+		}
+} 
+

@@ -194,4 +194,15 @@ public class BasePage {
 		}
 	}
 	
+	public List<String> getSelectOptions (Select select){
+		List<String> optionsNames = new ArrayList<String>();
+		for (WebElement option:select.getOptions()) {
+			optionsNames.add(option.getText());
+		}
+		
+		return optionsNames;
+	}
+	
+	
+	
 }
