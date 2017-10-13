@@ -40,11 +40,13 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
  	
 	@BeforeClass
 	public void mainSteup() {
-<<<<<<< HEAD
-		this.driver = setConexion.setupEze();	
-=======
+
 		this.driver = setConexion.setupPablo();	
->>>>>>> 47e6a6ed8d9cfb69968e32f4430e3e315dc33bc5
+
+		this.driver = setConexion.setupEze();	
+
+		this.driver = setConexion.setupPablo();	
+
 		login(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		

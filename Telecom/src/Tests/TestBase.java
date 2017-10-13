@@ -71,7 +71,7 @@ public class TestBase {
 	}
 	
 	public void login(WebDriver driver) {
-		driver.get("https://test.salesforce.com/");
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//if(driver.findElement(By.id("idcard")).isDisplayed())
 		//{
@@ -89,8 +89,16 @@ public class TestBase {
 		//{
 	    Login page0 = new Login(driver);
 	    page0.ingresar();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-	}	    	
+	}	
+	public void IngresarCred(WebDriver driver) {
+		
+	    Login page0 = new Login(driver);
+	    page0.ingresar();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+	}	
 	    
 	public void waitFor2(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))

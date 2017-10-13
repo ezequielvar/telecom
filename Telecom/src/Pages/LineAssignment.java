@@ -4,15 +4,19 @@ import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LineAssignment extends BasePage {
 	
 	final WebDriver driver;
+	private WebDriverWait wait;
 
 	@FindBy (how = How.ID, using = "SelectProvincia")
 	private WebElement selectState;
@@ -43,6 +47,7 @@ public class LineAssignment extends BasePage {
 	
 public LineAssignment(WebDriver driver) {
 		this.driver = driver;
+		wait = new WebDriverWait (driver, 10);
 	    PageFactory.initElements(driver, this);	
 }
 
@@ -69,7 +74,10 @@ public void cancelLineAssignment() {
 }
 
 public void clickOnNext() {
-	getElementFromList(next, "Siguiente").click();
+	WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("LineAssignment_nextBtn")));
+    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ nextButton.getLocation().y+")");
+    nextButton.click();
 }
+
 
 }

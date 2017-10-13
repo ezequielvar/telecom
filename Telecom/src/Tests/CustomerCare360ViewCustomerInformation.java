@@ -52,7 +52,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -83,6 +83,13 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.switchTo().defaultContent();
 	goToLeftPanel(driver, "Cuentas");
+
+	WebElement frame0 = driver.findElement(By.tagName("iframe"));
+	driver.switchTo().frame(frame0);
+	waitFor(driver, (By.name("fcf")));	
+	Select field = new Select(driver.findElement(By.name("fcf")));
+	field.selectByVisibleText("Todas Las cuentas");
+
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	WebElement frame3 = driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(frame3);
@@ -90,6 +97,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	field1.selectByVisibleText("Todas Las cuentas");
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.navigate().refresh();
+
 	
 	WebElement frame4 = driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(frame4);

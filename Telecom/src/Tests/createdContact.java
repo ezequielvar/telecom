@@ -38,16 +38,17 @@ public class createdContact extends TestBase {
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://goo.gl/ETjDYJ");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login1(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login1(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod
 	public void Setup() throws Exception
 	{
 		driver.get("https://goo.gl/ETjDYJ");
+		
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -195,5 +196,5 @@ public class createdContact extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-pristine.ng-scope.ng-valid-mask.ng-valid-pattern.ng-invalid.ng-invalid-required.ng-valid-minlength.ng-valid-maxlength"));
 	}
-
+	
 }

@@ -71,8 +71,13 @@ public class BasePage {
 		for(WebElement frame : frames) {
 			try {
 				driver.switchTo().frame(frame);
+
+				driver.findElement(byForElement).getText(); //each element is in the same iframe.
+				System.out.println(index); //prints the used index.
+
 				driver.findElement(byForElement).isDisplayed(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
+
 				driver.switchTo().defaultContent();
 				return index;
 			}catch(NoSuchElementException noSuchElemExcept) {
@@ -86,12 +91,11 @@ public class BasePage {
 	public WebElement getFrameForElement(WebDriver driver, By byForElement) {
 		driver.switchTo().defaultContent();
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		try {
-			return frames.get(getIndexFrame(driver, byForElement));
-		}catch(ArrayIndexOutOfBoundsException iobExcept) {
-			System.out.println("Elemento no encontrado en ningun frame.");
+		try {return frames.get(getIndexFrame(driver, byForElement));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame.");
 			return null;
 		}
+
 	}
 
 	public int getIndexFrame(WebDriver driver, WebElement webElementToFind) {
@@ -109,9 +113,11 @@ public class BasePage {
 			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
 				driver.switchTo().defaultContent();
+
 			}catch(NullPointerException noSuchElemExcept) {
 				index++;
 				driver.switchTo().defaultContent();
+
 			}
 		}
 		return -1;//if this is called, the element wasnt found.
@@ -124,8 +130,12 @@ public class BasePage {
 	}
 	
 	public void switchAppsMenu() {
+
+		driver.switchTo().defaultContent();
 		mainMenuButton.click();
 	}
+	
+	
 	
 	public void switchAppsMenu(WebDriver driver) {
 		driver.switchTo().defaultContent();
@@ -138,6 +148,7 @@ public class BasePage {
 //		List<WebElement> options = menuOptionsWrapper.findElements(By.className("menuButtonMenuLink"));
 		driver.switchTo().defaultContent();
 		List<WebElement> options = driver.findElement(By.id("tsid-menuItems")).findElements(By.tagName("a"));
+
 		for (WebElement option : options) {
 			if(option.getText().toLowerCase().equals(optionName.toLowerCase())){
 				option.click();
