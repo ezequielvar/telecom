@@ -38,12 +38,12 @@ public class newClient extends TestBase {
 	int i = 0;
 	private String validationType = "document";
 	
-	@AfterClass
+	@AfterClass(groups="Fase2")
 	public void tearDown2() {
 		//driver.close();
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups="Fase2")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -59,7 +59,7 @@ public class newClient extends TestBase {
 		IngresarCred(driver);
 	}*/
 	
-	@BeforeMethod
+	@BeforeMethod(groups="Fase2")
 	public void setup() throws Exception {
 		//driver.get("https://goo.gl/ULLWHZ");
 		//driver.get("https://goo.gl/ETjDYJ");
@@ -97,30 +97,30 @@ public class newClient extends TestBase {
 	  }
 	}
 	
-	@Test
-	public void TS6999_verifyFieldDepartmentEmpty()
+	@Test(groups="Fase2")
+	public void TS15412_CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_default_de_modalidad_entrega_para_Canal_Ecommerce_Telefonico()
 	{
 		assertTrue(driver.findElement(By.id("Department")).getAttribute("value").isEmpty());
 	}
 	
-	@Test
-	public void TS7001_verifyCheckBoxLineIdentificatory()
+	@Test(groups="Fase2")
+	public void TS15414_CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_default_de_modalidad_entrega_para_Canal_Presencial_Agentes()
 	{
 		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
 		assertFalse(driver.findElement(By.id("IdPhone")).isDisplayed());
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test
-	public void TS7000_lineaIdentificatory()
+	@Test(groups="Fase2")
+	public void TS15413_CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_default_de_modalidad_entrega_para_Canal_Presencial_Oficinas_comerciales()
 	{
 		driver.findElement(By.id("IdPhone")).sendKeys("1234568745");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
-	@Test
-	public void TS7002_mandatoryTaxCondition()
+	@Test(groups="Fase2")
+	public void TS15409_CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_LOV_de_modalidad_entrega_para_canal_ecommerce_telefonico()
 	{
 		BasePage page = new BasePage();
 		WebElement CI = driver.findElement(By.id("ImpositiveCondition"));
@@ -128,8 +128,9 @@ public class newClient extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-select-control.ng-scope.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-required"));
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	//**********REVISAR***********
-	public void TS7003_VerificarDomicilioFacturacionLegal(){
+	
+	@Test(groups="Fase2")
+	public void TS15411CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_LOV_de_modalidad_entrega_para_Canal_Presencial_Agentes(){
 		BasePage page = new BasePage();
 		WebElement prov = driver.findElement(By.id("State"));
 		page.setSimpleDropdown(prov, "Buenos Aires");
@@ -146,9 +147,9 @@ public class newClient extends TestBase {
 		assertTrue(driver.findElement(By.id("BillingPostalCodeTypeAhead")).isDisplayed());
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	//**********REVISAR************
-	@Test
-	public void TS7004_verifyFieldsNameAndLastname()
+	
+	@Test(groups="Fase2")
+	public void TS15410_CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_LOV_de_modalidad_entrega_para_Canal_Presencial_Oficinas_comerciales()
 	{
 		String a;
 		a = driver.findElement(By.id("ContactName")).getText();
@@ -156,7 +157,7 @@ public class newClient extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS7005_mandatoryTaxCondition()
 	{
 		BasePage page = new BasePage();

@@ -37,12 +37,12 @@ public class NewContactInformation extends TestBase {
 	String DNI = "Documento Nacional de Identidad";
 	String[] DocValue = {"52698547","3569874563","365","ssss"};
 	
-	@AfterClass
+	@AfterClass(groups="Fase2")
 	public void tearDown() {
 		driver.close();
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups="Fase2")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -52,7 +52,7 @@ public class NewContactInformation extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(groups="Fase2")
 	public void Setup() throws Exception
 	{
 		driver.get("https://goo.gl/ETjDYJ");
@@ -65,7 +65,7 @@ public class NewContactInformation extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6901_nonExistentContact()
 	{
 		ContactInformation page = new ContactInformation(driver);
@@ -73,7 +73,7 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.id("UpdateContact")).click();
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6920_verifyValidateContact()
 	{
 		ContactInformation page = new ContactInformation(driver);
@@ -82,28 +82,28 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		
 	}
-	@Test
+	@Test(groups="Fase2")
 	public void TS6909_numbersOnFieldLastName()
 	{
 		driver.findElement(By.id("LastName")).sendKeys("123");
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6910_numbersOnFieldName()
 	{
 		driver.findElement(By.id("Name")).sendKeys("123");
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));	
 	}	
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6949_Manualbirthdate() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys(DateOfBirthday);
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-valid.ng-valid-valid"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6950_MoreThanFiveDigits()
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys(DateOfBirthdayWrong +"4");
@@ -111,7 +111,7 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void birthdateLetters() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys("agosto");
@@ -119,41 +119,41 @@ public class NewContactInformation extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-dirty.ng-invalid-valid.ng-valid-parse.ng-valid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6951_birthdateOneMoreDay() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys("32/08/1999");
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void birthdateDayminusone() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys("00/08/1999");
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6952_birthdateOneMoreMonth() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys("22/13/1999");
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void birthdateMonthminusone() 
 	{
 		driver.findElement(By.id("Birthdate")).sendKeys("22/00/1999");
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6974_mailCheckEmpty() 
 	{	
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6941_noMailCheckSelect () 
 	{
 		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
@@ -161,34 +161,32 @@ public class NewContactInformation extends TestBase {
 	}
 	
 
-	@Test
+	@Test(groups="Fase2")
 	public void TS6934_mandatoryLastName()
 	{
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid-pattern.ng-invalid.ng-invalid-required.ng-valid-minlength.ng-valid-maxlength"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6936_mandatoryBirthDate()
 	{
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6938_mandatoryName()
 	{
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid-pattern.ng-invalid.ng-invalid-required.ng-valid-minlength.ng-valid-maxlength"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6931_calendarBirthDate()
 	{
 		driver.findElement(By.id("Birthdate")).click();
 		driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-.active"));
 	}
 
-	
-	
-	@Test
+	@Test(groups="Fase2")
 	public void birthdatemask() {
 
 		List<WebElement> profileinfo = driver.findElements(By.id("Birthdate")); 

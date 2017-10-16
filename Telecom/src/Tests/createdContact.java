@@ -29,12 +29,12 @@ public class createdContact extends TestBase {
 	String DNI = "Documento Nacional de Identidad";
 	String[] DocValue = {"10000000","3569874563","365","ssss"};
 	
-	@AfterClass
+	@AfterClass(groups="Fase2")
 	public void tearDown() {
 		//driver.close();
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups="Fase2")
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -44,7 +44,7 @@ public class createdContact extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(groups="Fase2")
 	public void Setup() throws Exception
 	{
 		driver.get("https://goo.gl/ETjDYJ");
@@ -54,7 +54,7 @@ public class createdContact extends TestBase {
 	
 	BasePage base = new BasePage();
 	
-	@Test
+	@Test(groups="Fase2")
 	public void createdNewValidContact()
 	{
 		ContactSearch contact = new ContactSearch(driver);
@@ -65,7 +65,7 @@ public class createdContact extends TestBase {
 		
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6965_verifiedFieldDNIShortNumer()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -74,7 +74,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-min-int.ng-valid-max-int.ng-invalid.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6918_generFemale()
 	{
 		ContactSearch contact = new ContactSearch(driver);
@@ -82,7 +82,7 @@ public class createdContact extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6919_generMale()
 	{
 		ContactSearch contact = new ContactSearch(driver);
@@ -90,7 +90,7 @@ public class createdContact extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6964_verifiedFieldDNILongNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -99,7 +99,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-min-int.ng-valid-max-int.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-pattern"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6967_mandatoryType()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -108,13 +108,13 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-select-control.ng-scope.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6967_mandatorySex()
 	{
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-pristine.ng-scope.ng-invalid.ng-invalid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6966_mandatoryDNI()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -122,7 +122,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid-pattern.ng-valid-min-int.ng-valid-max-int.ng-invalid.ng-invalid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6914_verifiedShortPassportNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -131,7 +131,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6915_verifiedLongPassportNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -139,7 +139,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.id("PassportDocument")).sendKeys("1231231234");
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6916_PassportNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -147,7 +147,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.id("PassportDocument")).sendKeys("123123123");
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6912_DNINumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -155,7 +155,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.id("DNIDocument")).sendKeys("12312312");
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6911_CUITNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -163,7 +163,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.id("CuitDocument")).sendKeys("22-35689987-4");
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6943_PassportNumberWithLetters()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -171,7 +171,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.id("PassportDocument")).sendKeys("AAA1231AA");
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6945_ceroCUITNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -179,7 +179,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.id("CuitDocument")).sendKeys("00256987450");
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6944_lettersCUITNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
@@ -188,7 +188,7 @@ public class createdContact extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid-parse.ng-valid-pattern.ng-valid-minlength.ng-valid-maxlength.ng-invalid.ng-invalid-required"));
 	}
 	
-	@Test
+	@Test(groups="Fase2")
 	public void TS6935_verifyFieldCUITNumber()
 	{
 		WebElement type = driver.findElement(By.id("DocumentType"));
