@@ -123,14 +123,15 @@ public class CustomerCare extends BasePage {
 	    element.click();
 	}
 	
-	public void elegircaso() {
+	public void elegircaso(String option) {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel(driver, "Casos");
 		driver.switchTo().defaultContent();
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Mis Casos");		
+		field.selectByVisibleText(option);		
 	}
 	
 	public void elegircuenta(String cuenta) {
@@ -144,8 +145,8 @@ public class CustomerCare extends BasePage {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		List<WebElement> accounts2 = driver.findElements(By.xpath("//*[text() ='"+cuenta+"']"));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		accounts2.get(0).click();
-		accounts2.get(0).click();
+		obligarclick(accounts2.get(0));
+		obligarclick(accounts2.get(0));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 	
@@ -477,6 +478,7 @@ break;
 	
 	
 	public void usarbuscadorsalesforce(String busqueda) {
+		buscador.clear();
 		buscador.sendKeys(busqueda);
 		buscador.submit();
 	}
@@ -498,8 +500,9 @@ break;
 	}
 	
 	public void validarlabusqueda(String busqueda) {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(6));
+		driver.switchTo().frame(frame1.get(1));
 		List<WebElement>asl = driver.findElements(By.cssSelector(".list0"));
 		//System.out.println(asl.size());
 		//System.out.println(asl.get(0).getText());
@@ -589,7 +592,7 @@ try {
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(3));
 		List <WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
-	Assert.assertEquals(asl.get(3).getText(), "El cliente no está activo.");
+	Assert.assertEquals(asl.get(3).getText(), "En este momento no se puede efectuar esta tipo de gestion porque su cuenta está un estado inactiva");
 		/*for(int i=0; i<asl.size() ; i++){
 			System.out.println("index: " + i + " "+asl.get(i).getText());
 			if(asl.get(i).getText().equals("El cliente no está activo.")) {
@@ -698,22 +701,142 @@ try {
 		driver.findElement(By.id("Comment")).sendKeys("Esto es un comentario");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
-((JavascriptExecutor)driver).executeScript("document.getElementById('ManagementType_nextBtn').click()");
-
+		
 		switch(gestion) {
 		case "crear":
-			//(656, 565)
-			//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
-			//driver.findElement(By.id("ManagementType_nextBtn")).click();
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ManagementType_nextBtn")).getLocation().y+")");
+			((JavascriptExecutor)driver).executeScript("document.getElementById('ManagementType_nextBtn').click()");
+
 			break;
 		case "cancel":
-			driver.findElement(By.className("vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
+		obligarclick(driver.findElement(By.xpath("//*[@id=\'a1zc0000003Ii6rAAC-0\']/div[2]/div/div[1]/div")));
+	
+
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("alert-ok-button")).click();
 			break;
 		}
-		
-		
+		}
+	
+	public void validarsubproductos() {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		Accounts accpage= new Accounts(driver);
+		driver.switchTo().frame(accpage.getFrameForElement(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".console-flyout.active.flyout")).isEnabled());
 	}
+	
+	public void validarestado() {
+		driver.switchTo().defaultContent();
+		Accounts accpage= new Accounts(driver);
+		driver.switchTo().frame(accpage.getFrameForElement(driver, By.className("card-top")));
+	
+		if(driver.findElements(By.cssSelector(".console-card.active.expired")).size() != 0) {
+			Assert.assertTrue(driver.findElement(By.cssSelector(".console-card.active.expired")).isEnabled());
+			//System.out.println("inactivo");
+		}else{
+				Assert.assertTrue(driver.findElement(By.cssSelector(".console-card.active")).isEnabled());
+				//System.out.println("activo");
+		}
+
+	}
+	
+	
+	public void validarcard() {
+		driver.switchTo().defaultContent();
+		Accounts accpage= new Accounts(driver);
+		driver.switchTo().frame(accpage.getFrameForElement(driver, By.className("card-top")));
+		Assert.assertTrue(driver.findElement(By.className("card-top")).isEnabled());
+	}
+	
+	public void validarhistorialdecuentas() {
+		driver.switchTo().defaultContent();
+		Accounts accpage= new Accounts(driver);
+		driver.switchTo().frame(accpage.getFrameForElement(driver, By.id("001c000001BMqtL_RelatedEntityHistoryList_title")));
+		Assert.assertTrue(driver.findElement(By.id("001c000001BMqtL_RelatedEntityHistoryList_title")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.className("pbBody")).isEnabled());
+
+	}
+	
+	public void clickContinueError() {
+	      try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		BasePage cambioFrameByID=new BasePage();
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+		      try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  List <WebElement> emergente= driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		  emergente.get(1).click();
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void validarcorrectopaso0() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		BasePage cambioFrameByID=new BasePage();
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-form-element__control")));
+		List<WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
+		/*for(int i =0;i<asl.size();i++) {
+			System.out.println(i+": "+asl.get(i).getText());
+		}*/
+Assert.assertEquals(asl.get(0).getText(), "En este formulario podrás cambiar la fecha en la cual se te empieza a facturar cada mes.");
+		driver.switchTo().defaultContent();
+
+	}
+	
+	public void validarpaso1cambiodeciclo() {
+		usarpanelcentral("Detalles");
+		String direccion =  driver.findElement(By.xpath("//*[@id=\'acc17_ileinner\']/table/tbody/tr[1]/td")).getText();
+		String b = direccion;
+		//*[@id="acc17_ileinner"]/table/tbody/tr[1]/td/text()[1]
+		driver.switchTo().defaultContent();
+		usarpanelcentral("Cambio de ciclo");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		BasePage cambioFrameByID=new BasePage();
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-form-element__label.slds-truncate.ng-binding")));
+		List<WebElement> asl = driver.findElements(By.cssSelector(".slds-form-element__label.slds-truncate.ng-binding"));
+		/*for(int i =0;i<asl.size();i++) {
+			System.out.println(i+": "+asl.get(i).getText());
+		}*/
+		String c = asl.get(0).getText().replaceAll("[(,)]", "");
+		c = c.replaceAll(" ", "");
+		c = c.substring(0,c.length()-4);
+		b = b.replaceAll(" ", "");
+		b = b.substring(0,c.length());
+		//System.out.println(b);
+		//System.out.println(c);
+
+		Assert.assertTrue(b.equals(c));
+		Assert.assertTrue(asl.get(1).getText().contains("Ciclo Actual"));
+	}
+	
+public void validarcambiodecicloservicios() {
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> asd = driver.findElements(By.xpath("//*[text() ='Ver servicios contratados']"));
+	asd.get(0).click();
+	driver.findElement(By.className("slds-tree__item")).click();
+	Assert.assertTrue(driver.findElement(By.className("slds-form-element__control")).isDisplayed());
+}
+public void ciclodefacturacionpaso2() {
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.className("slds-checkbox--faux")).click();
+	//Assert.assertTrue(driver.findElement(By.className("slds-checkbox--faux")).isSelected());
+	obligarclick(driver.findElement(By.id("BillingCycle_nextBtn")));
+	
+}
+
+public void validarpicklistmandatorio() {
+	BasePage cambioFrameByID=new BasePage();
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("BillingCycleSelect")));
+
+	obligarclick(driver.findElement(By.id("NewBillingCycle_nextBtn")));
+
+	   System.out.println(driver.findElement(By.xpath("//*[@id=\'alert-container\']/div[2]/p")).getText());
+	   Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\'alert-container\']/div[2]/p")).getText().equals("Error: Por favor complete todos los campos requeridos"));
+	
+}
+
 }
