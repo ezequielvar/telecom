@@ -742,4 +742,20 @@ try {
 		}
 		
 	}
+	public boolean ElementPresent(WebElement element) {
+		if (element.isDisplayed()) {
+			return true;
+		} else
+		return false;
+	}
+	public void clickSiguiente(WebElement element) {
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		element.click();
+	}
+	public void billings(List<WebElement> element) {
+		for (int i = 0; i < element.size(); i++) {
+			element.get(i).click();
+		}
+		
+	}
 }
