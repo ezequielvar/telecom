@@ -105,9 +105,13 @@ public class CustomerCare extends BasePage {
 	
 	//method
 	public void goToLeftPanel(WebDriver driver, String selection) {
+		
+
 		WebElement element = driver.findElement(By.className("x-btn-split"));
 		Actions builder = new Actions(driver);   
 		builder.moveToElement(element, 245, 20).click().build().perform();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 		switch(selection) {
 		case "Cuentas":
 		driver.findElement(By.id("nav-tab-0")).click();
@@ -135,6 +139,7 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void elegircuenta(String cuenta) {
+		driver.switchTo().defaultContent();
 		goToLeftPanel(driver, "Cuentas");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -464,6 +469,9 @@ break;
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(4));
 		//driver.findElement(By.cssSelector("slds-form-element__control"));
+		BasePage cambioFrameByID=new BasePage();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-form-element__control")));
 		List <WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
 		Assert.assertEquals("En este formulario podrás cambiar la fecha en la cual se te empieza a facturar cada mes.", asl.get(0).getText());
 		
@@ -544,6 +552,8 @@ try {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		setSimpleDropdown(listeditstatus2, "Yes");
 } catch (NoSuchElementException e) {}
+
+
 	}
 	
 	public void seleccionarfraude(String check) {
@@ -624,11 +634,33 @@ try {
 		}
 	}
 	
-	
-	
+	public void clienteactivo2() {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("CF00Nc0000001pSW3_ileinner")).click();	
+		if ( !driver.findElement(By.id("00Nc0000001pSdD_ileinner")).isSelected() )
+		{driver.findElement(By.id("00Nc0000001pSdD_ileinner")).click();}
+		setSimpleDropdown(driver.findElement(By.id("00Nc0000001pSdR_ileinner")), "Activo");
+		obligarclick(editsave);
+		usarpanelcentral("Detalles");
+		
+		
+	}
+	public void clienteinactivo2() {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("CF00Nc0000001pSW3_ileinner")).click();	
+		if ( driver.findElement(By.id("00Nc0000001pSdD_ileinner")).isSelected() )
+		{driver.findElement(By.id("00Nc0000001pSdD_ileinner")).click();}
+		setSimpleDropdown(driver.findElement(By.id("00Nc0000001pSdR_ileinner")), "Inactivo");
+		obligarclick(editsave);
+		usarpanelcentral("Detalles");
+		
+		
+	}
 	public void editarcuenta(String cuenta, String fraude,String Status) {
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
+		goToLeftPanel(driver, "Cuentas");
 		driver.switchTo().frame(frame0);
+
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		field.selectByVisibleText("Todas Las cuentas");		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -643,9 +675,11 @@ try {
 		switch(Status) {
 		case "active":
 			clienteactivo();
+			clienteactivo2();
 			break;
 		case "inactive":
 			clienteinactivo();
+			clienteinactivo2();
 			break;
 		}
 		seleccionarfraude(fraude);

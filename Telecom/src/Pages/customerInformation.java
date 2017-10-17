@@ -274,4 +274,43 @@ public class customerInformation extends BasePage {
 		}
 		return a;
 	}	
+	
+	public boolean validarlimitecaracterapellido() {
+		boolean a = false;
+		BasePage cambioFrameByID=new BasePage();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		   driver.findElement(By.className("profile-edit")).click();
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		   for(int i=0; i<51;i++) {
+driver.findElement(By.id("LastName")).sendKeys("b");
+		   }
+		   String b= driver.findElement(By.id("LastName")).getText();
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".ng-scope")));
+		   List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+		if(b.length() !=51 ){
+			Assert.assertTrue(errores.get(1).getText().equals("El Apellido No Puede Tener Números Ni Ser Mayor A 50 Caracteres."));
+			a = true;
+	}
+	return a;
+	}
+	
+	public boolean validarcaractertelefonoalternativo() {
+		boolean a = false;
+		BasePage cambioFrameByID=new BasePage();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		   driver.findElement(By.className("profile-edit")).click();
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		   List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+
+			if(driver.findElement(By.cssSelector(".slds-input.form-control.ng-valid-maxlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-touched.ng-valid-pattern.ng-not-empty.ng-invalid.ng-invalid-minlength")).isEnabled());{
+			Assert.assertTrue(errores.get(9).getText().equals("Longitud Mínima De 10 Solo Números."));
+			a = true;
+	}
+	return a;
+	}
 }
