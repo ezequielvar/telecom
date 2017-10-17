@@ -44,7 +44,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			driver.close();
 	}
 	
-	@AfterMethod(groups= "Fase2")
+	//@AfterMethod(groups= "Fase2")
 	public void alert (){
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
@@ -81,7 +81,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 	}
 	
-	@Test
+//	@Test
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
@@ -94,7 +94,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 	
 	
 		
-	@Test
+	//@Test
 	public void TS7138_BusinessDataPanelPicklistCommercialDataAccount() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
@@ -114,6 +114,8 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		page.openrightpanel();
 		page.SelectGestion("Cambio de ciclo");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.clickContinueError();
+		page.clickContinueError();
 		page.ValidarCambioDeCiclo();
 		
 	}

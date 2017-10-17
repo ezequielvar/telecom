@@ -89,12 +89,12 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	waitFor(driver, (By.name("fcf")));	
 	Select field = new Select(driver.findElement(By.name("fcf")));
 	field.selectByVisibleText("Todas Las cuentas");
-<<<<<<< HEAD
+
 	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));	
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-=======
+
 
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	WebElement frame3 = driver.findElement(By.tagName("iframe"));
@@ -112,7 +112,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	driver.findElement(By.xpath("//*[text() ='Andres Care']")).click();;
 	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
 	accounts.get(0).click();
->>>>>>> fc9ea4225d8454e4ccd72329304641255e37e4c6
+
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {

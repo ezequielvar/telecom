@@ -19,6 +19,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.AccountType;
+import Pages.CustomerCare;
 import Pages.NewAccount;
 import Pages.customerInformation;
 import Pages.setConexion;
@@ -63,7 +64,7 @@ public class customerInformationUpdates extends TestBase {
 	
 	@BeforeMethod
 	public void setUpTest() {
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
+		if (!driver.getCurrentUrl().toString().equals("https://crm--sit.cs14.my.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
@@ -109,15 +110,10 @@ public class customerInformationUpdates extends TestBase {
 			WebElement frame4 = driver.findElement(By.tagName("iframe"));
 			driver.switchTo().frame(frame4);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			waitFor(driver, (By.xpath("//*[text() = 'Aaa Aaa']")));
-			driver.findElement(By.xpath("//*[text() ='Aaa Aaa']")).click();;
-			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Aaa Aaa']"));
-			accounts.get(0).click();
+			 CustomerCare page = new CustomerCare(driver);
+				page.elegircuenta("Aaa Aaa");
 			driver.switchTo().defaultContent();
-			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			   driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
-			}
+			page.openleftpanel();
 			/*
 			List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame5.get(5));
@@ -495,8 +491,10 @@ public class customerInformationUpdates extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame6.get(4));
-		waitFor(driver, (By.id("FirstName")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		customerInformation page = new customerInformation(driver);
+		CustomerCare page1=new CustomerCare(driver);
+		page1.openleftpanel();
 		Assert.assertTrue(page.validarlimitecaracterapellido());
 	}
 	
@@ -506,7 +504,7 @@ public class customerInformationUpdates extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame6.get(4));
-		waitFor(driver, (By.id("FirstName")));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		customerInformation page = new customerInformation(driver);
 		Assert.assertTrue(page.validarcaractertelefonoalternativo());
 
