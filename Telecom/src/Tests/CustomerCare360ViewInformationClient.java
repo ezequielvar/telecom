@@ -82,7 +82,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		driver.switchTo().defaultContent();
 		
 	}
-/*	
+	
 	@Test
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
@@ -299,7 +299,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			page.cerrarultimapestaña();
 			driver.switchTo().defaultContent();
 		}
-	*/	
+		
 		@Test (groups= "Fase2")
 		public void TS15966_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_1_Escenario_1() {
 			CustomerCare page = new CustomerCare (driver);
