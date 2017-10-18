@@ -27,6 +27,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.Login;
 import Pages.setConexion;
 
@@ -73,6 +75,7 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 		}
+		
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
 	for (WebElement e : mainTabs) {
@@ -82,88 +85,22 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.switchTo().defaultContent();
-	goToLeftPanel(driver, "Cuentas");
 
-	WebElement frame0 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame0);
-	waitFor(driver, (By.name("fcf")));	
-	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas Las cuentas");
-
-	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));	
-	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
-	accounts.get(0).click();
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement frame3 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame3);
-	Select field1 = new Select(driver.findElement(By.name("fcf")));
-	field1.selectByVisibleText("Todas Las cuentas");
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.navigate().refresh();
-
-	
-	WebElement frame4 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame4);
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));
-	driver.findElement(By.xpath("//*[text() ='Andres Care']")).click();;
-	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
-	accounts.get(0).click();
-
-	driver.switchTo().defaultContent();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-		driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
-		}
+    CustomerCare page = new CustomerCare(driver);
+    page.elegircuenta("Andres Care");
+    page.openleftpanel();
 }
 	
 
-	/*@Test
-	public void TS7069_ValidationButtons () {
 
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(6));//It should be  6, instead of 5.
-		driver.findElement(By.className("profile-links-wrapper"));
-		List<WebElement> botones = driver.findElements(By.className("profile-links"));
-		Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
-		Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
-		driver.switchTo().defaultContent();
-
-
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	driver.switchTo().frame(frame1.get(5));		
-	List<WebElement> asl = driver.findElements(By.className("profile-box"));
-	System.out.println(asl.size());
-	List<WebElement> botones = driver.findElements(By.className("profile-links"));
-	Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
-	Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
-	driver.switchTo().defaultContent();
-	}*/
 	
 	@Test
 	public void TS7069_ValidationButtons () {
 
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frames.get(5));
-
-		/*for(int i=0; i < frames.size(); i++){
-			driver.switchTo().frame(frames.get(i));
-			try{
-				List<WebElement> asl = driver.findElements(By.className("profile-box"));
-				asl.get(0);
-				System.out.println(i);
-				System.out.println("Si");
-			}catch(java.lang.IndexOutOfBoundsException e){
-				System.out.println(e.getMessage());
-				System.out.println("No");
-			}
-		}*/
+		 BasePage cambioFrameByID=new BasePage();
+	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-links")));
 		List<WebElement> botones = driver.findElements(By.className("profile-links"));
 		Assert.assertEquals("Actualizar Datos", botones.get(0).getText());
 		Assert.assertEquals("| Reseteo Clave", botones.get(1).getText());
@@ -179,12 +116,6 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 	driver.findElements(By.className("ext-webkit.ext-chromehg"));
 	List<WebElement> profileinfo = driver.findElements(By.className("client-data-detail"));
 	driver.findElement(By.className("console-account-info"));
- /*Integer a = 0; 
-	for (WebElement e: profileinfo) {
-		System.out.println(a);
-		System.out.println(e.getText());
-		a++;
-	}*/
 	Assert.assertEquals("Correo Electrónico:", profileinfo.get(0).getText());
 	Assert.assertEquals("TelÃ©fono:", profileinfo.get(1).getText());
 	Assert.assertEquals("Club Personal:", profileinfo.get(2).getText());

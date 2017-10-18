@@ -527,7 +527,7 @@ public class customerInformationUpdates extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame6.get(4));
-		waitFor(driver, (By.id("FirstName")));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		customerInformation page = new customerInformation(driver);
 		Assert.assertTrue(page.validarcaracterespecialesNyA());
 
@@ -536,15 +536,14 @@ public class customerInformationUpdates extends TestBase {
 	public void TS12282_Reseteo_de_Claves_Manejo_de_la_Clave_Visualizar_Boton_Reseteo_Clave() {
 		driver.switchTo().defaultContent();
 		customerInformation page = new customerInformation(driver);
-		page.validacionbtnreseteodeclave();
+		Assert.assertTrue(page.validacionbtnreseteodeclave());
 	}
 	
-	@Test (groups= "fase2")//noterminado
+	@Test (groups= "fase2")
 	public void TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area() {
 		driver.switchTo().defaultContent();
 		customerInformation page = new customerInformation(driver);
-		page.EntrarEditarPerfil();
-		page.ValidarDigitosDelMovil();	
+		Assert.assertTrue(page.ValidarDigitosDelMovil());	
 	}
 	
 }
