@@ -38,16 +38,13 @@ private WebDriver driver;
 public void tearDown() {
 		driver.close();
 	}
-	
+	//***************************************ESTA CLASE NO VA*******************************************
 //@BeforeTest
 public void mainSeteup() {
 	this.driver = setConexion.setupLeo();	
 
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> fc9ea4225d8454e4ccd72329304641255e37e4c6
 @AfterMethod
 public void alert (){
 	driver.get("https://cs14.salesforce.com/home/home.jsp");
