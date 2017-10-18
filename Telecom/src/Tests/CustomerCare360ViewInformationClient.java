@@ -324,7 +324,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		
 		
 		@Test(groups="Fase2")
-		public void TS14593_360_View_Estado_Servicio_Visualizar_Botones_de_Acción_Subproductos() {
+		public void TS14593_360_View_Panel_de_los_Servicios_de_Cliente_Visualizar_borde_de_estado() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("Fernando Care");
 		page.usarpanelcentral("Servicios");
@@ -355,7 +355,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			page.validarhistorialdecuentas();
 		}
 		@Test(groups="Fase2")
-		public void TS15961_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_Cliente_activo() {
+		public void TS16061_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_Cliente_activo() {
 			CustomerCare page = new CustomerCare(driver);
 			page.editarcuenta("Fernando Care","no", "inactive");
 			page.elegircuenta("Fernando Care");
@@ -365,8 +365,8 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			page.validarerrorpaso0();
 		}
 		
-		@Test(groups="Fase2")
-		public void TS15959_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_Cliente_fraude() {
+		@Test(groups="Fase2")//*****************************
+		public void TS15959_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_fraude() {
 			//bug
 			CustomerCare page = new CustomerCare(driver);
 			page.editarcuenta("Fernando Care","si", "active");
@@ -382,7 +382,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		}
 		
 		@Test(groups="Fase2")
-		public void TS15060_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_Cliente_activo() {
+		public void TS16060_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_Cliente_activo() {
 			CustomerCare page = new CustomerCare(driver);
 			page.editarcuenta("Fernando Care","si", "active");
 			page.elegircuenta("Fernando Care");
@@ -392,7 +392,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			page.validarerrorpaso0();
 		}
 		@Test(groups="Fase2")
-		public void TS15057_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_correctas() {
+		public void TS16057_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_correctas() {
 			CustomerCare page = new CustomerCare(driver);
 			page.editarcuenta("Fernando Care","no", "active");
 			page.elegircuenta("Fernando Care");

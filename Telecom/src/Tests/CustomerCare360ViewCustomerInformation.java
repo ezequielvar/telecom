@@ -75,18 +75,8 @@ public class CustomerCare360ViewCustomerInformation extends TestBase  {
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 		}
-		
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
-	for (WebElement e : mainTabs) {
-	try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
-	}
-	List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.switchTo().defaultContent();
-
     CustomerCare page = new CustomerCare(driver);
+    page.cerrarultimapestaña();
     page.elegircuenta("Andres Care");
     page.openleftpanel();
 }
