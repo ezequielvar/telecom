@@ -313,4 +313,71 @@ driver.findElement(By.id("LastName")).sendKeys("b");
 	}
 	return a;
 	}
+	
+	
+	
+	public boolean validarcaractermovilalternativo() {
+		  boolean a = false;
+		  BasePage cambioFrameByID=new BasePage();
+		     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		     driver.findElement(By.className("profile-edit")).click();
+		     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		     List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+		     driver.findElement(By.id("MobilePhone")).sendKeys("a");
+		     for(WebElement aa:errores) {
+		      if(aa.getText().equals("Longitud Mínima De 10 Solo Números."))
+		       a= true;
+		     }          
+		     return a;
+		 }
+	
+	public boolean validacionbtnreseteodeclave() {
+		  boolean a = false;
+		  BasePage cambioFrameByID=new BasePage();
+		     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		     List<WebElement> btns = driver.findElements(By.className("profile-edit"));
+			      if(btns.get(1).getText().equals("Reseteo Clave")) {
+			       a= true;
+			     }          
+			     return a;
+	}
+	
+	public boolean validarcaracterespecialesNyA() {
+		  boolean a = false;
+		  BasePage cambioFrameByID=new BasePage();
+		     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		     driver.findElement(By.className("profile-edit")).click();
+		     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		     List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+		     driver.findElement(By.id("FirstName")).sendKeys("/*!#$");;
+		     driver.findElement(By.id("LastName")).sendKeys("/*!#$");
+		     if (errores.get(0).getText().equals("asd") && errores.get(1).getText().equals("asd")) {
+		      a = true;
+		     }    
+		  return a;
+		 }
+	
+	public boolean ValidarDigitosDelMovil() {
+		  boolean a = false;
+		  BasePage cambioFrameByID=new BasePage();
+		     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		     driver.findElement(By.className("profile-edit")).click();
+		     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		     driver.findElement(By.id("MobilePhone")).sendKeys("1234560123456789");;
+
+		     List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+		     for(WebElement aa:errores) {
+			      if(aa.getText().equals("Longitud Mínima De 10 Solo Números."))
+			       a= true;
+			     }             
+			  return a;
+	}
+	
 }
