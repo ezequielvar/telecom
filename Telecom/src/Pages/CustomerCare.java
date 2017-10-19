@@ -656,7 +656,15 @@ try {
 		
 		
 	}
+	
+	public void encontrarcuenta(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		System.out.println(driver.findElement(By.className("pageInput")).getText());
+		
+		driver.findElement(By.className("prevNext")).click();
+	}
 	public void editarcuenta(String cuenta, String fraude,String Status) {
+		encontrarcuenta();
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		goToLeftPanel(driver, "Cuentas");
 		driver.switchTo().frame(frame0);
