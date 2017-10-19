@@ -23,6 +23,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.CasePage;
+import Pages.CustomerCare;
 import Pages.SelectCaseRegisterType;
 import Pages.setConexion;
 
@@ -47,33 +48,16 @@ public class CustomerCareCaseManagement extends TestBase {
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
-		for (WebElement e : mainTabs) {
-		try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
-		}
-		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		goToLeftPanel(driver, "Casos");
-		WebElement frame0 = driver.findElement(By.tagName("iframe"));
-		driver.switchTo().frame(frame0);
-		waitFor(driver, (By.name("fcf")));	
-		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Mis Casos");
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(0));
-		driver.findElement(By.name("newCase")).click();
+		CustomerCare page = new CustomerCare(driver);
+		page.cerrarultimapestaña();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
+		page.elegircaso("Mis Casos");
 		driver.switchTo().defaultContent();
 		SelectCaseRegisterType selectCaseRegTypePage = new SelectCaseRegisterType(driver);
 		selectCaseRegTypePage.continueToCreate();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		driver.switchTo().frame(frame1.get(0));
+	
 	}
 	
 //	@AfterClass

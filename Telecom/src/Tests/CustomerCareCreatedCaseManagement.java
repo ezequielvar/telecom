@@ -31,11 +31,11 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 
 	@BeforeTest
 	public void mainSteup() {
-<<<<<<< HEAD
+
 		this.driver = setConexion.setupEze();
-=======
+
 		this.driver = setConexion.setupLeo();	
->>>>>>> fc9ea4225d8454e4ccd72329304641255e37e4c6
+
 	}
 
 	/*@BeforeTest
@@ -54,10 +54,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	@BeforeMethod
 	public void mainSetup() {
 		this.driver = setConexion.setupPablo();	
-<<<<<<< HEAD
-=======
 
->>>>>>> fc9ea4225d8454e4ccd72329304641255e37e4c6
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){

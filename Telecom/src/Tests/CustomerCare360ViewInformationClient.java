@@ -72,7 +72,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 		if (!driver.getCurrentUrl().toString().contains("https://crm--sit.cs14.my.salesforce.com/console")){
 			driver.findElement(By.id("tsidLabel")).click();
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();}	
+			driver.get("https://crm--sit.cs14.my.salesforce.com/console");}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
