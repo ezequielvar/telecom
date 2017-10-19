@@ -31,8 +31,7 @@ private WebElement colour;
 @FindBy (how = How.NAME, using = "productconfigmodal802c00000009fsEAAQ_field_1_6")
 private WebElement screenSize;
 
-@FindBy (how = How.NAME, using = "productconfigmodal802c00000009fsEAAQ_field_1_4")
-private WebElement model;
+
 
 
 

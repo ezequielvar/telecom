@@ -12,17 +12,20 @@ public class Login extends BasePage {
 	
 	//Fields
 	
-	@FindBy (how = How.ID, using = "username")
+	@FindBy (how = How.NAME, using = "Ecom_User_ID")
 	private WebElement username;
 	
-	@FindBy (how = How.ID, using = "password")
+	@FindBy (how = How.NAME, using = "Ecom_Password")
 	private WebElement password;
-	
-	@FindBy (how = How.ID, using = "Login")
+
+	@FindBy (how = How.ID, using = "loginButton2")
 	private WebElement login;
 	
 	@FindBy (how = How.NAME, using = "rememberUn")
 	private WebElement rememberMe;
+	
+	@FindBy(how = How.ID, using = "idp_section_buttons")
+	private WebElement logininterno;
 	
 	//Constructor
 	
@@ -34,8 +37,10 @@ public class Login extends BasePage {
 	//Methods
 	
 	public void ingresar() {
-		username.sendKeys("usit@telecom.sit");
-		password.sendKeys("pruebas07");
+		logininterno.click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		username.sendKeys("u589831");
+		password.sendKeys("Testa10k");
     	//rememberMe.click();
 		login.click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

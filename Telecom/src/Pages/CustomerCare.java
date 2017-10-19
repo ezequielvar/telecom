@@ -794,7 +794,7 @@ try {
 	}
 	
 	public void clickContinueError() {
-	      try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 		BasePage cambioFrameByID=new BasePage();
 		   driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
