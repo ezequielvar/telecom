@@ -92,6 +92,24 @@ public class TestBase {
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 	}	
+	
+	//By: Almer
+	  public void loginSCPAdmin(WebDriver driver) {
+	    driver.get("https://crm--uat2.cs92.my.salesforce.com");
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      Login page0 = new Login(driver);
+	      page0.ingresarAdminSCP();
+	  }
+	  
+	  //By: Almer
+	    public void loginSCPUsuario(WebDriver driver) {
+	      driver.get("https://crm--uat2.cs92.my.salesforce.com");
+	      try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	        Login page0 = new Login(driver);
+	        page0.ingresarUsuarioSCP();
+	    }
+	    
+	    
 	public void IngresarCred(WebDriver driver) {
 		
 	    Login page0 = new Login(driver);

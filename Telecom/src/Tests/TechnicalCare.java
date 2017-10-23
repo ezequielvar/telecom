@@ -48,12 +48,11 @@ public class TechnicalCare extends TestBase  {
 		if(accountPage.isTabOpened("Servicio Técnico")) {
 			System.out.println("Tab Opened.");
 			accountPage.closeAccountServiceTabByName("Servicio Técnico");
-			accountPage.clickRightPanelButtonByName("Servicio Técnico");
+			accountPage.findAndClickButton("Servicio Técnico");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}else {
-			accountPage.clickRightPanelButtonByName("Servicio Técnico");
+			accountPage.findAndClickButton("Servicio Técnico");
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			accountPage.goToTab("Servicio Técnico");
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 	}

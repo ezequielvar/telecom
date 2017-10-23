@@ -107,6 +107,24 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	}
 	
 	@Test(groups = "Fase2")
+	public void TS11619_SST_Servicio_Indiferente_Comentario_valido() {
+		Accounts accPage = new Accounts(driver);
+		accPage.fillIMEI(validIMEI);
+		accPage.continueFromImeiInput();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		accPage.continueFromClientInfo();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.selectOperationType("Consulta");
+		accPage.selectSymptomByIndex(2);
+		driver.findElement(By.id("TextAreaNotes")).sendKeys("problemas con el servicio");
+		accPage.continueFromSymptoms();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
+		assertTrue(driver.findElement(By.id("TicketCreation_prevBtn")).isDisplayed());
+	}
+	
+	
+	@Test(groups = "Fase2")
 	public void TS11625_SST_Servicio_Indiferente_Adjuntar_Dos_Archivos() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\Florangel\\Downloads\\nosignal.jpg";
@@ -371,7 +389,6 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		driver.findElement(By.id("AlternativePhone")).sendKeys("1125116113");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-valid-minlength.ng-valid-maxlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-valid.ng-valid-pattern"));
-	//verificar si ajuro debo presionar continuar
 	}
 	
 	@Test(groups = "Fase2") 

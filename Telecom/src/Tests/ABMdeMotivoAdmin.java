@@ -1,7 +1,11 @@
 package Tests;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,9 +14,9 @@ import org.testng.annotations.Test;
 
 import Pages.ContactMotiveManager;
 import Pages.ContactMotivesManager;
+import Pages.HomeBase;
 import Pages.setConexion;
 
-//page link: https://cs14.salesforce.com/a41?fcf=00Bc0000001LRma&rolodexIndex=-1&page=1
 
 public class ABMdeMotivoAdmin extends TestBase {
 	
@@ -21,7 +25,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	private String motiveName = "motivo Nuevo para Tests"; // needed for 12587 and 12589 (ADD and DEL motive)
 	private String descripcion = "Descripcion para el test.";
 	private String servicio = "Llamadas ilimitadas";
-	private String motivesAbmURL = "https://cs14.salesforce.com/a41?fcf=00Bc0000001LRma&rolodexIndex=-1&page=1";
+	
 	
 	@BeforeClass
 	public void init() throws Exception
@@ -32,19 +36,41 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterClass
+	/*@AfterClass
 	public void tearDown() {
 		driver.close();
-	}
+	}*/
 
 	@BeforeMethod
 	public void setUp() throws Exception {
 		//TODO: add how to get to ABM de Motivo
-		
-		if (!driver.getCurrentUrl().toString().equals(motivesAbmURL)){
-			driver.get(motivesAbmURL);
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		}
+		HomeBase homePage = new HomeBase(driver);
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    String a = driver.findElement(By.id("tsidLabel")).getText();
+	    if (a.contains("Ventas")){}
+	    else {
+		     homePage.switchAppsMenu();
+		     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		     homePage.selectAppFromMenuByName("Ventas");
+		     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+	    }
+	    
+	    //click +
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
+	    
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    WebElement BenBoton= driver.findElement(By.xpath("//a[@href=\"/a41/o\"]"));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+	    BenBoton.click();
+	    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	        
+	    
+	    driver.findElement(By.id("filter_element")).findElement(By.tagName("input")).click();
+	    
+	    
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	        
 	}
 	
 	//priority forces the tests order execution, and groupsDependency, guarantees the other ones finished

@@ -175,7 +175,7 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> Motivos = driver.findElements(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical")).get(1).findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
 		for (WebElement UnMot : Motivos) {
-			if(UnMot.getText().toLowerCase().equals("internet funciona lento o se cae")) {
+			if(UnMot.getText().toLowerCase().equals("no me funciona internet")) {
 				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+UnMot.getLocation().y+")");
 			      UnMot.click();
 			      break;
@@ -184,8 +184,16 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("IntegProc_Diagnóstico")).getLocation().y+")");
 		driver.findElement(By.id("IntegProc_Diagnóstico")).click();
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String Texto = driver.findElement(By.id("TestServiceTechnology")).findElement(By.tagName("span")).getText();
 		assertTrue(!Texto.equals("Tecnología del Servicio:"));
+		WebElement bbtn = driver.findElement(By.id("SelectMotiveDiagnosis_nextBtn"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+bbtn.getLocation().y+")");
+		bbtn.click();
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		bbtn = driver.findElement(By.id("TestDiagnosis_nextBtn"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+bbtn.getLocation().y+")");
+		bbtn.click();
 		//debe ser completado pero por ahora el sistema no anda como deberia...!!!!!!
 	}
 	

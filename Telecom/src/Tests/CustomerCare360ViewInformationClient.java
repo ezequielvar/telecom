@@ -42,17 +42,20 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			driver.close();
 	}
 	
-//	@AfterMethod
-	public void alert (){
+	/*@AfterMethod(groups= "Fase2")
+	 public void alert (){
 		
-		//driver.get("https://cs14.salesforce.com/console");
-		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
-		try{
-			Alert alert = driver.switchTo().alert();
-			System.out.println(alert.getText());
-		}catch(org.openqa.selenium.NoAlertPresentException e){}
-	}
+		  CustomerCare page = new CustomerCare(driver);
+		  page.cerrarultimapestaña();
+		 // driver.get("https://cs14.salesforce.com/console");
+		  //login(driver);
+
+		  try{
+		   Alert alert = driver.switchTo().alert();
+		   System.out.println(alert.getText());
+		  }catch(org.openqa.selenium.NoAlertPresentException e){}
+		 }
+	*/
 
 	@BeforeClass
 	public void init() throws Exception
@@ -326,10 +329,10 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			driver.switchTo().frame(Bp.getFrameForElement(driver, By.className("profile-box")));
 			driver.findElement(By.className("profile-box-details")).findElement(By.className("profile-links-wrapper")).findElements(By.tagName("a")).get(1).click();
 			driver.switchTo().defaultContent();
-			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("Step 1_nextBtn")));
 			driver.findElement(By.cssSelector(".slds-radio.ng-scope")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("Step 1_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("Step 1_nextBtn")).click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -355,7 +358,6 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			 if (parcial.contains(" ")) {
 				 parcial.substring(1);
 			 }
-			 System.out.println("parcial"+parcial);
 			 page.ciclodefacturacionpaso2();
 			 try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			 if (parcial.equals("1")) {
@@ -364,13 +366,14 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			 try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("NewBillingCycle_nextBtn")).getLocation().y+")");
 				driver.findElement(By.id("NewBillingCycle_nextBtn")).click();
-				try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				String actual = driver.findElement(By.id("SelectableItems2")).findElements(By.cssSelector("slds-text-align--left.slds-m-around--x-small.ng-binding.ng-scope")).get(1).getText();
+				try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("SelectableItems2")));
+				String actual = driver.findElements(By.cssSelector(".slds-text-align--left.slds-m-around--x-small.ng-binding.ng-scope")).get(1).getText();
 				actual = actual.substring(actual.length()-2, actual.length());
 				 if (actual.contains(" ")) {
 					 actual.substring(1);
 				 }
-				 System.out.println("actual"+actual);
 				 assertTrue(actual.equals(parcial));
 				 //error, se deben esperar 2 dias para relaizar la prueba
 		}
