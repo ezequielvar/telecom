@@ -55,12 +55,12 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	@AfterClass
+	@AfterClass(groups = {"Fase2"})
 	public void tearDown() {
-		//driver.close();
+		driver.close();
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups = {"Fase2"})
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -70,9 +70,9 @@ public class ta_CPQ extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod
+	@BeforeMethod(groups = {"Fase2"})
 	public void setup() throws Exception {		
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
@@ -86,6 +86,14 @@ public class ta_CPQ extends TestBase {
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
+	@AfterMethod(groups = {"Fase2"})
+	public void returnToSales() {
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://crm--sit.cs14.my.salesforce.com/801c0000000Ec64");
+	      }
+	    
+	       
+	  
 	@Test
 	public void TS6816_checkSimCardAssignment() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -625,21 +633,21 @@ public class ta_CPQ extends TestBase {
 		Assert.assertTrue(optionsDeliveryMethod.contains("Presencial"));
 	}
 	
-	@Test//(groups = {"Fase2"})
+	@Test//(groups = {"Fase2-1"})
 	public void TS11950_CRM_Fase_2_SalesCPQ_Alta_Linea_Nueva_Venta_Verificar_campo_desplegable_con_cuentas_activas() {
 		TS6835_CRM_Fase_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Lista_de_cuentas_del_cliente();
 	}
 	
-	@Test //(groups = {"Fase2"})
+	@Test //(groups = {"Fase2-1"})
 	public void TS11951_CRM_Fase_2_SalesCPQ_Alta_Linea_Nueva_Venta_Verificar_que_se_habilite_la_opcion_de_creacion_de_cuenta_nueva() {
 		TS6836_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Nueva_Cuenta();
 	}
 	
+	/**Se verifica que el sistema muestra disponibles los ciclos de facturacion 1, 7, 14 y 21*
+	 * 
+	 */
 	@Test
 	public void TS15366_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles(){
-		/*Se verifica que el sistema muestra disponibles los ciclos de facturacion 1, 7, 14 y 21*
-		 * 
-		 */
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
 		cart.addAnyProductToCart();	
@@ -687,7 +695,7 @@ public class ta_CPQ extends TestBase {
 	 * del Bundle Convergente, se agrega a la vista previa del carrito 
 	 * y se habilita el boton Siguiente
 	 */
-	@Test(groups = {"Fase2"})
+	@Test(groups = {"Fase2-1"})
 	public void TS15424_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_boton_siguiente_habilitado() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
@@ -701,7 +709,7 @@ public class ta_CPQ extends TestBase {
 	 * Se verifica que, cuando no se selecciona un producto para linea movil del 
 	 * Bundle Convergente, no se agrega a la vista previa del carrito, no se encuentra habilitado el boton Siguiente
 	 */
-	@Test(groups = {"Fase2"})
+	@Test(groups = {"Fase2-1"})
 	public void TS15423_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_boton_siguiente_inhabilitado() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
@@ -714,7 +722,7 @@ public class ta_CPQ extends TestBase {
 	 * Se visualiza que el producto movil se incorpora en forma automatica 
 	 * dentro de la familia Dispositivos cuando se agrega a la vista previa del carrito
 	 */
-	@Test(groups = {"Fase2"})
+	@Test(groups = {"Fase2-1"})
 	public void TS15422_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_producto_incorporado_Autom_Familia_Dispositivos() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
@@ -729,9 +737,125 @@ public class ta_CPQ extends TestBase {
 		
 		Assert.assertTrue(cart.getAddedProducts().contains(leftProductName));
 	}
- 	
 	
+ 	//Almer:listo. detalles:faltan planes para comparar
+	@Test(groups = {"Fase2-1"})
+	public void TS14361_CRM_Fase_2_SalesCPQ_Carrito_CreacionCategorias_Verificar_contenido_de_la_categoria_Planes(){
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  cart.selectFromRightPanel(RightPanel.PLANES);
+		  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 //Falta completar por Bug del Sistema planes no disponibles.
+		  boolean disponible=false;
+		  try {
+		  if(driver.findElement(By.cssSelector(".slds-tile__title slds-truncate.product-name")).isDisplayed()) {
+			 if(cart.verificarSiContenido("plan movil")&&cart.verificarSiContenido("plan datos"))
+				 disponible=true;
+			 //aqui van los planes que se van a comparar
+		  }
+		  else
+			  disponible=false;}
+		  catch(org.openqa.selenium.NoSuchElementException e) {disponible=false;}
+		  assertTrue(disponible);
+	}
+	
+	//Almer:listo. Faltan los datos a comparar
+	@Test(groups = {"Fase2-1"})
+	public void TS14362_CRM_Fase_2_SalesCPQ_Carrito_CreacionCategorias_Verificar_contenido_de_la_categoria_TV(){
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  cart.selectFromRightPanel(RightPanel.TV);
+		  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  //La palabra "combo" debe ser remplazada por los datos a comparar
+		  assertTrue(cart.verificarSiContenido("Combo"));  
+	}
+	
+	//Almer:listo
+	@Test(groups = {"Fase2-1"})
+	public void TS14357_CRM_Fase_2_SalesCPQ_Carrito_CreacionCategorias_Verificar_visualizacion_de_productos_y_servicios_agrupados_por_categoria() {
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  assertTrue(cart.categoriasDisponibles());
+	}
+	
+	//Almer: listo
+	@Test(groups={"Fase2-1"})
+	public void TS14280_CRM_Fase_2_SalesCPQ_Carrito_Productos_Verificar_Orden_de_Familias_v360() {
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 assertTrue(cart.categoriasDisponiblesEnOrden());
+	}
+	
+	//Almer:listo
+	@Test(groups={"Fase2-1"})
+	public void TS14282_CRM_Fase_2_SalesCPQ_Carrito_Productos_Verificar_Req_domicilio_de_instalacion_Producto(){
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  assertTrue(cart.CheckAnyProductRequiresPrefactibility());
+	}
+	
+	//Almer:listo
+	@Test(groups={"Fase2-1"})
+	public void TS14284_CRM_Fase_2_SalesCPQ_Carrito_Productos_Verificar_Req_domicilio_de_instalacion_Familia(){
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  cart.selectFromRightPanel(RightPanel.BUNDLES);
+		  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  assertTrue(cart.CheckAnyProductRequiresPrefactibility());
+	}
+	
+	//Almer:listo
+	@Test(groups={"Fase2-1"})
+	public void TS15331_CRM_Fase_2_SalesCPQ_Prefactibilidad_v360_Visualizar_boton_Prefactibilidad_en_v360(){
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		  cart.deleteAddedProducts();
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  WebElement boton = driver.findElement(By.cssSelector(".slds-list--horizontal.slds-col.slds-no-flex.slds-align-top")).findElement(By.className("slds-button-group")).findElement(By.cssSelector(".slds-button.slds-button--neutral"));
+		  //boton.click();
+		  assertTrue(boton.isDisplayed());
+	}
+	
+	//Almer:listo
+	@Test(groups={"Fase2-1"})
+	public void TS14331_CRM_Fase_2_SalesCPQ_Ventas_ProductosEPC_Verificar_producto_incorporado_Automaticamente() {
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		cart.deleteAddedProducts();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		cart.addAnyProductToCart();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		WebElement leftProductDiv = cart.getAddableDivProduct(1);
+		leftProductDiv = leftProductDiv.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		String leftProductName = leftProductDiv.getText().trim();
+		
+		Assert.assertTrue(cart.getAddedProducts().contains(leftProductName));
+	}
+	
+	//Ultimo de Nacho
+	@Test(groups = {"Fase2-1"})
+	public void TS15364_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclo_de_facturacion_asignado_por_default() {
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		cart.deleteAddedProducts();
+		cart.addAnyProductToCart();
+		WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(cart.getButtonNext()));
+		nextButton.click();
+		LineAssignment lineAssignmentPage = new LineAssignment(driver);
+		lineAssignmentPage.clickOnNext();
+		BillSimulation billSimulationPage = new BillSimulation(driver);
+		billSimulationPage.clickOnNext();
+		DeliveryMethod deliveryMethodPage = new DeliveryMethod (driver);
+		Select billingCycleSelect = new Select(deliveryMethodPage.getBillingCycle());
+		Assert.assertEquals(billingCycleSelect.getFirstSelectedOption().getText(), "21");
+	}
 }
+
+
+
 	
 	
 

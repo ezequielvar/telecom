@@ -6,16 +6,26 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 import Pages.BasePage;
+import Pages.Order;
+import Pages.OrdersTab;
 import Pages.Ta_CPQ;
 import Pages.Ta_CPQ_Validate;
+import Pages.setConexion;
 
 public class ta_CPQ_Validate extends ta_CPQ{
+	
+	private WebDriver driver;
 	
 	Ta_CPQ_Validate validatePage;
 	private String ngValidRequired = "ng-valid-required";
@@ -29,11 +39,34 @@ public class ta_CPQ_Validate extends ta_CPQ{
 	private String postalCode = "7620";
 	private String  typeZone = "Urbano";
 	
+	@BeforeClass(groups = {"Fase2"})
+	public void Init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		 wait = new WebDriverWait(driver, 10);
+		//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 	
-	@Override
-	@BeforeMethod
+	//@Override
+	@BeforeMethod(groups = {"Fase2"})
 	public void setup() throws Exception {
-		super.setup();
+		//super.setup();
+		
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
+			driver.findElement(By.id("tsidLabel")).click();
+			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+		}
+		OrdersTab page1 = new OrdersTab(driver);
+		page1.goToOrdersTab();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page1.goToRecentOrder();
+		Order page2 = new Order(driver);
+		page2.goToTaCPQ();
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
 		
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		WebElement buttonValidate = null;
@@ -64,6 +97,17 @@ public class ta_CPQ_Validate extends ta_CPQ{
 			input.sendKeys(value);
 		}
 		return (input.getAttribute("value").length() == repetitions);
+	}
+	
+	@AfterMethod(groups = {"Fase2"})
+	public void returnToSales() {
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://crm--sit.cs14.my.salesforce.com/801c0000000Ec64");
+	      }
+	
+	@AfterClass(groups = "Fase2")
+	public void tearDown() {
+		driver.close();
 	}
 	
 	@Test(groups = {"Fase2"})
@@ -446,6 +490,7 @@ public class ta_CPQ_Validate extends ta_CPQ{
 	@Test(groups = {"Fase2"})
 	public void TS11844_CRM_Fase_2_SalesCPQ_Configuracion_DomicilioDeInstalacion_Verificar_longitud_del_campo_Descripcion_de_Tipo_de_Domicilio_es_menorigual_25_caracteres_y_posibles_valores() {
 		//tomar los datos del test 11834
+		
 	}
 	
 	

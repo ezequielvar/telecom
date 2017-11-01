@@ -47,15 +47,15 @@ public class NewContactInformation extends TestBase {
 	{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login1(driver);
-		IngresarCred(driver);
+		login(driver);
+	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod(groups="Fase2")
 	public void Setup() throws Exception
 	{
-		driver.get("https://goo.gl/ETjDYJ");
+	
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

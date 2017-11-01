@@ -1,7 +1,11 @@
 package Tests;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -11,6 +15,7 @@ import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.setConexion;
 
@@ -19,7 +24,7 @@ public class TechnicalCare extends TestBase  {
 	private WebDriver driver;
 	private String validIMEI = "545229703256596";
 	
-	@BeforeClass
+	@BeforeClass(groups = "Fase2")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupPablo();
@@ -28,12 +33,22 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeClass
+	@BeforeMethod(groups = "Fase2")
 	public void setUp() throws Exception {
 		HomeBase homePage = new HomeBase(driver);
-		homePage.switchAppsMenu();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		homePage.selectAppFromMenuByName("Consola FAN");
+	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	        homePage.switchAppsMenu();
+	        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	        homePage.selectAppFromMenuByName("Ventas");
+	        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	       }
+	       homePage.switchAppsMenu();
+	       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       homePage.selectAppFromMenuByName("Consola FAN");
+	       
+	       CustomerCare cerrar = new CustomerCare(driver);
+			cerrar.cerrarultimapestaña();
+	       
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		goToLeftPanel2(driver, "Cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -43,22 +58,22 @@ public class TechnicalCare extends TestBase  {
 		accountPage.accountSelect("Vista Tech");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
-		if(accountPage.isTabOpened("Servicio Técnico")) {
-			System.out.println("Tab Opened.");
-			accountPage.closeAccountServiceTabByName("Servicio Técnico");
-			accountPage.clickRightPanelButtonByName("Servicio Técnico");
-			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		}else {
-			accountPage.clickRightPanelButtonByName("Servicio Técnico");
-			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			accountPage.goToTab("Servicio Técnico");
-			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		}
+		accountPage.selectAccountByName("Adrian Tech");
+		//try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//escribe servicio tecnico
+		BasePage sImput=new BasePage();
+		driver.switchTo().frame(sImput.getFrameForElement(driver,By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input")));
+		WebElement elemento = driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
+		elemento.sendKeys("Servicio t");
+		//Click en el resultado Servicio Tecnico
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement eMasivos= driver.findElement(By.xpath("//*[text() = 'Servicio Técnico']"));
+		eMasivos.click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass
+	/*@AfterClass(groups = "Fase2")
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		BasePage basePage = new BasePage(driver);
@@ -66,19 +81,32 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		basePage.selectAppFromMenuByName("Ventas");
 		driver.close();
-	}
+	}*/
 
-	@AfterMethod
+	@AfterMethod(groups = "Fase2")
 	public void closeTechCareTab() {
-		System.out.println("AfterMethod executed.");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Accounts accountPage = new Accounts(driver);
-		if(accountPage.isTabOpened("Servicio Técnico")) {
-			accountPage.closeAccountServiceTabByName("Servicio Técnico");	
-		}
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.clickRightPanelButtonByName("Servicio Técnico");
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
+		  for (WebElement e : mainTabs) {
+		  try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
+		  }
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("tsidButton")).getLocation().y+")");
+		driver.findElement(By.id("tsidButton")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> options = driver.findElement(By.id("tsid-menuItems")).findElements(By.tagName("a"));
+		for (WebElement option : options) {
+	      if(option.getText().toLowerCase().equals("Sales".toLowerCase()) || option.getText().toLowerCase().equals("Ventas".toLowerCase()) ){
+	        option.click();
+	        break;
+	      }
+	    }
+	       
+	  }
+
+	@AfterClass(groups = "Fase2")
+	public void tearDown() {
+		driver.close();
 	}
 
 	@Test(groups = "Fase2")
@@ -194,4 +222,5 @@ public class TechnicalCare extends TestBase  {
 		System.out.println(textoArchivoAdjunto);
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".pdf"));
 	}
+	
 }

@@ -1,6 +1,8 @@
 package Tests;
 
 
+import static org.testng.Assert.assertTrue;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,17 +15,19 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.CasePage;
-import Pages.CustomerCare;
+import Pages.CustomerCasesManager;
+import Pages.HomeBase;
 import Pages.SelectCaseRegisterType;
 import Pages.setConexion;
 
@@ -32,57 +36,89 @@ public class CustomerCareCaseManagement extends TestBase {
 	private WebDriver driver;
 	
 	
-	@BeforeTest
+	@BeforeClass(groups= "Fase1")
 	public void init() throws Exception
-	{this.driver = setConexion.setupEze();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	login(driver);
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		HomeBase homePage = new HomeBase(driver);
+	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	        homePage.switchAppsMenu();
+	        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	        homePage.selectAppFromMenuByName("Ventas");
+	        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	       }
+	       homePage.switchAppsMenu();
+	       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       homePage.selectAppFromMenuByName("Consola FAN");
 	}
 
-	@BeforeClass
+	@BeforeMethod(groups= "Fase1")
 	public void mainSteup() {
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().contains("https://cs14.salesforce.com/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+	       
+	       
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
+		for (WebElement e : mainTabs) {
+		try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
 		}
-		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
+		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		goToLeftPanel(driver, "Casos");
+		WebElement frame0 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame0);
+		waitFor(driver, (By.name("fcf")));	
+		Select field = new Select(driver.findElement(By.name("fcf")));
+		field.selectByVisibleText("Mis Casos");
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame1.get(0));
+		driver.findElement(By.name("newCase")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegircaso("Mis Casos");
+
 		driver.switchTo().defaultContent();
 		SelectCaseRegisterType selectCaseRegTypePage = new SelectCaseRegisterType(driver);
 		selectCaseRegTypePage.continueToCreate();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-	
+		driver.switchTo().frame(frame1.get(0));
 	}
 	
-//	@AfterClass
+	@AfterClass(groups= "Fase1")
 	public void tearDown() {
-		driver.switchTo().defaultContent();
+		/*driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		waitFor(driver, (By.className("x-toolbar-cell")));
 		List<WebElement> btn = driver.findElements(By.cssSelector(".x-btn-text"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn.get(5));*/
 		driver.close();	
 	}
 	
-@AfterMethod
+	@AfterMethod(groups= "Fase1")
 	public void alert (){
-		driver.get("https://cs14.salesforce.com/console");
-		try{
+		HomeBase homePage = new HomeBase(driver);
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		homePage.switchAppsMenu();
+        homePage.selectAppFromMenuByName("Ventas");
+        try{
 			Alert alert = driver.switchTo().alert();
 			System.out.println(alert.getText());
 			alert.accept();
 		}catch(org.openqa.selenium.NoAlertPresentException e){}
+		
+        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        homePage.switchAppsMenu();
+        homePage.selectAppFromMenuByName("Consola FAN");
 	}
 
-	@Test
+	@Test(groups= "Fase1")
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -90,10 +126,9 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.ValidChannelClosing();
-		driver.switchTo().defaultContent();
 	}
 
-	@Test
+	@Test(groups= "Fase1")
 	public void TS7090_CaseRelatedFieldsValuesSubArea(){
 
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -102,8 +137,6 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesSubArea();
-		driver.switchTo().defaultContent();
-
 	}
 
 	@Test
@@ -114,22 +147,9 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame2.get(1));
 		CasePage page = new CasePage(driver);
 		page.FieldsValuesType();
-		driver.switchTo().defaultContent();
-
 	}
 
-	@Test
-	public void TS7092_Case_Related_Field_Valores_del_Canal_de_inicio(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.FieldsValuesinicio();
-		driver.switchTo().defaultContent();
-	}
-	
-	@Test
+	@Test(groups= "Fase1")
 	public void TS7195_CaseRelatedCreateValuesCheck(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -146,7 +166,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(groups= "Fase1")
 	public void TS7083_ValidateDueTimeLogic(){
 		//Pre-requirement : no other cases or new cases tabss.
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -183,23 +203,92 @@ public class CustomerCareCaseManagement extends TestBase {
 
 	}
 	
-	@Test
-	public void TS7198_Estados_de_la_Entidad_Caso_Visualizar_picklist_Estado(){
+	
+	@Test(groups= "Fase1")
+	public void TS_7082_SeeDueDate(){
+		//Pre-requirement : no other cases or new cases tabss.
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.validpicklistestado();
-		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frames.get(1));//CaseCreation frame
+		//CasePage page = new CasePage(driver);
+		try {
+		assertTrue(driver.findElement(By.id("00Nc0000001pWcs")).isDisplayed());}
+		catch(org.openqa.selenium.NoSuchElementException e) {assertTrue(false);}
+		
+	
 	}
 	
-	@Test
-	public void TS7212_Case_Management_Detalles_del_caso_Descripcion() {
-		driver.switchTo().defaultContent();
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(1));
-		CasePage page = new CasePage(driver);
-		page.validarcampodescrip();
-	}
+	public void checkAlert() {
+	     try {
+	         WebDriverWait wait = new WebDriverWait(driver, 2);
+	         wait.until(ExpectedConditions.alertIsPresent());
+	         Alert alert = driver.switchTo().alert();
+	         alert.accept();
+	     } catch (Exception e) {
+	         //exception handling
+	      System.out.println(e.getMessage());
+	     }
+	 }
+	
+	//Falla seleccionando campo
+	@Test(groups= "Fase1")
+	 public void TS7085_DeleteCasesAdminRestrictedMessage() {
+	  String adminRestrictedMsg = "El primer error de validación encontrado fue \"Solo el administrador puede eliminar casos generados.\"";
+	  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  CustomerCasesManager CCManagerPage = new CustomerCasesManager(driver);
+	  CCManagerPage.getCase("00001813").findElement(By.xpath("//a[@onclick=\"return confirmDelete();\"]")).click();
+	  try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  checkAlert();
+	  try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  driver.switchTo().defaultContent();
+
+	  List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+	  WebElement frameToSwitchTo = frames.get(0);
+	  for (WebElement frame: frames) {
+	   if(frame.getAttribute("id").equals("ext-comp-1005")) {
+	    frameToSwitchTo = frame;
+	   }
+	  }
+	  
+	  driver.switchTo().frame(frameToSwitchTo);
+	  List<WebElement> trList = driver.findElements(By.tagName("tr"));
+
+	  String errorMsgInPage = trList.get(1).findElement(By.tagName("td")).getText();
+
+	  Assert.assertTrue(errorMsgInPage.contains(adminRestrictedMsg));
+	 }
+	
+	@Test(groups= "Fase1")
+	 public void TS7092_Case_Related_Field_Valores_del_Canal_de_inicio(){
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  driver.switchTo().defaultContent();
+	  List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+	  driver.switchTo().frame(frame2.get(1));
+	  CasePage page = new CasePage(driver);
+	  page.FieldsValuesinicio();
+	  driver.switchTo().defaultContent();
+	 }
+	
+	@Test(groups= "Fase1")
+	 public void TS7198_Estados_de_la_Entidad_Caso_Visualizar_picklist_Estado(){
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  driver.switchTo().defaultContent();
+	  List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+	  driver.switchTo().frame(frame2.get(1));
+	  CasePage page = new CasePage(driver);
+	  page.validpicklistestado();
+	  driver.switchTo().defaultContent();
+	 }
+	 
+	 @Test(groups= "Fase1")
+	 public void TS7212_Case_Management_Detalles_del_caso_Descripcion() {
+	  driver.switchTo().defaultContent();
+	  List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+	  driver.switchTo().frame(frame2.get(1));
+	  CasePage page = new CasePage(driver);
+	  page.validarcampodescrip();
+	 }
+	 
+
 }

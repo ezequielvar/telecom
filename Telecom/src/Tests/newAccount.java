@@ -28,7 +28,7 @@ String accountName = "Aaa Aaa";
 
 @BeforeTest
 public void mainSteup() {
-	this.driver = setConexion.setupPablo();	
+	this.driver = setConexion.setupEze();	
 	login(driver);
 }
 

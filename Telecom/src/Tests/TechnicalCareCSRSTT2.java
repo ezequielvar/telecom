@@ -26,16 +26,16 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 		private String validIMEI = "545229703256596";
 		private String Ngestion;
 		
-		@BeforeClass
+		@BeforeClass(groups = "Fase2") 
 		public void init() throws Exception
 		{
-			this.driver = setConexion.setupPablo();
+			this.driver = setConexion.setupEze();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			login(driver);
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		@BeforeMethod
+		@BeforeMethod(groups = "Fase2") 
 		public void setUp() throws Exception {
 		 HomeBase homePage = new HomeBase(driver);
 	     homePage.switchAppsMenu();
@@ -79,7 +79,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
-		@AfterMethod
+		@AfterMethod(groups = "Fase2") 
 		 public void afterMethod() {
 			BasePage bP = new BasePage(driver);
 			driver.switchTo().defaultContent();

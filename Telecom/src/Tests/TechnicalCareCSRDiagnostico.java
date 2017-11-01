@@ -20,17 +20,17 @@ import Pages.setConexion;
 
 public class TechnicalCareCSRDiagnostico extends TestBase{
 	private WebDriver driver;
-	
-	@BeforeClass
+
+	@BeforeClass(groups = "Fase2")
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod
+	@BeforeMethod(groups = "Fase2")
 	public void setUp() throws Exception {
 	 HomeBase homePage = new HomeBase(driver);
      homePage.switchAppsMenu();
@@ -54,7 +54,7 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
      }
      try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  }
-	@AfterMethod
+	@AfterMethod(groups = "Fase2")
 	public void closeTechCareTab() {
 		System.out.println("AfterMethod executed.");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

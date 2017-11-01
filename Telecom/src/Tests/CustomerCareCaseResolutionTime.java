@@ -30,7 +30,7 @@ public class CustomerCareCaseResolutionTime extends TestBase {
 	/*@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -38,7 +38,7 @@ public class CustomerCareCaseResolutionTime extends TestBase {
 	
 	@BeforeMethod
 	public void mainSetup() {
-		this.driver = setConexion.setupPablo();	
+		this.driver = setConexion.setupEze();	
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){

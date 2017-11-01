@@ -1,6 +1,8 @@
 package Tests;
 
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -20,6 +22,8 @@ import org.testng.annotations.Test;
 
 import Pages.CasePage;
 import Pages.CustomerCasesManager;
+import Pages.HomeBase;
+import Pages.RegistroEventoMasivo;
 import Pages.SelectCaseRegisterType;
 import Pages.setConexion;
 
@@ -28,20 +32,26 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	private WebDriver driver;
 
 
-
-	@BeforeTest
+	@BeforeClass(groups= "Fase1")
 	public void mainSteup() {
-
 		this.driver = setConexion.setupEze();
-
-		this.driver = setConexion.setupLeo();	
-
+		login(driver);
+		
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        homePage.selectAppFromMenuByName("Ventas");
+        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+       homePage.switchAppsMenu();
+       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+       homePage.selectAppFromMenuByName("Consola FAN");
 	}
 
 	/*@BeforeTest
 	public void mainSteup() {
 		this.driver = setConexion.setupEze();	
 >>>>>>> cdaf0f4bf4a99ac0526033539863b1b75abf5232
+>>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
 	@BeforeClass
 	public void init() throws Exception
 	{
@@ -51,17 +61,12 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}*/
 	
-	@BeforeMethod
+	@BeforeMethod(groups= "Fase1")
 	public void mainSetup() {
-		this.driver = setConexion.setupPablo();	
+		//this.driver = setConexion.setupPablo();	
+		
 
-		login(driver);
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-		}
+		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
 		for (WebElement e : mainTabs) {
@@ -75,19 +80,19 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		driver.switchTo().frame(frame0);
 		waitFor(driver, (By.name("fcf")));	
 		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Mis casos");
+		field.selectByVisibleText("Mis Casos");
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass
+	@AfterClass(groups= "Fase1")
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		driver.get("https://cs14.salesforce.com/console");
+		//driver.get("https://cs14.salesforce.com/console");
 		try{
 			Alert alert = driver.switchTo().alert();
 			System.out.println(alert.getText());
@@ -96,18 +101,27 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		driver.close();
 	}
 	
-	/*
-	@AfterMethod
+	
+	@AfterMethod(groups= "Fase1")
 	public void alert (){
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		homePage.switchAppsMenu();
+        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        homePage.selectAppFromMenuByName("Ventas");
+        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+       homePage.switchAppsMenu();
+       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+       homePage.selectAppFromMenuByName("Consola FAN");
 
-	}*/
+	}
 	/*
 	@BeforeMethod
 	public void setup() throws Exception {	
 	}
 	*/
 	
-	@Test
+	@Test(groups= "Fase1")
 	public void TS7202_CreatedAndDueTimeInHoursFormatCheck(){
 		
 		String dateWithHourPattern = "(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2})";
@@ -130,11 +144,11 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
 	}
 	
-	@Test
+	@Test(groups= "Fase1")
 	public void TS7082_VisualizeDueDate(){
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
+		driver.switchTo().defaultContent(); 
 
 		CustomerCasesManager customerCasesManagerPage = new CustomerCasesManager(driver);
 
@@ -149,5 +163,39 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		page.getCaseDueDate();
 		
 	}
+	
+	
+	@Test(groups= "Fase1")
+	public void TS_7202_ValidatedCreationDate(){
+		//Pre-requirement : no other cases or new cases tabs.
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent(); 
+
+		CustomerCasesManager customerCasesManagerPage = new CustomerCasesManager(driver);
+
+		customerCasesManagerPage.clickCase("00001372");
+		CasePage page = new CasePage(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frames.get(1));
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String fecha=driver.findElement(By.id("CreatedDate_ileinner")).getText();
+		//System.out.println(fecha);
+		RegistroEventoMasivo Formato=new RegistroEventoMasivo(driver);
+		assertTrue(Formato.validarFecha(fecha,"dd/mm/yyyy HH:mm"));
+		
+ }
+	
+	 @Test(groups= "Fase1")
+		public void TS_7094_TimeResolution(){
+			//Campo Ya no existe desde el deploy 3, se realizo para fallar fecha 30/11/2017
+		 
+		 assertTrue(false);
+		 
+			
+	 }
+	
 	
 }

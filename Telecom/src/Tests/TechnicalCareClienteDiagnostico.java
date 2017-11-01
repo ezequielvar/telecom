@@ -41,17 +41,13 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 	@BeforeClass
 	public void mainSteup() {
 
-		this.driver = setConexion.setupPablo();	
-
 		this.driver = setConexion.setupEze();	
-
-		this.driver = setConexion.setupPablo();	
 
 		login(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
-//	@AfterTest
+	@AfterTest
 	public void tearDown() {
 		value = "UP/Down";
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
@@ -141,11 +137,6 @@ public class TechnicalCareClienteDiagnostico extends TestBase  {
 		TechCareDiagnostic page = new TechCareDiagnostic(driver);
 		page.selectpage("2");
 		page.selectaccounttech();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
-			}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.SelectGestion(gestion);
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

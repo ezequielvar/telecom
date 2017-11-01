@@ -72,7 +72,7 @@ public class TestBase {
 	
 	public void login(WebDriver driver) {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//if(driver.findElement(By.id("idcard")).isDisplayed())
 		//{
 	    Login page0 = new Login(driver);
@@ -81,7 +81,20 @@ public class TestBase {
 			//driver.findElement(By.id("chooser")).click();
 	//	}
 	}
-	
+	public void loginSCPAdmin(WebDriver driver) {
+	     driver.get("https://crm--uat2.cs92.my.salesforce.com");
+	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       Login page0 = new Login(driver);
+	       page0.ingresarAdminSCP();
+	   }
+	   
+	   
+	     public void loginSCPUsuario(WebDriver driver) {
+	       driver.get("https://crm--uat2.cs92.my.salesforce.com");
+	       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	         Login page0 = new Login(driver);
+	         page0.ingresarUsuarioSCP();
+	     }
 	public void login1(WebDriver driver) {
 		driver.get("https://goo.gl/ETjDYJ");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -98,7 +111,7 @@ public class TestBase {
 	    page0.ingresar();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-	}	
+	}
 	    
 	public void waitFor2(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
@@ -107,6 +120,7 @@ public class TestBase {
 	public void waitFor(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
 	}
+
 
 	
 	public void clickLeftPanel(WebDriver driver) {
@@ -136,5 +150,56 @@ public class TestBase {
 
 				  .until(ExpectedConditions.presenceOfElementLocated(element));
 */
+	
+	
+
+	
+	//Sales Fase 3
+		
+		/**Ingresa con los datos de la cuenta Andres
+		 * Para el Modulo Sales tiene vinculado el perfil de Agente y Atención a clientes		 */
+		public void loginAndres(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarAndres();
+		}
+		
+		/**Ingresa con los datos de la cuenta Elena
+		 * Para el Modulo Sales tiene vinculado el perfil de Call center		 */
+		public void loginElena(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarElena();
+		}
+	
+		
+		/**Ingresa con los datos de la cuenta Francisco
+		 * Para el Modulo Sales tiene vinculado el perfil de Vendedor Oficina Comercial		 */
+		public void loginFranciso(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarFrancisco();
+		}
+		
+		/**Ingresa con los datos de la cuenta Nicolas.
+		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
+		public void loginNicolas(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarNicolas();
+		}
+		
+		/**Ingresa con los datos de la cuenta de Marcela
+		 * Para el Modulo Sales tiene vinculado el perfil de Entregas y Configuraciones	 */
+		public void loginMarcela(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarMarcela();
+		}
 }
 

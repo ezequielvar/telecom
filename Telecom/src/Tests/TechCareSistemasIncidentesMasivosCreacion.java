@@ -24,16 +24,16 @@ import Pages.setConexion;
 public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	private WebDriver driver;
 	
-	@BeforeClass
+	@BeforeClass(groups = "Fase2") 
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "Fase2") 
 	  public void setUp() throws Exception {
 	    
 	    //Entrar en Velocity Telecomunication servics
@@ -87,7 +87,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	    
 	    }
 	
-	@AfterMethod
+	@AfterMethod(groups = "Fase2") 
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("tsidButton")).getLocation().y+")");
