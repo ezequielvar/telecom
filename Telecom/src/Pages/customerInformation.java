@@ -345,6 +345,8 @@ driver.findElement(By.id("LastName")).sendKeys("b");
 			     return a;
 	}
 	
+	
+	
 	public boolean validarcaracterespecialesNyA() {
 		  boolean a = false;
 		  BasePage cambioFrameByID=new BasePage();
