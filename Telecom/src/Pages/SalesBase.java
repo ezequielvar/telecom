@@ -2,7 +2,8 @@ package Pages;
 
 import java.util.List;
 
-
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -123,14 +124,80 @@ final WebDriver driver;
 	
 	@FindBy (how = How.CLASS_NAME, using = "recycleText")
 	private WebElement paperCan;
+	@FindBy (how = How.ID, using = "ContactFirstName")
+	private WebElement firstname;
+	
+	@FindBy (how = How.ID, using = "ContactLastName")
+	private WebElement lastname;
+	
+	@FindBy(how=How.ID,using = "AccountName")
+	private WebElement razonsocial;
+	
+	@FindBy(how=How.ID, using ="AccountNumber")
+	private WebElement numerodecuenta;
+	
+	@FindBy(how=How.ID, using ="Email")
+	private WebElement Email;
+	
+	@FindBy(how= How.ID, using ="SearchClientDocumentType")
+	private WebElement DNIbuscador;
+	
+	@FindBy (how =How.ID,using="SearchClientsDummy")
+	private WebElement btnbuscar;
 	
 public SalesBase(WebDriver driver){
 		this.driver = driver;
         PageFactory.initElements(driver, this);
 }
 
-public void goToOrdersTab() {
-	ordersTab.click();
+public void BusquedaAvanzada(){
+	List<WebElement> busqueda = driver.findElements(By.className("slds-form-element__control"));	
+	for(WebElement e: busqueda){
+		if(e.getText().equals("Búsqueda avanzada")){
+			e.click();}}}
+
+public void busqueda(String nombre, String apellido, String razon, String cuenta, String email){
+	firstname.sendKeys(nombre);
+	lastname.sendKeys(apellido);
+	razonsocial.sendKeys(razon);
+	numerodecuenta.sendKeys(cuenta);
+	Email.sendKeys(email);
+	List<WebElement> btnbuscar = driver.findElements(By.className("ng-binding"));
+	for(WebElement e: btnbuscar){
+	if(e.getText().equals("Buscar")){
+		e.click();
+	}
+	}
+	
+}
+public void validarespacio(){
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> resultado = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
+	String dato= resultado.get(1).getText();
+	System.out.println(dato);
+	dato=dato.replaceAll(" ", "ESTOESUNESPACIO");
+	System.out.println(dato);
+
+	Assert.assertTrue(dato.contains("ESTOESUNESPACIO"));
 }
 
+public void validarcamposbusqueda(){
+	firstname.isSelected();
+	lastname.isSelected();
+	razonsocial.isSelected();
+	numerodecuenta.isSelected();
+	Email.isSelected();
+}
+
+public void buscarcuenta(){
+	setSimpleDropdown(DNIbuscador, "DNI");
+	btnbuscar.click();
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+}
+public void entrarcatalogo(){
+	List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+	btns.get(0).click();
+	
+}
 }

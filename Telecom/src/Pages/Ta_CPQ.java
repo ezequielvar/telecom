@@ -15,7 +15,7 @@ public class Ta_CPQ extends BasePage {
 
 	final WebDriver driver;
 	
-	public enum RightPanel{DISPOSITIVOS, PLANES, BUNDLES, DATOS, ACCESORIOS}
+	public enum RightPanel{DISPOSITIVOS, PLANES, BUNDLES, DATOS, ACCESORIOS, TV, CONTENIDOS, IOT, PACKS}
 	
 	@FindBy (how = How.CSS, using = ".slds-button.slds-button--neutral.add-button")
 	private List<WebElement> addToCartButtons;
@@ -58,6 +58,7 @@ public class Ta_CPQ extends BasePage {
 	
 	@FindBy (how = How.XPATH, using = ".//a[@ng-class=\"{'cpq-category-item-selected' : isSelectedCategory(category.catalogName), 'cat-icon': !isSelectedCategory(category.catalogName)}\"]")
 	private List<WebElement> rightPanelButtons;
+	
 	
 	public Ta_CPQ(WebDriver driver){
 		this.driver = driver;
@@ -198,6 +199,18 @@ public class Ta_CPQ extends BasePage {
 		closeButton.click();
 
 	}
+	/**
+	 * Verifica si algun producto de la lista requiere prefactibilidad
+	 */
+	public boolean CheckAnyProductRequiresPrefactibility() {
+		divsProducts = driver.findElements(By.cssSelector(".slds-tile.cpq-product-item"));
+		for (WebElement div: divsProducts) {
+			if (requiresPrefactibility(div))
+				return true;
+			}
+		return false;
+	}
+			
 	
 	
 	/*
@@ -221,7 +234,11 @@ public class Ta_CPQ extends BasePage {
 			case BUNDLES:{
 				rightPanelButtons.get(2).click();
 				break;
-				}		
+				}
+			case TV:{
+				rightPanelButtons.get(6).click();
+				break;
+				}	
 			}
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
@@ -235,5 +252,57 @@ public class Ta_CPQ extends BasePage {
 		}
 		return nameAddedProducts; 
 	}
+	/**
+	 * Verifica si en la lista de productos aparece el contenido enviado
+	 */
+	public boolean verificarSiContenido(String contenido) {
+		//listo los Elementos que aparecen en el panel
+		List <WebElement> lista = driver.findElements(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		for(WebElement listaB: lista) {
+			if(listaB.getText().contains(contenido))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Verifica si las categorias contine los datos especificados
+	 */
+	public boolean categoriasDisponibles() {
+		boolean valor=false;
+		String[] datos = {"bundles", "dispositivos", "tv", "datos", "contenidos", "accesorios", "accessorios", "iot", "packs"};
+		List<String> textos = new ArrayList<String>();
+		for(WebElement a : rightPanelButtons) {
+			textos.add(a.getText().toLowerCase());
+			//System.out.println(a.getText());
+			}
+		for(String b: datos)
+			if(textos.contains(b))
+				valor=true;
+			else
+				return false;
+		return valor;
+	}
+	
+	/**
+	 * Verifica si las categorias estan en el orden especifico
+	 */
+	public boolean categoriasDisponiblesEnOrden() {
+		boolean valor=false;
+		int i=0;
+		String[] datos = {"dispositivos", "planes", "bundles","datos", "accesorios", "accessorios","tv", "contenidos", "iot", "packs"};
+		for(WebElement a : rightPanelButtons) {
+			//System.out.println(a.getText().toLowerCase()+"  "+datos[i]);
+			if(a.getText().toLowerCase().equals(datos[i]))
+				valor=true;
+			else
+				return false;
+		i++;
+		}
+		return valor;
+	}
+	
+	
+	
 }	
 	

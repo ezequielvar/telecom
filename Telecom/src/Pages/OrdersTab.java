@@ -29,4 +29,9 @@ public OrdersTab(WebDriver driver) {
 		
 	}
 
+	public void goToOrdersTab() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
