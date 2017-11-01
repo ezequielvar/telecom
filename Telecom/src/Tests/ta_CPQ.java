@@ -643,16 +643,23 @@ public class ta_CPQ extends TestBase {
 		TS6836_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Nueva_Cuenta();
 	}
 	
+<<<<<<< HEAD
 	/**Se verifica que el sistema muestra disponibles los ciclos de facturacion 1, 7, 14 y 21*
 	 * 
 	 */
 	@Test
 	public void TS15366_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles(){
+=======
+	/*Se verifica que el sistema muestra disponibles los ciclos de facturacion 
+	 * 1, 7, 14 y 21*
+	 */
+	@Test
+	public void TS15366_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles(){	
+>>>>>>> nacho
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
 		cart.addAnyProductToCart();	
-		
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		cart.getButtonNext().click();
 		
 		LineAssignment lineAssignment = new LineAssignment (driver);
@@ -660,16 +667,19 @@ public class ta_CPQ extends TestBase {
 		BillSimulation billSimulation = new BillSimulation (driver);
 		billSimulation.clickOnNext();
 		DeliveryMethod deliveryMethod = new DeliveryMethod (driver);
-		
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("1"));
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("7"));
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("14"));
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("21"));
 	}
 	
+	/**
+	 * Se verifica que el sistema permite modificar el ciclo de facturacion 
+	 * en la orden de venta en una nueva venta
+	 */
 	@Test
 	public void TS15365_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_que_se_puede_modificar_el_ciclo_de_facturacion() {
-		/*Se verifica que el sistema permite modificar el ciclo de facturacion*/
 		
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
@@ -687,6 +697,7 @@ public class ta_CPQ extends TestBase {
 		Select billingCycleSelect = new Select (deliveryMethod.getBillingCycle());
 		billingCycleSelect.selectByValue("7");
 		Assert.assertEquals(billingCycleSelect.getFirstSelectedOption().getText(), "7");
+		
 	}
 	
 	
@@ -735,8 +746,29 @@ public class ta_CPQ extends TestBase {
 		leftProductDiv = leftProductDiv.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
 		String leftProductName = leftProductDiv.getText().trim();
 		
+		System.out.println(leftProductName);
 		Assert.assertTrue(cart.getAddedProducts().contains(leftProductName));
 	}
+<<<<<<< HEAD
+=======
+	
+	@Test(groups = {"Fase2"})
+	public void TS15364_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclo_de_facturacion_asignado_por_default() {
+		Ta_CPQ cart = new Ta_CPQ(driver);
+		cart.deleteAddedProducts();
+		cart.addAnyProductToCart();
+		WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(cart.getButtonNext()));
+		nextButton.click();
+		LineAssignment lineAssignmentPage = new LineAssignment(driver);
+		lineAssignmentPage.clickOnNext();
+		BillSimulation billSimulationPage = new BillSimulation(driver);
+		billSimulationPage.clickOnNext();
+		DeliveryMethod deliveryMethodPage = new DeliveryMethod (driver);
+		Select billingCycleSelect = new Select(deliveryMethodPage.getBillingCycle());
+		Assert.assertEquals(billingCycleSelect.getFirstSelectedOption().getText(), "21");
+	}
+
+>>>>>>> nacho
 	
  	//Almer:listo. detalles:faltan planes para comparar
 	@Test(groups = {"Fase2-1"})

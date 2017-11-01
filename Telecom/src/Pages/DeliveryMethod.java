@@ -58,5 +58,11 @@ public List<String> getBillingCycleOptions(){
 	return (invoicingCycleOptions);
 }
 
-public WebElement getBillingCycle() {return billingCycle;}
+public WebElement getBillingCycle() {
+	//WebElement waitForOptionsUntilTheyAppear = wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("option")));
+	//For some fucking reason, wait.until doesn't wait until options were loaded, so I decided to use a horrible timer:
+	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	return billingCycle;
+}
+
 }
