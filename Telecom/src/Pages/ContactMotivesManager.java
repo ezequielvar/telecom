@@ -64,7 +64,8 @@ public class ContactMotivesManager extends BasePage{
 		WebElement motive = getMotiveByName(motiveName);
 		//nested element, there are 2 "a" inside this grid column. modificar and eliminar
 		motive.findElements(By.className("x-grid3-col")).get(2).findElements(By.tagName("a")).get(1).click();//1 is the index for "Eliminar"
-		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		System.out.println("Se supone se borro");
+		try {Thread.sleep(300);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {
 			Alert alert = driver.switchTo().alert();
 			alert.accept();

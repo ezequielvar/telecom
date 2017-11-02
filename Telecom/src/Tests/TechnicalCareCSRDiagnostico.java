@@ -23,31 +23,37 @@ import Pages.setConexion;
 public class TechnicalCareCSRDiagnostico extends TestBase{
 	private WebDriver driver;
 	
-	@BeforeClass
+	@BeforeClass(groups = "Fase2") 
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	    	 homePage.switchAppsMenu();
+	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	     }
+	     homePage.switchAppsMenu();
+	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     homePage.selectAppFromMenuByName("Consola FAN");
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}      
+	     goToLeftPanel2(driver, "Cuentas");
+	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod
+	@BeforeMethod(groups = "Fase2") 
 	public void setUp() throws Exception {
-	 HomeBase homePage = new HomeBase(driver);
-     homePage.switchAppsMenu();
-     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-     homePage.selectAppFromMenuByName("Consola FAN");
-     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-     goToLeftPanel2(driver, "Cuentas");
-     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-     Accounts accountPage = new Accounts(driver);
+	 Accounts accountPage = new Accounts(driver);
      //Selecciono Vista Tech
      driver.switchTo().defaultContent();
      accountPage.accountSelect("Vista Tech");
      try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-     accountPage.selectAccountByName("Robo Tech");
-     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+     accountPage.selectAccountByName("Adrian Tech");
+     try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
      if(accountPage.isTabOpened("Asistencia Técnica")) {
          System.out.println("Tab Opened.");
          accountPage.goToTab("Asistencia Técnica");
@@ -56,13 +62,13 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
      }
      try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  }
-	@AfterMethod
+	@AfterMethod(groups = "Fase2") 
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
 		ctas.remove(0);
 		for (WebElement cta : ctas) {
-			if (cta.findElement(By.className("tabText")).getText().equals("Robo Tech")) {
+			if (cta.findElement(By.className("tabText")).getText().equals("Adrian Tech")) {
 				Actions action = new Actions(driver);
 				action.moveToElement(cta);
 				action.moveToElement(cta.findElement(By.className("x-tab-strip-close"))).click().build().perform();
@@ -75,7 +81,7 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 	}
 	
 	
-	@AfterClass
+	@AfterClass(groups = "Fase2") 
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -84,11 +90,11 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 		for (WebElement option : options) {
 			if(option.getText().toLowerCase().equals("Ventas".toLowerCase())){
 				option.click();
-				return;
+				break;
 			}
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.quit();
+		driver.close();
 	}
 	
 	@Test(groups = "Fase2") 

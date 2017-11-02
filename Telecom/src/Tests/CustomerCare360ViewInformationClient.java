@@ -32,56 +32,230 @@ import Pages.CustomerCare;
 import Pages.Login;
 import Pages.customerInformation;
 import Pages.setConexion;
+import org.openqa.selenium.support.ui.Select;
 public class CustomerCare360ViewInformationClient extends TestBase {
 
-	
+
+
+		
 	private WebDriver driver;
 	 	
-	//@AfterClass
+	//@AfterClass(groups= "Fase2")
 	public void tearDown() {
 			driver.close();
 	}
 	
-	/*@AfterMethod(groups= "Fase2")
+	//@AfterMethod(groups= "Fase2")
 	 public void alert (){
-		
-		  CustomerCare page = new CustomerCare(driver);
-		  page.cerrarultimapestaña();
-		 // driver.get("https://cs14.salesforce.com/console");
-		  //login(driver);
+	  CustomerCare page = new CustomerCare(driver);
+	  page.cerrarultimapestaña();
+	  //driver.get("https://cs14.salesforce.com/console");
+	  //login(driver);
 
-		  try{
-		   Alert alert = driver.switchTo().alert();
-		   System.out.println(alert.getText());
-		  }catch(org.openqa.selenium.NoAlertPresentException e){}
-		 }
-	*/
+	  try{
+	   Alert alert = driver.switchTo().alert();
+	   System.out.println(alert.getText());
+	  }catch(org.openqa.selenium.NoAlertPresentException e){}
+	 }
 
-	@BeforeClass
-	public void init() throws Exception
-	{
-		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}	
-	@BeforeClass
-	public void setUpTest() {
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().contains("https://crm--sit.cs14.my.salesforce.com/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();}	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	@BeforeClass(groups= "Fase2")
+	 public void init() throws Exception
+	 {
+	  this.driver = setConexion.setupEze();
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  login(driver);
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  BasePage homePage=new BasePage(driver);
+		if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	        homePage.switchAppsMenu();
+	        homePage.selectAppFromMenuByName("Ventas");
+	        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	       }
+	       homePage.switchAppsMenu();
+	       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       homePage.selectAppFromMenuByName("Consola FAN");
+	 } 
+	
+	 @BeforeMethod(groups= "Fase2")
+	 public void setup(){
+		 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       
+	  CustomerCare page = new CustomerCare(driver);
+	  page.cerrarultimapestaña();
+	 }
+	
+	@Test
+	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		
+		goToLeftPanel(driver, "Cuentas");
+		page.elegircuenta("Andres Care");
+		page.openleftpanel();		
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box-details")));
+		driver.findElements(By.className("profile-box-details"));
+		//page.validarDatos();
 		
 	}
 	
+	
+		
+	@Test
+	public void TS7138_BusinessDataPanelPicklistCommercialDataAccount() {
+		CustomerCare page = new CustomerCare(driver);
+		goToLeftPanel(driver, "Cuentas");
+		page.elegircuenta("Andres Care");
+		page.openleftpanel();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box-details")));
+		driver.findElement(By.className("account-select"));
+		
+	}
+		
+		
+	@Test(groups= "Fase2")
+	public void TS16056_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Funcionamiento_Boton_Sesion_Guiada() {
+		CustomerCare page = new CustomerCare(driver);
+		goToLeftPanel(driver, "Cuentas");
+		page.elegircuenta("Andres Care");
+		page.openrightpanel();
+		page.SelectGestion("Cambio de ciclo");
+		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.ValidarCambioDeCiclo();
+		
+	}
+		
+		@Test(groups= "Fase2")
+	public void TS16055_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion__Boton_Sesion_Guiada() {
+			CustomerCare page = new CustomerCare(driver);
+			goToLeftPanel(driver, "Cuentas");
+			page.elegircuenta("Andres Care");
+			page.openrightpanel();
+			page.ValidarBtnsGestion("Cambio de ciclo");
+		}
+		
+		
+		@Test(groups= "Fase2")
+	public void TS15962_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Boton_de_sesion_guiada() {
+			CustomerCare page = new CustomerCare(driver);
+			goToLeftPanel(driver, "Cuentas");
+			page.elegircuenta("Andres Care");
+			page.openrightpanel();	
+			page.ValidarBtnsGestion("Cambios de condición impositiva");
+		}
+			
+		
+		@Test(groups= "Fase2")
+		//terminar
+	public void TS16061_Line_Movements_Paso_0_Error_por_cliente_inactivo() {
+			CustomerCare page = new CustomerCare(driver);
+			goToLeftPanel(driver, "Cuentas");
+			page.elegircuenta("Andres Care");
+			page.openrightpanel();	
+			page.SelectGestion("Cambio de ciclo");
+			//page.validacion
+			driver.switchTo().defaultContent();
+
+		}
+		
+		
+		@Test(groups= "Fase2")
+		public void TS14567_Capacidades_de_Busqueda_Filtrar_Por_DNI() {
+			CustomerCare page = new CustomerCare(driver);
+			page.usarbuscadorsalesforce("30303030");
+			//page.detectarframe();
+			page.validarlabusqueda("Andres Care");
+			driver.switchTo().defaultContent();
+
+		}
+		
+		
+		@Test(groups= "Fase2")
+		public void TS14565_View_Capacidades_de_Busqueda_Visualizar_Filtro_Salesforce() {
+			CustomerCare page = new CustomerCare(driver);
+			page.validarbuscadorsalesforce();
+			driver.switchTo().defaultContent();
+
+		}
+		
+		
+
+		@Test(groups= "Fase2")
+		public void TS14570_Busqueda_de_Transacciones_Filtrar_Por_Numero_de_Caso() {
+			CustomerCare page = new CustomerCare(driver);
+			page.usarbuscadorsalesforce("00003035");
+			//page.detectarframe();
+			page.validarlabusqueda("00003035");
+			driver.switchTo().defaultContent();
+
+			
+		}
+		
+		
+		
+		@Test(groups= "Fase2")
+		public void TS12252_Billing_Group_User_Line_Movements_Paso_0_Error_por_cliente_inactivo() {
+			CustomerCare page = new CustomerCare(driver);
+			goToLeftPanel(driver, "Cuentas");
+			page.editarcuenta("Fernando Care", "no", "inactive");
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("Movimientos de cuenta de facturaci");
+			page.validarerrorpaso0();	
+			driver.switchTo().defaultContent();
+			page.cerrarultimapestaña();
+
+		}
+		
+		
+		
+		@Test(groups= "Fase2")
+		public void TS12251_Billing_Group_User_Line_Movements_Paso_0_Error_por_fraude_Cliente_inactivo() {
+			CustomerCare page = new CustomerCare(driver);
+			goToLeftPanel(driver, "Cuentas");
+			page.editarcuenta("Fernando Care", "si", "inactive");
+			page.elegircuenta("Fernando Care");
+			page.SelectGestion("Movimientos de cuenta de facturaci");
+			page.validarerrorpaso0();
+			driver.switchTo().defaultContent();
+			//page.cerrarultimapestaña();
+
+
+		}
+		@Test(groups= "Fase2")
+		public void TS12262_Billing_Group_User_Line_Movements_Paso_1_Billing_Account_suspendida_por_fraude_No_se_visualiza() {
+			CustomerCare page = new CustomerCare(driver);
+			goToLeftPanel(driver, "Cuentas");
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.editarcuenta("Fernando Care", "no", "active");
+			page.editarcuenta("Fernando Care Billing 1", "si", "active");
+			page.editarcuenta("Fernando Care Billing 2", "no", "inactive");
+			page.elegircuenta("Fernando Care");		
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();};
+			page.SelectGestion("Movimientos de cuenta de facturacion");
+			page.validarerrorpaso1("cuenta billing fraude no aparece");
+			driver.switchTo().defaultContent();
+			page.cerrarultimapestaña();
+
+
+		}
+		
+		@Test(groups="Fase2")
+		public void TS12261_Billing_Group_User_Line_Movements_Paso_1_Mover_Bundle_Se_mueven_todos_los_servicios() {
+		CustomerCare page = new CustomerCare(driver);
+		goToLeftPanel(driver, "Cuentas");
+		page.editarcuenta("Fernando Care","no","active");
+		page.editarcuenta("Fernando Care Billing 1", "no", "active");
+		page.editarcuenta("Fernando Care Billing 2", "no", "active");
+		page.elegircuenta("Fernando Care");
+		page.SelectGestion("Movimientos de cuenta de facturaci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();};
+		page.serviciocambiadecuenta("Arnet 10 MB (Prueba)", "Fernando Care Billing 2");
+		page.SelectGestion("Movimientos de cuenta de facturacion");
+		page.validarerrorpaso1("servicio cambia de cuenta billing");
+
+		
+		}
 	/*@Test
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
@@ -317,7 +491,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 			
 		}
 		
-		@Test(groups="Fase2")
+		/*@Test(groups="Fase2")
 		public void TS12286_Reseteo_de_Claves_Manejo_De_La_Clave_Gestion_Caso_Reseteo_Clave() {
 			CustomerCare page = new CustomerCare(driver);
 			CasePage Cp = new CasePage(driver);
@@ -376,7 +550,7 @@ public class CustomerCare360ViewInformationClient extends TestBase {
 				 }
 				 assertTrue(actual.equals(parcial));
 				 //error, se deben esperar 2 dias para relaizar la prueba
-		}
+		}*/
 		
 		
 }

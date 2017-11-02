@@ -23,6 +23,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.HomeBase;
 import Pages.customerInformation;
 import Pages.setConexion;
 
@@ -31,13 +32,12 @@ public class PanelServiceActive extends TestBase {
 	
 	private WebDriver driver;
 	
-	
-	@AfterClass
+	@AfterClass(groups = "Fase1")
 	public void tearDown2() {
 		driver.close();	
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups = "Fase1")
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -46,17 +46,22 @@ public class PanelServiceActive extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "Fase1")
 	public void setUp() throws Exception {
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-		}
+		HomeBase homePage = new HomeBase(driver);
+	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	    	 homePage.switchAppsMenu();
+	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	     }
+	     homePage.switchAppsMenu();
+	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     homePage.selectAppFromMenuByName("Consola FAN");
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}      
 	}
 	
-	@Test
+	@Test(groups = "Fase1")
 	public void TS7130_filterFuncionality()
 	{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -87,7 +92,7 @@ public class PanelServiceActive extends TestBase {
 		
 	}
 	
-	@Test
+	@Test(groups = "Fase1")
 	public void TS7129_showFilter()
 	{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -116,7 +121,7 @@ public class PanelServiceActive extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test
+	@Test(groups = "Fase1")
 	public void TS7131_showCardService()
 	{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -145,7 +150,7 @@ public class PanelServiceActive extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test
+	@Test(groups = "Fase1")
 	public void TS7133_validationScroll(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {

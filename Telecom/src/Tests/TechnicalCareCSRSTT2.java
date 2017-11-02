@@ -25,7 +25,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 		private String validIMEI = "545229703256596";
 		private String Ngestion;
 		
-		@BeforeClass
+		@BeforeClass(groups = "Fase2") 
 		public void init() throws Exception
 		{
 			this.driver = setConexion.setupPablo();
@@ -33,6 +33,12 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			login(driver);
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			HomeBase homePage = new HomeBase(driver);
+		     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+		    	 homePage.switchAppsMenu();
+		    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    	 homePage.selectAppFromMenuByName("Ventas");
+		    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+		     }
 		     homePage.switchAppsMenu();
 		     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		     homePage.selectAppFromMenuByName("Consola FAN");
@@ -41,7 +47,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 		     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		@BeforeMethod
+		@BeforeMethod(groups = "Fase2") 
 		public void setUp() throws Exception {
 	     Accounts accountPage = new Accounts(driver);
 	     //Selecciono Vista Tech
@@ -49,7 +55,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 	     accountPage.accountSelect("Vista Tech");
 	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     //select accountName "Robo Tech", currently has index 10.
-	     accountPage.selectAccountByName("Robo Tech");
+	     accountPage.selectAccountByName("Adrian Tech");
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
 	     if(accountPage.isTabOpened("Servicio Técnico")) {
 	         System.out.println("Tab Opened.");
@@ -77,13 +83,13 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
-		@AfterMethod
+		@AfterMethod(groups = "Fase2") 
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
 			ctas.remove(0);
 			for (WebElement cta : ctas) {
-				if (cta.findElement(By.className("tabText")).getText().equals("Robo Tech")) {
+				if (cta.findElement(By.className("tabText")).getText().equals("Adrian Tech")) {
 					Actions action = new Actions(driver);
 					action.moveToElement(cta);
 					action.moveToElement(cta.findElement(By.className("x-tab-strip-close"))).click().build().perform();
@@ -95,7 +101,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			
 			  }
 		
-		@AfterClass
+		@AfterClass(groups = "Fase2") 
 		public void tearDown() {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.id("tsidButton")).click();
@@ -104,11 +110,11 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			for (WebElement option : options) {
 				if(option.getText().toLowerCase().equals("Ventas".toLowerCase())){
 					option.click();
-					return;
+					break;
 				}
 			}
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.quit();
+			driver.close();
 		}
 		
 		@Test(groups = "Fase2") 
@@ -167,7 +173,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			//tipo de operacion
 			assertTrue(campos.get(0).getText().equals("Consulta"));
 			//sintoma
-			assertTrue(campos.get(1).getText().equals("Baja señal"));
+			assertTrue(campos.get(1).getText().toLowerCase().equals("carcaza frontal rota"));
 			//comentarios
 			assertTrue(campos.get(2).getText().equals("No funciona todo el tiempo"));
 		}
@@ -190,6 +196,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> campos= driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-PriceListSelection.ng-scope")).findElements(By.className("slds-checkbox"));
 			for (WebElement camp : campos) {
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+camp.getLocation().y+")");
 				camp.click();
 			}
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -219,7 +226,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			//tipo de operacion
 			assertTrue(campos.get(0).getText().equals("Consulta"));
 			//sintoma
-			assertTrue(campos.get(1).getText().equals("Baja señal"));
+			assertTrue(campos.get(1).getText().toLowerCase().equals("carcaza frontal rota"));
 			//comentarios
 			assertTrue(!campos.get(2).getText().isEmpty());
 		}

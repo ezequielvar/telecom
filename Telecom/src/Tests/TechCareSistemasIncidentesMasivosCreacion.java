@@ -64,13 +64,13 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
 	    //click techcare massive create
-	    WebElement tcmc = driver.findElement(By.id("omni-home-group-44-toggle-button"));
+	    WebElement tcmc = driver.findElement(By.id("omni-home-group-59-toggle-button"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+tcmc.getLocation().y+")");
 	    tcmc.click();
 	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
-	    //click version 9
-	    WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 9)\"]"));
+	    //click version 14
+	    WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 14)\"]"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cv8.getLocation().y+")");
 	    cv8.click();
 	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

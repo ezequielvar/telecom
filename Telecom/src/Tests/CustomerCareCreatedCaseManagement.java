@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import Pages.CasePage;
 import Pages.CustomerCasesManager;
+import Pages.HomeBase;
 import Pages.SelectCaseRegisterType;
 import Pages.setConexion;
 
@@ -27,38 +28,29 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 
 	private WebDriver driver;
 
-
-
-	@BeforeTest
+	@BeforeClass(groups = "Fase1")
 	public void mainSteup() {
-		this.driver = setConexion.setupLeo();	
-	}
-
-	/*@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupEze();	
->>>>>>> cdaf0f4bf4a99ac0526033539863b1b75abf5232
-	@BeforeClass
-	public void init() throws Exception
-	{
-		this.driver = setConexion.setupPablo();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}*/
-	
-	@BeforeMethod
-	public void mainSetup() {
 		this.driver = setConexion.setupPablo();	
-
 		login(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().equals("https://cs14.salesforce.com/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	    	 homePage.switchAppsMenu();
+	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	     }
+	     homePage.switchAppsMenu();
+	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     homePage.selectAppFromMenuByName("Consola FAN");
+	}
+
+	
+	
+	@BeforeMethod(groups = "Fase1")
+	public void mainSetup() {
+		
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
 		for (WebElement e : mainTabs) {
 		try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
@@ -71,12 +63,12 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		driver.switchTo().frame(frame0);
 		waitFor(driver, (By.name("fcf")));	
 		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Mis casos");
+		field.selectByVisibleText("Mis Casos");
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass
+	@AfterClass(groups = "Fase1")
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
@@ -97,13 +89,10 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	public void alert (){
 
 	}*/
-	/*
-	@BeforeMethod
-	public void setup() throws Exception {	
-	}
-	*/
 	
-	@Test
+	
+	
+	@Test(groups = "Fase1")
 	public void TS7202_CreatedAndDueTimeInHoursFormatCheck(){
 		
 		String dateWithHourPattern = "(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2})";
@@ -126,7 +115,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
 	}
 	
-	@Test
+	@Test(groups = "Fase1")
 	public void TS7082_VisualizeDueDate(){
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

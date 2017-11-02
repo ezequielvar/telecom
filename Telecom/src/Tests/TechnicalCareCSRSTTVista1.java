@@ -27,7 +27,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	private String validIMEI = "545229703256596";
 	private String sinTniE = "356514072350581";
 	
-	@BeforeClass
+	@BeforeClass(groups = "Fase2")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupPablo();
@@ -35,6 +35,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		 HomeBase homePage = new HomeBase(driver);
+		 
+	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	    	 homePage.switchAppsMenu();
+	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	     }
 	     homePage.switchAppsMenu();
 	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     homePage.selectAppFromMenuByName("Consola FAN");
@@ -43,15 +50,16 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod
+	@BeforeMethod(groups = "Fase2")
 	public void setUp() throws Exception {
      Accounts accountPage = new Accounts(driver);
      //Selecciono Vista Tech
      driver.switchTo().defaultContent();
      accountPage.accountSelect("Vista Tech");
      try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-     accountPage.selectAccountByName("Robo Tech");
-     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+     try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+     accountPage.selectAccountByName("Adrian Tech");
+     try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
      if(accountPage.isTabOpened("Servicio Técnico")) {
          System.out.println("Tab Opened.");
          accountPage.goToTab("Servicio Técnico");
@@ -61,7 +69,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
      try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  }
 	
-	@AfterClass
+	@AfterClass(groups = "Fase2")
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -70,20 +78,20 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		for (WebElement option : options) {
 			if(option.getText().toLowerCase().equals("Ventas".toLowerCase())){
 				option.click();
-				return;
+				break;
 			}
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.close();
 	}
 	
-	@AfterMethod
+	@AfterMethod(groups = "Fase2")
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
 		ctas.remove(0);
 		for (WebElement cta : ctas) {
-			if (cta.findElement(By.className("tabText")).getText().equals("Robo Tech")) {
+			if (cta.findElement(By.className("tabText")).getText().equals("Adrian Tech")) {
 				Actions action = new Actions(driver);
 				action.moveToElement(cta);
 				action.moveToElement(cta.findElement(By.className("x-tab-strip-close"))).click().build().perform();
@@ -118,7 +126,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		driver.findElement(By.id("TextAreaNotes")).sendKeys("problemas con el servicio");
 		accPage.continueFromSymptoms();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		assertTrue(driver.findElement(By.id("TicketCreation_prevBtn")).isDisplayed());
 	}
@@ -154,7 +162,6 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
-
 	}
 	
 	
@@ -279,7 +286,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(campos.get(10).getText().equals("NO POSEE") || !campos.get(10).getText().isEmpty());
 	}*/
 		
-	/*@Test(groups = "Fase2") 
+	@Test(groups = "Fase2") 
 	public void TS16170_STT_Cliente() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -302,7 +309,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(!campos.get(1).getText().isEmpty());
 		//mercado
 		assertTrue(!campos.get(3).getText().isEmpty());
-	}*/
+	}
 	
 	
 	@Test(groups = "Fase2") 

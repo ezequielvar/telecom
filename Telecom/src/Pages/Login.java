@@ -12,6 +12,9 @@ public class Login extends BasePage {
 	
 	//Fields
 	
+	@FindBy(how = How.ID, using = "idp_section_buttons")
+	private WebElement logininterno;
+	
 	@FindBy (how = How.ID, using = "username")
 	private WebElement username;
 	
@@ -46,12 +49,13 @@ public class Login extends BasePage {
 	//Methods
 	
 	public void ingresar() {
-		username.sendKeys("usit@telecom.sit");
-		password.sendKeys("pruebas08");
-    	//rememberMe.click();
-		login.click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
+	    logininterno.click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Ecom_User_ID.sendKeys("u589831");
+	    Ecom_Password.sendKeys("Testa10k");
+	    loginButton2.click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	   }
 	
 	//By: Almer
 	  public void ingresarAdminSCP() {
@@ -68,5 +72,73 @@ public class Login extends BasePage {
 	    loginButton2.click();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  }
+	  
+	//Logins de  Fase 3
+	  
+	  
+	  /**Para el Modulo Sales tiene vinculado el perfil de Agente y Atención a clientes
+	   * @author Almer
+	   * @Fase 3
+	   */
+	  public void ingresarAndres() {
+	      logininterno.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      Ecom_User_ID.sendKeys("u590422");
+	      Ecom_Password.sendKeys("Testa10k");
+	      loginButton2.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     }
+	  
+	  /**Para el Modulo Sales tiene vinculado el perfil de Call center
+	   * @author Almer
+	   * @Fase 3
+	   */
+	  public void ingresarElena() {
+	      logininterno.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      Ecom_User_ID.sendKeys("u580714");
+	      Ecom_Password.sendKeys("Testa10k");
+	      loginButton2.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     }
+	  
+	  /**Para el Modulo Sales tiene vinculado el perfil de Vendedor Oficina Comercial
+	   * @author Almer
+	   * @Fase 3
+	   */
+	  public void ingresarFrancisco() {
+	      logininterno.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      Ecom_User_ID.sendKeys("u581441");
+	      Ecom_Password.sendKeys("Testa10k");
+	      loginButton2.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     }
+	  
+	  /**Para el Modulo Sales tiene vinculado el perfil de Logistica
+	   * @author Almer
+	   * @Fase 3
+	   */
+	  public void ingresarNicolas() {
+	      logininterno.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      Ecom_User_ID.sendKeys("u586760");
+	      Ecom_Password.sendKeys("Testa10k");
+	      loginButton2.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     }
+	  
+	  /**Para el Modulo Sales tiene vinculado el perfil de Entregas y Configuraciones
+	   * @author Almer
+	   * @Fase 3
+	   */
+	  public void ingresarMarcela() {
+	      logininterno.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      Ecom_User_ID.sendKeys("u591584");
+	      Ecom_Password.sendKeys("Testa10k");
+	      loginButton2.click();
+	      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     }
 
 }

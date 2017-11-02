@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -54,21 +55,22 @@ public class SintomasSTTManagement extends TestBase {
 	@BeforeMethod
 	public void setUp() throws Exception {
 		//TODO: add how to get to ABM de Motivo
-		if (!driver.getCurrentUrl().toString().startsWith(symptomsListURL)){
-			HomeBase homePage = new HomeBase(driver);
-			homePage.switchAppsMenu();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			homePage.selectAppFromMenuByName("Consola FAN");
-			driver.get(symptomsListURL); //TODO: change to actual path.
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
-		}
+		HomeBase homePage = new HomeBase(driver);
+		if(!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")) {
+	    	 homePage.switchAppsMenu();
+	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	     }
+	     homePage.switchAppsMenu();
+	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     homePage.selectAppFromMenuByName("Consola FAN");
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}        
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterClass
+	//@AfterClass
 	public void tearDown() {
-
-		
 
 		HomeBase homePage = new HomeBase(driver);
 		homePage.closeAllTabs(driver);
@@ -77,7 +79,7 @@ public class SintomasSTTManagement extends TestBase {
 		driver.close();
 	}
 	
-	@AfterMethod
+	//@AfterMethod
 	public void goToConsolaFAN() {
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();

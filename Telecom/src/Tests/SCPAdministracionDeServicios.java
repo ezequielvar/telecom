@@ -47,7 +47,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass
+	@AfterClass
 	public void tearDown() {
 		driver.close();
 	}
@@ -380,7 +380,6 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "Fase2")
 	public void TS112559_Asignación_De_Value_Drivers_A_Oportunidades_Chatter_Contextualizado_Escribir_Comentario() {
 		SCP pcp = new SCP(driver);
-		BasePage Bp = new BasePage();
 		pcp.moveToElementOnAccAndClick("tercerTitulo",1);
 		WebElement subir = driver.findElement(By.className("publisherWrapper"));
 		  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+subir.getLocation().y+")");

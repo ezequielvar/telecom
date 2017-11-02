@@ -1,5 +1,6 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -71,7 +72,7 @@ public class TestBase {
 	}
 	
 	public void login(WebDriver driver) {
-		driver.get("https://test.salesforce.com/");
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//if(driver.findElement(By.id("idcard")).isDisplayed())
 		//{
@@ -136,6 +137,78 @@ public class TestBase {
 			}
 		}
 	}
+	
+//Sales Fase 3
+    
+    /**Ingresa con los datos de la cuenta Andres
+     * Para el Modulo Sales tiene vinculado el perfil de Agente y Atención a clientes
+     * @Fase 3
+     */
+    public void loginAndres(WebDriver driver) {
+      driver.get("https://crm--sit.cs14.my.salesforce.com/");
+      try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        Login page0 = new Login(driver);
+        page0.ingresarAndres();
+    }
+    
+    /**Ingresa con los datos de la cuenta Elena
+     * Para el Modulo Sales tiene vinculado el perfil de Call center
+     * @Fase 3
+     */
+    public void loginElena(WebDriver driver) {
+      driver.get("https://crm--sit.cs14.my.salesforce.com/");
+      try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        Login page0 = new Login(driver);
+        page0.ingresarElena();
+    }
+  
+    
+    /**Ingresa con los datos de la cuenta Francisco
+     * Para el Modulo Sales tiene vinculado el perfil de Vendedor Oficina Comercial
+     * @Fase 3
+     */
+    public void loginFranciso(WebDriver driver) {
+      driver.get("https://crm--sit.cs14.my.salesforce.com/");
+      try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        Login page0 = new Login(driver);
+        page0.ingresarFrancisco();
+    }
+    
+    /**Ingresa con los datos de la cuenta Nicolas.
+     * Para el Modulo Sales tiene vinculado el perfil de Logistica
+     * @Fase 3
+     */
+    public void loginNicolas(WebDriver driver) {
+      driver.get("https://crm--sit.cs14.my.salesforce.com/");
+      try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        Login page0 = new Login(driver);
+        page0.ingresarNicolas();
+    }
+    
+    /**Ingresa con los datos de la cuenta de Marcela
+     * Para el Modulo Sales tiene vinculado el perfil de Entregas y Configuraciones
+     * @Fase 3
+     */
+    public void loginMarcela(WebDriver driver) {
+      driver.get("https://crm--sit.cs14.my.salesforce.com/");
+      try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+        Login page0 = new Login(driver);
+        page0.ingresarMarcela();
+    }
+    
+    //Verifica el contenido de una lista, recibiendo un arreglo a "consultar" en un arreglo de string y la "Lista" del WebElement     
+    public boolean verificarContenidoLista(String[] consultar,List <WebElement> Lista) {
+         List<String> titleTabla = new ArrayList<String>();
+         for(WebElement a : Lista) {
+           titleTabla.add(a.getText().toLowerCase());
+           System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+         }     
+         for(String a:consultar) {
+          if(!(titleTabla.contains(a)))
+           return false;
+         }
+         return true;
+    }
 	
 		//}else{
 		//	driver.findElement(By.id("chooser")).click();
