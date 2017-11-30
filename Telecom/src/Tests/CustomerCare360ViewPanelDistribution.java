@@ -12,6 +12,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -20,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Login;
 import Pages.TechCareDiagnostic;
@@ -29,332 +31,351 @@ public class CustomerCare360ViewPanelDistribution extends TestBase {
 
 	private WebDriver driver;
 
-
-//@AfterTest
-public void tearDown() {
-		driver.close();
-}
-//@AfterMethod
-public void alert (){
-	driver.get("https://cs14.salesforce.com/console");
-	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	try{
-		Alert alert = driver.switchTo().alert();
-		alert.accept();
-	}catch(org.openqa.selenium.NoAlertPresentException e){}
-}
-
-@BeforeClass
-public void init() throws Exception
-{
-	this.driver = setConexion.setupLeo();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	login(driver);
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-}
-
-@BeforeClass
-public void setUpTest() {
-	driver.switchTo().defaultContent();
-	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	if (!driver.getCurrentUrl().toString().contains("https://crm--sit.cs14.my.salesforce.com/console")){
-		driver.findElement(By.id("tsidLabel")).click();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+	@AfterClass(groups= "CustomerCare")
+	public void tearDown() {
+		driver.quit();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-		
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
-	for (WebElement e : mainTabs) {
-	try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
+
+	//@AfterMethod(groups= "CustomerCare")
+	public void alert() {
+		CustomerCare page = new CustomerCare(driver);
+		page.cerrarultimapestaña();
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {
+			Alert alert = driver.switchTo().alert();
+			System.out.println(alert.getText());
+		} catch (org.openqa.selenium.NoAlertPresentException e) {}
 	}
-	List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-	goToLeftPanel(driver, "Cuentas");
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement frame0 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame0);
-	waitFor(driver, (By.name("fcf")));	
-	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Vista Care");
-	waitFor(driver, (By.xpath("//*[text() = 'Andres Care']")));	
-	driver.findElement(By.xpath("//*[text() ='Andres Care']")).click();;
-	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
-	accounts.get(0).click();
-	
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-	driver.switchTo().defaultContent();
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-}
-
-//@BeforeMethod
-public void setUpTest2() {
-	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	try {	
+	@BeforeClass(groups= "CustomerCare")
+	public void init() throws Exception {
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
 		driver.findElement(By.id("tsidLabel")).click();
-		System.out.println(a);
-		if(a.equals("Ventas"))
-		{
-			System.out.println("True");
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-		}else
-		{
-			System.out.println("False");
-			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+		if (a.equals("Ventas")) {
+			driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();
+		} else {
+			driver.findElement(By.xpath("//a[@href=\'/home/home.jsp?tsid=02u41000000QWha\']")).click();
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("tsidLabel")).click();
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
+			driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();
 		}
-	}
-	catch (NoSuchElementException NoSuchElemException){
-		System.out.println("ErrorTime");
-		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
-	for (WebElement e : mainTabs) {
-	try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
-	}
-	List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-	((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-	goToLeftPanel(driver, "Cuentas");
-	WebElement frame0 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame0);
-	waitFor(driver, (By.name("fcf")));	
-	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas las cuentas");
-	waitFor(driver, (By.xpath("//*[text() = 'Adrian Tech']")));	
-	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() ='Andres Care']"));
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	accounts.get(0).click();
-	driver.switchTo().defaultContent();
-}	
-		
-	@Test
-	public void TS7059_Verificar_Visualizar_Panel_Promociones() {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+		CustomerCare page = new CustomerCare(driver);
+		page.elegircuenta("Fernando Care");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
-			}		
-		
-		driver.switchTo().frame(frame1.get(4));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".via-slds-story-cards--header.spacer.acct-spacer"));
-		driver.switchTo().defaultContent();
 	}
+
+	@BeforeMethod(groups= "CustomerCare")
+	public void setup() {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+
 	
-	@Test
+	@Test(groups= "CustomerCare")
+	public void TS7059_Verificar_Visualizar_Panel_Promociones() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".via-slds-story-cards--header.spacer.acct-spacer")));
+		List<WebElement> promociones = driver.findElements(By.cssSelector(".via-slds-story-cards--header.spacer.acct-spacer"));
+		Assert.assertTrue(promociones.get(1).isDisplayed());
+	}
+
+	
+	@Test(groups= "CustomerCare")
 	public void TS7058_Visualizar_Panel_Servicios_Activos() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[text() ='Servicios']")).click();
-		driver.switchTo().frame(frame1.get(2));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-
-		driver.findElement(By.cssSelector(".console-card.active"));
-		driver.switchTo().defaultContent();
 	}
+
 	
-	@Test
-	public void TS7200_VerifyDisplayLogo() {	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+	@Test(groups= "CustomerCare")
+	public void TS7200_VerifyDisplayLogo() {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("sd_custom_logo"));
-	
 	}
-	
-	@Test
-	public void TS7060_Visualizar_Panel_Alertas() {	
 
+	
+	// @Test(groups= "CustomerCare")
+	public void TS7060_Visualizar_Panel_Alertas() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	
 		driver.findElement(By.xpath("//*[text() ='Servicios']")).click();
 		driver.switchTo().frame(frame1.get(2));
-		driver.findElement(By.className("ta-alertMessage-content"));	
+		driver.findElement(By.className("ta-alertMessage-content"));
 		driver.switchTo().defaultContent();
 	}
+
 	
-	@Test
-	public void TS7201_VerifyDisplayfilterAccounts() {	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
-			}
-		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-		
-		driver.findElement(By.className("account-select-table")).click();	
-	
+	@Test(groups= "CustomerCare")
+	public void TS7201_VerifyDisplayfilterAccounts() {
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("account-select-table")));
+		List<WebElement> filtro = driver.findElements(By.className("account-select-table"));
+		Assert.assertTrue(filtro.get(0).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
-	@Test
-	public void TS7066_VerifyDisplayPanelAccountsClient() {	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
-			}
-		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7066_VerifyDisplayPanelAccountsClient() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("account-select-container")));
 		driver.findElement(By.className("account-select-container")).click();
 		driver.switchTo().defaultContent();
 	}
-	@Test
-	public void TS7054_VerifyDisplayPanelBusinessData() {	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).click();
-			}
-		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame1.get(5));
-		driver.findElement(By.className("profile-box"));	
-		driver.switchTo().defaultContent();
-	}
-	@Test
-	public void TS7061_Visualizar_Panel_Sesiones_Guiadas() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openrightpanel();
-		page.verificaciondebotonesdegestion();
-		driver.switchTo().defaultContent();
-	}
+
 	
-	@Test
-	public void TS7062_Visualizar_Panel_Gestiones_abandonadas() {	
+	@Test(groups= "CustomerCare")
+	public void TS7054_VerifyDisplayPanelBusinessData() {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box")));
+		driver.findElement(By.className("profile-box"));
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7061_Visualizar_Panel_Sesiones_Guiadas() {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("actions-content")));
+		Assert.assertTrue(driver.findElement(By.className("actions-content")).isDisplayed());
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7062_Visualizar_Panel_Gestiones_abandonadas() {
 		CustomerCare page = new CustomerCare(driver);
 		page.openrightpanel();
 		page.GestionAbandonadapanel();
 		driver.switchTo().defaultContent();
 	}
+
 	
-	@Test
+	@Test(groups= "CustomerCare")
 	public void TS7063_Contraccion_Paneles() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("todosOFF");
-		page.verificacrhideleft("todosOFF");
-		page.closeleftpanel();
-		page.openrightpanel();
-		page.panelder("todos");
-		page.verificarhideright("todosOFF");
-		page.closerightpanel();
-		driver.switchTo().defaultContent();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.cssSelector(".slds-p-right--x-small.spacer")).click();
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
+		element.get(1).click();
+		driver.findElement(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header")).click();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.className("actions-content")));
+		List <WebElement> x = driver.findElements(By.cssSelector(".via-slds-story-cards--header.spacer"));
+		x.get(0).click();
+		x.get(1).click();
+		x.get(2).click();
+		try {
+			Assert.assertFalse(driver.findElement(By.className("actions-content")).isDisplayed());
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			Assert.assertTrue(true);
+		}
 	}
-	@Test
+
+	
+	@Test(groups= "CustomerCare")
 	public void TS7064_Contraccion_Panel_Datos_Comerciales() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.verificarnohidedatoscomerciales();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.className("profile-box")));
+		Assert.assertTrue(driver.findElement(By.className("profile-box")).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
-	@Test
+
+	
+	@Test(groups= "CustomerCare")
 	public void TS7065_Expansion_Paneles() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("todosON");
-		page.verificacrhideleft("todosON");
-		page.closeleftpanel();
-		page.openrightpanel();
-		page.panelder("todos");
-		page.verificarhideright("todosON");
-		page.closerightpanel();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.cssSelector(".slds-p-right--x-small.spacer")).click();
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
+		element.get(1).click();
+		element.get(1).click();
+		driver.findElement(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header")).click();
+		driver.findElement(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header")).click();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.className("actions-content")));
+		List <WebElement> x = driver.findElements(By.cssSelector(".via-slds-story-cards--header.spacer"));
+		x.get(0).click();
+		x.get(0).click();
+		x.get(1).click();
+		x.get(1).click();
+		x.get(2).click();
+		x.get(2).click();
+		Assert.assertTrue(driver.findElement(By.className("actions-content")).isDisplayed());
 		driver.switchTo().defaultContent();
-	}	
-//360 View Customer Key Metrics
-	@Test
+	}
+
+	
+	@Test(groups= "CustomerCare")
 	public void TS7074_Key_Metrics_Visualizar_Picklist() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.verificarpicklist();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.id("text-input-01")));
+		Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
+
 	
-	@Test
+	@Test(groups= "CustomerCare")
 	public void TS7075_Key_Metrics_Funcionamiento_Picklist() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.funcionamientopicklist();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[5]/ng-include/div/div[1]/div/div[1]/div")).click();
+		driver.findElement(By.id("text-input-01")).click();
+		List <WebElement> x = driver.findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label.customer-story-label"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("preocupaciones")) {
+				a.click();
+			}
+		}
+		WebElement element = driver.findElement(By.className("profile-tags-container"));
+		Assert.assertTrue(element.getText().toLowerCase().contains("preocupaciones"));
 		driver.switchTo().defaultContent();
+	}
 
-	}
-	@Test
-	public void TS7076_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Intereses_personales() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("perfil");
-		page.validarbtnsperfil("Intereses Personales");
-		driver.switchTo().defaultContent();
-}
-	@Test
-	public void TS7078_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Criterios_de_compra() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("perfil");
-		page.validarbtnsperfil("Criterios de compra");
-		driver.switchTo().defaultContent();
-}
-
-	@Test
-	public void TS7079_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Familia() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("perfil");
-		page.validarbtnsperfil("Familia");
-}
-	@Test
-	public void TS7080_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Productos_de_interes() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("perfil");
-		page.validarbtnsperfil("Productos de interes");
-}
-	@Test
-	public void TS7081_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Preocupaciones() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.panelizq("perfil");
-		page.validarbtnsperfil("Preocupaciones");
-		driver.switchTo().defaultContent();
-}
-	@Test
-	public void TS7082() throws ParseException {
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-		page.comparaciondefechas();
-		driver.switchTo().defaultContent();
-	}
-	@Test
-	public void TS7120_Key_Metrics_Panel_Perfil_Visualizar_Scroll(){
-		CustomerCare page = new CustomerCare(driver);
-		page.openleftpanel();
-	((JavascriptExecutor)driver).executeScript("scroll(0,400)");
-	JavascriptExecutor javascript = (JavascriptExecutor) driver;
-	Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
-	assertTrue(VertscrollStatus);
-	driver.switchTo().defaultContent();
-	}
 	
-	@Test
+	@Test(groups= "CustomerCare")
+	public void TS7076_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Intereses_personales() {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[5]/ng-include/div/div[1]/div/div[1]/div")).click();
+		driver.findElement(By.id("text-input-01")).click();
+		List <WebElement> x = driver.findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label.customer-story-label"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("todos")) {
+				a.click();
+			}
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
+		Assert.assertTrue(element.get(5).isDisplayed());
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7078_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Criterios_de_compra() {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[5]/ng-include/div/div[1]/div/div[1]/div")).click();
+		driver.findElement(By.id("text-input-01")).click();
+		List <WebElement> x = driver.findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label.customer-story-label"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("todos")) {
+				a.click();
+			}
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
+		Assert.assertTrue(element.get(3).isDisplayed());
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7079_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Familia() {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[5]/ng-include/div/div[1]/div/div[1]/div")).click();
+		driver.findElement(By.id("text-input-01")).click();
+		List <WebElement> x = driver.findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label.customer-story-label"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("todos")) {
+				a.click();
+			}
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
+		Assert.assertTrue(element.get(4).isDisplayed());
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7080_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Productos_de_interes() {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[5]/ng-include/div/div[1]/div/div[1]/div")).click();
+		driver.findElement(By.id("text-input-01")).click();
+		List <WebElement> x = driver.findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label.customer-story-label"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("todos")) {
+				a.click();
+			}
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
+		Assert.assertTrue(element.get(1).isDisplayed());
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7081_Key_Metrics_Visualizar_boton_Añadir_Nuevo_Preocupaciones() {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[5]/ng-include/div/div[1]/div/div[1]/div")).click();
+		driver.findElement(By.id("text-input-01")).click();
+		List <WebElement> x = driver.findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label.customer-story-label"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("todos")) {
+				a.click();
+			}
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
+		Assert.assertTrue(element.get(0).isDisplayed());
+		driver.switchTo().defaultContent();
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7082_Visualizar_Fecha_de_vencimiento() throws ParseException {
+		CustomerCare page = new CustomerCare(driver);
+		page.openleftpanel();
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
+		for (WebElement x : element) {
+			if (x.getText().contains("  /  /    ")) {
+				Assert.assertTrue(x.isDisplayed());
+			}
+		}		
+	}
+
+	
+	@Test(groups= "CustomerCare")
+	public void TS7120_Key_Metrics_Panel_Perfil_Visualizar_Scroll() {
+		BasePage cambioFrameByID = new BasePage(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box")));
+		JavascriptExecutor javascript = (JavascriptExecutor) driver;
+		Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
+		assertTrue(VertscrollStatus);
+	}
+
+	
+	@Test(groups= "CustomerCare")
 	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_Activo_Usuario_Externo() {
 		CustomerCare page = new CustomerCare(driver);
 		page.usarpanelcentral("Detalles");
 		page.validarstatus("Active");
-		}
+	}
+
 	
-	@Test
+	@Test(groups= "CustomerCare")
 	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_inactivo_Usuario_Externo() {
 		CustomerCare page = new CustomerCare(driver);
 		page.usarpanelcentral("Detalles");
 		page.validarstatus("Active");
-		}
+	}
 }
