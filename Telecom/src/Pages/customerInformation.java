@@ -102,25 +102,25 @@ public class customerInformation extends BasePage {
 	
 	public void setDefaultValues() {
 		name.clear();
-		name.sendKeys("Aaa");
+		name.sendKeys("Fernandoasd");
 		lastName.clear();
-		lastName.sendKeys("Aaa");
+		lastName.sendKeys("Careeeeee");
 //		setSimpleDropdown(documentType, "DNI");
 //		document.clear();
 //		document.sendKeys("12345678");
 		email.clear();
-		email.sendKeys("aaa.aaa@gmail.com");
-		setSimpleDropdown(gender, "Masculino");
+		email.sendKeys("facundo.dilemme@live.com");
+		setSimpleDropdown(gender, "Fernando");
 		mobilePhone.clear();
-		mobilePhone.sendKeys("1159241474");
-		phone.clear();
-		phone.sendKeys("4553401412");
+		mobilePhone.sendKeys("1164853799");
+		//phone.clear();
+		//phone.sendKeys("1122332233");
 		otherPhone.clear();
-		otherPhone.sendKeys("4551475412");
+		otherPhone.sendKeys("1122332233");
 		cuil.clear();
-		cuil.sendKeys("23123456789");
+		cuil.sendKeys("23267493724");
 		birthDate.clear();
-		birthDate.sendKeys("06/07/2016");
+		birthDate.sendKeys("04/05/2049");
 		getElementFromList(update, "Actualizar").click();
 	}
 	
@@ -222,18 +222,20 @@ public class customerInformation extends BasePage {
 		getElementFromList(update, "Actualizar").click();
 	}
 	
-	public Boolean areNumbersAllowedInFirstNameAndLastName() {
-		Boolean a = false;
+	public void areNumbersAllowedInFirstNameAndLastName() {
+		//Boolean a = false;
 		name.clear();
 		name.sendKeys("1234");
 		lastName.clear();
 		lastName.sendKeys("1234");
-		List<WebElement> lista = driver.findElements(By.cssSelector(".description.ng-binding"));
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003WDyFAAW-3\"]/div[1]/div/child[2]/div/ng-form/div[2]/div[2]/div/div[2]/small[8]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003WDyFAAW-3\"]/div[1]/div/child[3]/div/ng-form/div[2]/div[2]/div/div[2]/small[8]")).isDisplayed());
+		/*List<WebElement> lista = driver.findElements(By.cssSelector(".description.ng-binding"));
 		if((lista.get(6).getText().equals("El Nombre No Debe Tener Números.")) &&
 		   (lista.get(13).getText().equals("El Apellido No Debe Tener Números."))){
 			a = true;
 			}	
-		return a;
+		return a;*/
 	}
 	
 	public void modifyDniBy(String doc) {
@@ -273,5 +275,40 @@ public class customerInformation extends BasePage {
 			a = true;
 		}
 		return a;
-	}	
+	}
+
+	public boolean validarcaractermovilalternativo() {
+		boolean a = false;
+		BasePage cambioFrameByID=new BasePage();
+	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+	    driver.findElement(By.className("profile-edit")).click();
+	    try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+	    List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+	    driver.findElement(By.id("MobilePhone")).sendKeys("a");
+	    for(WebElement aa:errores) {
+	    	if(aa.getText().equals("Longitud Mínima De 10 Solo Números."))
+	    		return true;
+	    }	    	    
+	    return false;
+	}
+
+	public boolean validarcaracterespecialesNyA() {
+		boolean a = false;
+		BasePage cambioFrameByID=new BasePage();
+	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+	    driver.findElement(By.className("profile-edit")).click();
+	    try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+	    List<WebElement> errores = driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope"));
+	    driver.findElement(By.id("FirstName")).sendKeys("/*!#$");;
+	    driver.findElement(By.id("LastName")).sendKeys("/*!#$");
+	    if (errores.get(0).getText().equals("asd") && errores.get(1).getText().equals("asd")) {
+	    	a = true;
+	    }    
+		return false;
+	}
+	
 }

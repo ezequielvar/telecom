@@ -382,7 +382,7 @@ public class CasePage extends BasePage {
 	
 		switch (caso) {
 			case "nico":
-				Assert.assertTrue(driver.findElement(By.id("cas14_ileinner")).getText().equals(asunto));
+				Assert.assertTrue(driver.findElement(By.id("cas14_ileinner")).getText().contains(asunto));
 				break;
 
 			case "leo":
